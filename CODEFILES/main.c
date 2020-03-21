@@ -1,4 +1,17 @@
-/* Animation project */
+/***************************************************************
+ * Copyleft 2020
+ *   Junior C programmer presents (lol)
+ ***************************************************************/
+
+/* FILE NAME   : main.c
+ * PURPOSE     : Animation project.
+ *               Main file of project.
+ * PROGRAMMER  : Andrey Shayda.
+ * LAST UPDATE : 22.03.2020.
+ *
+ * All parts of this file may be changed without agreement
+ *   of programmer if you give credits to author.
+ */
  
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,29 +27,35 @@
 #include <GL/glu.h>
 #include <string.h>
 
+#include "comdef.h"
+
 /* Time variable */
-double SyncTime;
+DBL SyncTime;
 
 /* Window & context parameters */
-Display                 *dpy;
-Window                  root;
-GLint                   att[] = { GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, None };
-XVisualInfo             *vi;
-Colormap                cmap;
-XSetWindowAttributes    swa;
-Window                  win;
-GLXContext              glc;
-XWindowAttributes       gwa;
-XEvent                  xev;
+Display                 *dpy;                                                             /*  Display pointer             */
+Window                  root;                                                             /*  Root pointer to window      */
+GLint                   att[] = { GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, None }; /*  Attributes of GL            */
+XVisualInfo             *vi;                                                              /*  Visual info of XServer      */
+Colormap                cmap;                                                             /*  Colormap attribute          */
+XSetWindowAttributes    swa;                                                              /*  Set main window attributes  */
+Window                  win;                                                              /*  Window code                 */
+GLXContext              glc;                                                              /*  OpenGL context              */
+XWindowAttributes       gwa;                                                              /*  Total attributes of window  */ 
+XEvent                  xev;                                                              /*  Event structure             */
 
-void ReshapeFunc( int W, int H )
+/* Main reshape handle function
+ * ARGUMENTS: None.
+ * RETURNS: None.
+ */ 
+VOID ReshapeFunc( INT W, INT H )
 {
-  double size = 0.1, rx = size, ry = size;
+  DBL size = 0.1, rx = size, ry = size;
  
   if (W > H)
-    rx *= (double)W / H;
+    rx *= (DBL)W / H;
   else
-    ry *= (double)H / W;
+    ry *= (DBL)H / W;
  
   glViewport(0, 0, W, H);
  
@@ -46,9 +65,13 @@ void ReshapeFunc( int W, int H )
  
   gluLookAt(0, 0, 10, 0, 0, 0, 0, 1, 0);
   glMatrixMode(GL_MODELVIEW);
-}
+} /* End of 'ReshapeFunc' function */
 
-void DisplayFunc( void )
+/* Main display handle function
+ * ARGUMENTS: None.
+ * RETURNS: None.
+ */
+VOID DisplayFunc( VOID )
 {
   glClearColor(0.3, 0.5, 0.7, 1.0);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -61,18 +84,26 @@ void DisplayFunc( void )
   glPopMatrix();
 
   glFinish();
-}
+} /* End of 'DisplayFunc' function */
 
-void DestroyProgramm( void )
+/* Close all entries function
+ * ARGUMENTS: None.
+ * RETURNS: None.
+ */
+VOID DestroyProgramm( VOID )
 {
   glXMakeCurrent(dpy, None, NULL);
   glXDestroyContext(dpy, glc);
   XDestroyWindow(dpy, win);
   XCloseDisplay(dpy);
   exit(0);  
-}
+} /* End of 'DestroyProgramm' function */
 
-void CheckEvents( void )
+/* Check pending events function
+ * ARGUMENTS: None.
+ * RETURN: None.
+ */
+VOID CheckEvents( VOID )
 {
   /* Key pressed event check */  
   if (XCheckWindowEvent(dpy, win, KeyPressMask, &xev))
@@ -89,14 +120,23 @@ void CheckEvents( void )
     XGetWindowAttributes(dpy, win, &gwa);  
     ReshapeFunc(gwa.width, gwa.height);  
   } 
-}
+} /* End of 'CheckEvents' function */
 
-void Timer( void )
+/* Timer dummy function (refactor later)
+ * ARGUMENTS: None.
+ * RETURNS: None.
+ */
+VOID Timer( VOID )
 {
-  SyncTime = (double)clock() / CLOCKS_PER_SEC;
-}
+  SyncTime = (DBL)clock() / CLOCKS_PER_SEC;
+} /* End of 'Timer' function */
 
-int main( int argc, char *argv[] )
+/* Main programm function
+ * ARGUMENTS: None.
+ * RETURNS:
+ *   (INT) programm return code.
+ */
+INT main( VOID )
 {
   /* First call to XLib */
   dpy = XOpenDisplay(NULL);
@@ -201,4 +241,7 @@ int main( int argc, char *argv[] )
     DisplayFunc();
     glXSwapBuffers(dpy, win);
   }
-}
+} /* End of 'main' function */
+
+/* END OF 'main.c' FILE */
+
