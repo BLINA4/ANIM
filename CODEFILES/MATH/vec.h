@@ -13,8 +13,8 @@
  *   of programmer if you give credits to author.
  */
 
-#ifndef _vec_h_
-#define _vec_h_
+#ifndef __vec_h_
+#define __vec_h_
 
 #include "mth.h"
 
@@ -303,6 +303,6 @@ __inline VEC PointTransform( VEC V, MATR M )
            M.M[0][2] * V.X + M.M[1][2] * V.Y + M.M[2][2] * V.Z + M.M[3][2]);
 } /* End of 'PointTransform' function */
 
-#endif /* _vec_h_ */
+#endif /* __vec_h_ */
 
 /* END OF 'vec.h' FILE */

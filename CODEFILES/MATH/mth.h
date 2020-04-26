@@ -13,8 +13,8 @@
  *   of programmer if you give credits to author.
  */
 
-#ifndef _mth_h_
-#define _mth_h_
+#ifndef __mth_h_
+#define __mth_h_
 
 #include "../comdef.h"
 
@@ -83,6 +83,6 @@ typedef struct tagCAMERA
     ProjFarClip, ProjW, ProjH;  /* Projection parameters */
 } CAMERA;
 
-#endif /* _mth_h_ */
+#endif /* __mth_h_ */
 
 /* END OF 'mth.h' FILE */

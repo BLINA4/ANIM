@@ -19,12 +19,6 @@
 #include <sys/time.h>
 #include <unistd.h>
 #include <math.h>
-#include <X11/X.h>
-#include <X11/Xlib.h>
-#include <X11/XKBlib.h>
-#include <GL/gl.h>
-#include <GL/glx.h>
-#include <GL/glu.h>
 #include <string.h>
 
 #include "comdef.h"
@@ -143,7 +137,7 @@ INT main( VOID )
  
   if (dpy == NULL)
   {
-	printf("\n\tcannot connect to X server\n\n");
+	  printf("\n\tcannot connect to X server\n\n");
     exit(0);
   }
   
@@ -155,11 +149,11 @@ INT main( VOID )
 
   if (vi == NULL) 
   {
-	printf("\n\tno appropriate visual found\n\n");
+	  printf("\n\tno appropriate visual found\n\n");
     exit(0);
   }
   else
-	printf("\n\tvisual %p selected\n", (void *)vi->visualid); /* %p creates hexadecimal output like in glxinfo */
+	  printf("\n\tvisual %p selected\n", (void *)vi->visualid); /* %p creates hexadecimal output like in glxinfo */
 
   /* Create colormap for window */
   cmap = XCreateColormap(dpy, root, vi->visual, AllocNone);

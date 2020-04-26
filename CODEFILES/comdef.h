@@ -13,8 +13,16 @@
  *   of programmer if you give credits to author.
  */
 
-#ifndef _comdef_h_
-#define _comdef_h_
+#ifndef __comdef_h_
+#define __comdef_h_
+
+/* main project headers */
+#include <X11/X.h>
+#include <X11/Xlib.h>
+#include <X11/XKBlib.h>
+#include <GL/gl.h>
+#include <GL/glx.h>
+#include <GL/glu.h>
 
 /* redefining main C types */
 typedef void VOID;
@@ -29,6 +37,6 @@ typedef unsigned short USHORT;
 typedef long LONG;
 typedef unsigned long ULONG;
 
-#endif /* _comdef_h_ */
+#endif /* __comdef_h_ */
 
 /* END OF 'comdef.h' FILE */

@@ -13,8 +13,8 @@
  *   of programmer if you give credits to author.
  */
 
-#ifndef _cam_h_
-#define _cam_h_
+#ifndef __cam_h_
+#define __cam_h_
 
 #include "vec.h"
 #include "matr.h"
@@ -117,6 +117,6 @@ __inline VOID CamSetDefault( CAMERA *Cam )
   CamProjSet(Cam, 1, 1);
 } /* End of 'CamSetDefault' function */
 
-#endif /* _cam_h_ */
+#endif /* __cam_h_ */
 
 /* END OF 'cam.h' FILE */
