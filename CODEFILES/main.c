@@ -6,8 +6,8 @@
 /* FILE NAME   : main.c
  * PURPOSE     : Animation project.
  *               Main file of project.
- * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 22.03.2020.
+ * PROGRAMMER  : BLIN4
+ * LAST UPDATE : 03.02.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -35,7 +35,7 @@ VOID main( VOID )
   
   //AnimUnitAdd(UnitCreateQuad());
   AnimUnitAdd(UnitCreateOS());
-
+  
   AnimRun();
   AnimClose();
 } /* End of 'main' function */

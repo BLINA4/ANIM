@@ -37,6 +37,11 @@ typedef unsigned short USHORT;
 typedef long LONG;
 typedef unsigned long ULONG;
 typedef unsigned short BOOL;
+typedef uint32_t DWORD;
+typedef uint16_t WORD;
+
+#define FALSE 0
+#define TRUE  1
 
 #endif /* __comdef_h_ */
 

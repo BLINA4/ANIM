@@ -19,6 +19,7 @@
 #include "../comdef.h"
 #include "./UNITS/unit.h"
 #include "../RENDER/render.h"
+#include "./TEXTURES/textures.h"
 
 #define MAX_UNITS 4096
 
@@ -36,10 +37,13 @@ struct tagANIM
   Display *dpy;
   UNIT *Units[MAX_UNITS];
   INT NumOfUnits;
-  BOOL Run;
+  BOOL Run;         
   DBL SyncTime;
-  GLint                   att[];                                                            /*  Attributes of GL            */
+  INT                     NumOfTextures;                                                    /*  Number of loaded textures   */
+  GLint                   att[];                                                            /*  Attributes of GL            */ 
 };
+
+extern ANIM Anim;
 
 /* Main animation loop function.
  * ARGUMENTS: None.

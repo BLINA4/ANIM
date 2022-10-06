@@ -15,8 +15,8 @@
 
 #include <math.h>
 
-#ifndef _quad_c_
-#define _quad_c_
+#ifndef __quad_c_
+#define __quad_c_
 
 #include "../unit.h"
 #include "../../anim.h"

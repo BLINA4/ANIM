@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Render system code file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 26.04.2020.
+ * LAST UPDATE : 05.02.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -38,6 +38,10 @@ VOID      (*glVertexAttribPointer)      ( GLuint, GLint, GLenum, GLboolean, GLsi
 VOID      (*glEnableVertexAttribArray)  ( GLuint );
 VOID      (*glDeleteVertexArrays)       ( GLsizei, const GLuint * );
 VOID      (*glDeleteBuffers)            ( GLsizei, const GLuint * );
+VOID      (*glGetShaderiv)		        ( GLuint, GLenum, GLint * );
+VOID 	  (*glGetShaderInfoLog)		    ( GLuint, GLsizei, GLsizei *, GLchar * );
+VOID      (*glGenerateMipmap)           ( GLenum );
+VOID      (*glTexStorage2D)             ( GLenum, GLsizei, GLenum, GLsizei, GLsizei );
 
 /* Render initialization function.
  * ARGUMENTS: None.
@@ -62,6 +66,10 @@ VOID RndInit( VOID )
   glEnableVertexAttribArray = glXGetProcAddress((const GLubyte *)"glEnableVertexAttribArray");
   glDeleteVertexArrays = glXGetProcAddress((const GLubyte *)"glDeleteVertexArrays");
   glDeleteBuffers = glXGetProcAddress((const GLubyte *)"glDeleteBuffers");
+  glGetShaderiv = glXGetProcAddress((const GLubyte *)"glGetShaderiv");
+  glGetShaderInfoLog = glXGetProcAddress((const GLubyte *)"glGetShaderInfoLog");
+  glGenerateMipmap = glXGetProcAddress((const GLubyte *)"glGenerateMipmap");
+  glTexStorage2D = glXGetProcAddress((const GLubyte *)"glTexStorage2D");
 } /* End of 'RndInit' function */
 
 /* Render close function.
@@ -70,6 +78,7 @@ VOID RndInit( VOID )
  */
 VOID RndClose( VOID )
 {
+
 } /* End of 'RndClose' function */
 
 /* Render start function.
@@ -78,6 +87,7 @@ VOID RndClose( VOID )
  */
 VOID RndStart( VOID )
 {
+
 } /* End of 'RndStart' function */
 
 /* Render stop function.
@@ -86,6 +96,7 @@ VOID RndStart( VOID )
  */
 VOID RndEnd( VOID )
 {
+
 } /* End of 'RndEnd' function */
 
 /* Render copy active frame function.
@@ -96,6 +107,7 @@ VOID RndEnd( VOID )
  */
 VOID RndCopyFrame( Window win )
 {
+
 } /* End of 'RndCopyFrame' function */
 
 /* Reshape handle function
@@ -130,11 +142,11 @@ VOID RndReshape( INT W, INT H )
  * RETURN: None.
  */
 VOID RndCheckEvents( ANIM *Anim )
-{
+{ 
   if (XCheckWindowEvent(Anim->dpy, Anim->win, KeyPressMask, &(Anim->xev)))
-  {
-    char *key_string = XKeysymToString(XkbKeycodeToKeysym(Anim->dpy, Anim->xev.xkey.keycode, 0, 0));
-
+  {  
+    CHAR *key_string = XKeysymToString(XkbKeycodeToKeysym(Anim->dpy, Anim->xev.xkey.keycode, 0, 0));
+ 
     if (!strncmp(key_string, "Esc", 3))
       Anim->Run = 0;
   }

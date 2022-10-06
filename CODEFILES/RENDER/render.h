@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Render system header file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 26.04.2020.
+ * LAST UPDATE : 04.02.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -36,6 +36,10 @@ extern VOID      (*glVertexAttribPointer)      ( GLuint, GLint, GLenum, GLboolea
 extern VOID      (*glEnableVertexAttribArray)  ( GLuint );
 extern VOID      (*glDeleteVertexArrays)       ( GLsizei, const GLuint * );
 extern VOID      (*glDeleteBuffers)            ( GLsizei, const GLuint * );
+extern VOID  	 (*glGetShaderiv)	           ( GLuint, GLenum, GLint * );
+extern VOID 	 (*glGetShaderInfoLog)	       ( GLuint, GLsizei, GLsizei *, GLchar * );
+extern VOID      (*glGenerateMipmap)           ( GLuint );
+extern VOID      (*glTexStorage2D)             ( GLenum, GLsizei, GLenum, GLsizei, GLsizei );
 
 /* Render initialization function.
  * ARGUMENTS: None.
