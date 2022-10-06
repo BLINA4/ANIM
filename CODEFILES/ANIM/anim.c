@@ -125,9 +125,8 @@ VOID AnimRun( VOID )
     for (i = 0; i < Anim.NumOfUnits; i++)
       Anim.Units[i]->Render(Anim.Units[i], &Anim);
     RndEnd();
-
+  
     glXSwapBuffers(Anim.dpy, Anim.win);
-
     glFinish();
   }
 } /* End of 'AnimRun' function */
