@@ -1,12 +1,12 @@
 /***************************************************************
  * Copyleft 2020
- *   Junior C programmer presents (lol)
+ *   C programmer
  ***************************************************************/
 
 /* FILE NAME   : unit.h
  * PURPOSE     : Animation project.
  *               Header for units handling module.
- * PROGRAMMER  : Andrey Shayda.
+ * PROGRAMMER  : BLIN4.
  * LAST UPDATE : 22.03.2020.
  *
  * All parts of this file may be changed without agreement
@@ -18,7 +18,9 @@
 
 #include "../comdef.h"
 
-#define UNIT_BASE_FIELDS                      \ 
+typedef struct tagANIM ANIM;
+
+#define UNIT_BASE_FIELDS                      \
   VOID (*Init)( UNIT *Uni, ANIM *Ani );       \
   VOID (*Close)( UNIT *Uni, ANIM *Ani );      \
   VOID (*Response)( UNIT * Uni, ANIM *Ani );  \

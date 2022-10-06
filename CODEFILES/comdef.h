@@ -1,12 +1,12 @@
 /***************************************************************
  * Copyleft 2020
- *   Junior C programmer presents (lol)
+ *   C programmer
  ***************************************************************/
 
 /* FILE NAME   : comdef.h
  * PURPOSE     : Animation project.
  *               Common defines of project
- * PROGRAMMER  : Andrey Shayda.
+ * PROGRAMMER  : BLIN4.
  * LAST UPDATE : 22.03.2020.
  *
  * All parts of this file may be changed without agreement
@@ -36,6 +36,7 @@ typedef short SHORT;
 typedef unsigned short USHORT;
 typedef long LONG;
 typedef unsigned long ULONG;
+typedef unsigned short BOOL;
 
 #endif /* __comdef_h_ */
 

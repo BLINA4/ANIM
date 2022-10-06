@@ -1,12 +1,12 @@
 /***************************************************************
  * Copyleft 2020
- *   Junior C programmer presents (lol)
+ *   C programmer 
  ***************************************************************/
 
 /* FILE NAME   : anim.h
  * PURPOSE     : Animation project.
  *               Animation system header file.
- * PROGRAMMER  : Andrey Shayda.
+ * PROGRAMMER  : BLIN4.
  * LAST UPDATE : 22.03.2020.
  *
  * All parts of this file may be changed without agreement
@@ -17,18 +17,55 @@
 #define __anim_h_
 
 #include "../comdef.h"
-#include "../UNITS/unit.h"
+#include "./UNITS/unit.h"
+#include "../RENDER/render.h"
 
-#define MAX_UNITS 1024
+#define MAX_UNITS 4096
 
-typedef struct tagANIM
+typedef struct tagANIM ANIM;
+struct tagANIM
 {
+  Window                  root;                                                             /*  Root pointer to window      */
+  XVisualInfo             *vi;                                                              /*  Visual info of XServer      */
+  Colormap                cmap;                                                             /*  Colormap attribute          */
+  XSetWindowAttributes    swa;                                                              /*  Set main window attributes  */
+  Window                  win;                                                              /*  Window code                 */
+  GLXContext              glc;                                                              /*  OpenGL context              */
+  XWindowAttributes       gwa;                                                              /*  Total attributes of window  */
+  XEvent                  xev;                                                              /*  Event structure             */
   Display *dpy;
-  Window win;
-  XWindowAttributes gwa;
   UNIT *Units[MAX_UNITS];
   INT NumOfUnits;
-} ANIM;
+  BOOL Run;
+  DBL SyncTime;
+  GLint                   att[];                                                            /*  Attributes of GL            */
+};
+
+/* Main animation loop function.
+ * ARGUMENTS: None.
+ * RETURNS: None.
+ */
+VOID AnimRun( VOID );
+
+/* Animation closing function.
+ * ARGUMENTS: None.
+ * RETURNS: None.
+ */
+VOID AnimClose( VOID );
+
+/* Animation initialization function.
+ * ARGUMENTS: None.
+ * RETURNS: None.
+ */
+VOID AnimInit( VOID );
+
+/* Unit adding function.
+ * ARGUMENTS:
+ *   - Unit structure pointer:
+ *       UNIT *Unit;
+ * RESPONSE: None.
+ */
+VOID AnimUnitAdd( UNIT *Unit );
 
 #endif /* __anim_h_ */
 
