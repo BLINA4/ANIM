@@ -142,19 +142,46 @@ VOID RndReshape( INT W, INT H )
  * RETURN: None.
  */
 VOID RndCheckEvents( ANIM *Anim )
-{ 
+{
+  XEvent xe;
+  INT count = XPending(Anim->dpy);
+ 
+  while (count)
+  {
+    CHAR *key_string;
+    XNextEvent(Anim->dpy, &xe);
+
+    switch (xe.type)
+    {
+    case KeyPress: 
+      key_string = XKeysymToString(XkbKeycodeToKeysym(Anim->dpy, xe.xkey.keycode, 0, 0));
+      //printf("%s\n", key_string);
+      //printf("Key pressed event!\n");
+      if (!strncmp(key_string, "Esc", 3))
+        Anim->Run = 0;
+      break;
+    
+    case Expose:
+      //printf("Exposed event!\n");
+      XGetWindowAttributes(Anim->dpy, Anim->win, &(Anim->gwa));
+      RndReshape(Anim->gwa.width, Anim->gwa.height);
+      break;
+    
+    default:
+      //printf("Strange event!\n");
+      break;
+    }
+      
+    count--;  
+    count = XPending(Anim->dpy);
+  }
+
   if (XCheckWindowEvent(Anim->dpy, Anim->win, KeyPressMask, &(Anim->xev)))
   {  
     CHAR *key_string = XKeysymToString(XkbKeycodeToKeysym(Anim->dpy, Anim->xev.xkey.keycode, 0, 0));
  
     if (!strncmp(key_string, "Esc", 3))
       Anim->Run = 0;
-  }
-
-  if (XCheckWindowEvent(Anim->dpy, Anim->win, ExposureMask, &(Anim->xev)))
-  {
-    XGetWindowAttributes(Anim->dpy, Anim->win, &(Anim->gwa));
-    RndReshape(Anim->gwa.width, Anim->gwa.height);
   }
 } /* End of 'RndCheckEvents' function */
 

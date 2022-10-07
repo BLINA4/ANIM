@@ -175,6 +175,7 @@ static VOID UnitClose( UNIT_OS *Unit, ANIM *Anim )
 static VOID UnitResponse( UNIT_OS *Unit, ANIM *Anim )
 {
   // Mouse action response
+
 } /* End of 'UnitResponse' function */
  
 /* Unit drawing function.
