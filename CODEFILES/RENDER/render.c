@@ -159,6 +159,8 @@ VOID RndCheckEvents( ANIM *Anim )
       //printf("Key pressed event!\n");
       if (!strncmp(key_string, "Esc", 3))
         Anim->Run = 0;
+      if (!strncmp(key_string, "Tab", 3))
+        Anim->Debug = Anim->Debug ? 1 : 0;
       break;
     
     case Expose:

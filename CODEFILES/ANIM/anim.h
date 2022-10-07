@@ -34,11 +34,12 @@ struct tagANIM
   GLXContext              glc;                                                              /*  OpenGL context              */
   XWindowAttributes       gwa;                                                              /*  Total attributes of window  */
   XEvent                  xev;                                                              /*  Event structure             */
-  Display *dpy;
-  UNIT *Units[MAX_UNITS];
-  INT NumOfUnits;
-  BOOL Run;         
-  DBL SyncTime;
+  Display                 *dpy;
+  UNIT                    *Units[MAX_UNITS];
+  INT                     NumOfUnits;
+  BOOL                    Run;         
+  BOOL                    Debug;    
+  DBL                     SyncTime;
   INT                     NumOfTextures;                                                    /*  Number of loaded textures   */
   GLint                   att[];                                                            /*  Attributes of GL            */ 
 };
