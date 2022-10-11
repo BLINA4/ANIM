@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Render system code file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 05.02.2022.
+ * LAST UPDATE : 11.10.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -87,7 +87,8 @@ VOID RndClose( VOID )
  */
 VOID RndStart( VOID )
 {
-
+  glClearColor(0.3, 0.5, 0.7, 1.0);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
 } /* End of 'RndStart' function */
 
 /* Render stop function.
@@ -96,7 +97,8 @@ VOID RndStart( VOID )
  */
 VOID RndEnd( VOID )
 {
-
+  glXSwapBuffers(Anim.dpy, Anim.win);
+  glFinish();
 } /* End of 'RndEnd' function */
 
 /* Render copy active frame function.
@@ -173,8 +175,7 @@ VOID RndCheckEvents( ANIM *Anim )
       //printf("Strange event!\n");
       break;
     }
-      
-    count--;  
+        
     count = XPending(Anim->dpy);
   }
 

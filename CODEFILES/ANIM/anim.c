@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Animation system implementation file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 07.03.2021.
+ * LAST UPDATE : 11.10.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -115,19 +115,13 @@ VOID AnimRun( VOID )
   {
     RndCheckEvents(&Anim);
     RndTimer(&Anim);
-
-    glClearColor(0.3, 0.5, 0.7, 1.0);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
-  
+ 
     for (i = 0; i < Anim.NumOfUnits; i++)
       Anim.Units[i]->Response(Anim.Units[i], &Anim);
     RndStart();
     for (i = 0; i < Anim.NumOfUnits; i++)
       Anim.Units[i]->Render(Anim.Units[i], &Anim);
     RndEnd();
-  
-    glXSwapBuffers(Anim.dpy, Anim.win);
-    glFinish();
   }
 } /* End of 'AnimRun' function */
 
