@@ -31,6 +31,7 @@ typedef enum mouse_state
 typedef enum key
 {
   A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z,
+  ESCAPE,
   TAB,
   SPACE,
   LCTRL,
@@ -42,7 +43,9 @@ typedef enum key
   RSHIFT,
   ENTER,
   BACKSPACE,
-  SUPER
+  SUPER,
+
+  NUM_OF_KEYS
 } KEY;
 
 typedef struct tagCONTROLLER CONTROLLER;
@@ -64,6 +67,34 @@ struct tagCONTROLLER
  *       (CONTROLLER *)
  */
 CONTROLLER * ControllerInit( VOID );
+
+/* Pressed key controller handle function.
+ * ARGUMENTS:
+ *   - controller structure pointer:
+ *       CONTROLLER *cnt
+ *   - string of pressed key:
+ *       CHAR *key_str
+ * RETURNS: None.
+ */
+VOID ControllerKeyPress( CONTROLLER *cnt, CHAR *key_str );
+
+/* Released key controller handle function.
+ * ARGUMENTS:
+ *   - controller structure pointer:
+ *       CONTROLLER *cnt
+ *   - string of released key:
+ *       CHAR *key_str
+ * RETURNS: None.
+ */
+VOID ControllerKeyRelease( CONTROLLER *cnt, CHAR *key_str );
+
+/* Cleaning up all keys state function.
+ * ARGUMENTS:
+ *   - controller structure pointer:
+ *       CONTROLLER *cnt
+ * RETURNS: None.
+ */
+VOID ControllerCleanup( CONTROLLER *cnt );
 
 /* Controller deinitialization function.
  * ARGUMENTS: 

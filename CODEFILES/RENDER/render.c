@@ -15,7 +15,6 @@
  
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <time.h>
 
 #include "../comdef.h"
@@ -147,9 +146,11 @@ VOID RndCheckEvents( ANIM *Anim )
 {
   XEvent xe;
   INT count = XPending(Anim->dpy);
- 
+
+  ControllerCleanup(Anim->Controller);
   while (count)
   {
+    //printf("Count is %i!\n");
     CHAR *key_string;
     XNextEvent(Anim->dpy, &xe);
 
@@ -157,14 +158,16 @@ VOID RndCheckEvents( ANIM *Anim )
     {
     case KeyPress: 
       key_string = XKeysymToString(XkbKeycodeToKeysym(Anim->dpy, xe.xkey.keycode, 0, 0));
-      //printf("%s\n", key_string);
-      //printf("Key pressed event!\n");
-      if (!strncmp(key_string, "Esc", 3))
-        Anim->Run = 0;
-      if (!strncmp(key_string, "Tab", 3))
-        Anim->Debug = Anim->Debug ? 1 : 0;
+      //printf("=== PRESSED: %s ===\n", key_string);
+      ControllerKeyPress(Anim->Controller, key_string);
       break;
     
+    case KeyRelease:
+      key_string = XKeysymToString(XkbKeycodeToKeysym(Anim->dpy, xe.xkey.keycode, 0, 0));
+      //printf("=== RELEASED: %s ===\n", key_string); 
+      ControllerKeyRelease(Anim->Controller, key_string);
+      break;
+
     case Expose:
       //printf("Exposed event!\n");
       XGetWindowAttributes(Anim->dpy, Anim->win, &(Anim->gwa));
@@ -177,14 +180,6 @@ VOID RndCheckEvents( ANIM *Anim )
     }
         
     count = XPending(Anim->dpy);
-  }
-
-  if (XCheckWindowEvent(Anim->dpy, Anim->win, KeyPressMask, &(Anim->xev)))
-  {  
-    CHAR *key_string = XKeysymToString(XkbKeycodeToKeysym(Anim->dpy, Anim->xev.xkey.keycode, 0, 0));
- 
-    if (!strncmp(key_string, "Esc", 3))
-      Anim->Run = 0;
   }
 } /* End of 'RndCheckEvents' function */
 

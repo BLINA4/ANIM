@@ -61,7 +61,7 @@ VOID AnimInit( VOID )
 
   /* Set window attributes */
   Anim.swa.colormap = Anim.cmap;
-  Anim.swa.event_mask = ExposureMask | KeyPressMask;
+  Anim.swa.event_mask = ExposureMask | KeyPressMask | KeyReleaseMask;
 
   /* Create window */
   /* The arguments are : 
@@ -100,8 +100,8 @@ VOID AnimInit( VOID )
   glXMakeCurrent(Anim.dpy, Anim.win, Anim.glc);
   
   Anim.Controller = ControllerInit();
-  Anim.Debug = 0;
-  Anim.Run = 1;
+  Anim.Debug = FALSE;
+  Anim.Run = TRUE;
   RndInit();
 } /* End of 'AnimInit' function */
 
@@ -117,7 +117,12 @@ VOID AnimRun( VOID )
   {
     RndCheckEvents(&Anim);
     RndTimer(&Anim);
- 
+
+    if (Anim.Controller->keys[ESCAPE] == TRUE)
+      Anim.Run = FALSE;  
+    if (Anim.Controller->keys[TAB] == TRUE)
+      Anim.Debug = !Anim.Debug;
+
     for (i = 0; i < Anim.NumOfUnits; i++)
       Anim.Units[i]->Response(Anim.Units[i], &Anim);
     RndStart();

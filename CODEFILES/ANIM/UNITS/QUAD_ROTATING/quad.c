@@ -18,6 +18,7 @@
 #ifndef __quad_c_
 #define __quad_c_
 
+#include <stdio.h>
 #include "../unit.h"
 #include "../../anim.h"
 
@@ -79,7 +80,10 @@ static VOID UnitResponse( UNIT_QUAD *Unit, ANIM *Anim )
  * RETURNS: None.
  */
 static VOID UnitRender( UNIT_QUAD *Unit, ANIM *Anim )
-{ 
+{
+  if (Anim->Debug)
+    printf("=== DEBUG === Rendering of QUAD unit ===\n");  
+
   glPushMatrix();
   glColor3d(1, 0, 0);  
   glRotated(Unit->Angle, 0, 0, 1); 
