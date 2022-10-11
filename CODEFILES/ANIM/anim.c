@@ -98,7 +98,9 @@ VOID AnimInit( VOID )
   /* Create & Bind GL context to the window */
   Anim.glc = glXCreateContext(Anim.dpy, Anim.vi, NULL, GL_TRUE);
   glXMakeCurrent(Anim.dpy, Anim.win, Anim.glc);
-
+  
+  Anim.Controller = ControllerInit();
+  Anim.Debug = 0;
   Anim.Run = 1;
   RndInit();
 } /* End of 'AnimInit' function */
