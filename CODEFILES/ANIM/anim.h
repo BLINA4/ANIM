@@ -27,19 +27,15 @@
 typedef struct tagANIM ANIM;
 struct tagANIM
 {
-  Window                  root;                                                             /*  Root pointer to window      */
-  XVisualInfo             *vi;                                                              /*  Visual info of XServer      */
-  Colormap                cmap;                                                             /*  Colormap attribute          */
-  XSetWindowAttributes    swa;                                                              /*  Set main window attributes  */
-  Window                  win;                                                              /*  Window code                 */
   GLXContext              glc;                                                              /*  OpenGL context              */
-  XWindowAttributes       gwa;                                                              /*  Total attributes of window  */
-  XEvent                  xev;                                                              /*  Event structure             */
+  SDL_Surface             *scr;                                                             /*  SDL screen surface pointer  */
+  SDL_Window              *win;                                                             /*  SDL window pointer          */
   Display                 *dpy;                                                             /*  Display pointer             */
   UNIT                    *Units[MAX_UNITS];                                                /*  Array of units              */
   INT                     NumOfUnits;                                                       /*  Number of loaded units      */
   BOOL                    Run;                                                              /*  Is programm still running   */
-  BOOL                    Debug;                                                            /*  Is programm in debug mode   */    
+  BOOL                    Debug;                                                            /*  Is programm in debug mode   */
+  DBL                     StartTime;                                                        /*  Time of startup             */
   DBL                     SyncTime;                                                         /*  Synchronization time        */
   INT                     NumOfTextures;                                                    /*  Number of loaded textures   */
   CONTROLLER              *Controller;                                                      /*  Module controller           */

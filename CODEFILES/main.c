@@ -13,14 +13,6 @@
  *   of programmer if you give credits to author.
  */
  
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <sys/time.h>
-#include <unistd.h>
-#include <math.h>
-#include <string.h>
-
 #include "comdef.h"
 #include "ANIM/UNITS/unit.h"
 #include "ANIM/anim.h"
@@ -29,7 +21,7 @@
  * ARGUMENTS: None.
  * RETURNS: None.
  */
-VOID main( VOID )
+INT main( VOID )
 {
   AnimInit();
   
@@ -38,6 +30,8 @@ VOID main( VOID )
   
   AnimRun();
   AnimClose();
+
+  return 0;
 } /* End of 'main' function */
 
 /* END OF 'main.c' FILE */

@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Render system code file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 11.10.2022.
+ * LAST UPDATE : 12.10.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -96,7 +96,6 @@ VOID RndStart( VOID )
  */
 VOID RndEnd( VOID )
 {
-  glXSwapBuffers(Anim.dpy, Anim.win);
   glFinish();
 } /* End of 'RndEnd' function */
 
@@ -144,7 +143,7 @@ VOID RndReshape( INT W, INT H )
  */
 VOID RndCheckEvents( ANIM *Anim )
 {
-  XEvent xe;
+  /*XEvent xe;
   INT count = XPending(Anim->dpy);
 
   ControllerCleanup(Anim->Controller);
@@ -180,7 +179,7 @@ VOID RndCheckEvents( ANIM *Anim )
     }
         
     count = XPending(Anim->dpy);
-  }
+  }*/
 } /* End of 'RndCheckEvents' function */
 
 /* Timer dummy function (refactor later)
@@ -191,7 +190,7 @@ VOID RndCheckEvents( ANIM *Anim )
  */
 VOID RndTimer( ANIM *Anim )
 {
-  Anim->SyncTime = (DBL)clock() / CLOCKS_PER_SEC;
+  Anim->SyncTime = (DBL)clock() / CLOCKS_PER_SEC - Anim->StartTime;
 } /* End of 'RndTimer' function */
 
 /* END OF 'anim.h' FILE */

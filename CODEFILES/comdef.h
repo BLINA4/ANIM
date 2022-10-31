@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Common defines of project
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 22.03.2020.
+ * LAST UPDATE : 12.10.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -17,9 +17,7 @@
 #define __comdef_h_
 
 /* main project headers */
-#include <X11/X.h>
-#include <X11/Xlib.h>
-#include <X11/XKBlib.h>
+#include <SDL2/SDL.h>
 #include <GL/gl.h>
 #include <GL/glx.h>
 #include <GL/glu.h>

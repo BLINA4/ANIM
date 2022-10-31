@@ -57,7 +57,10 @@ struct tagCONTROLLER
   MOUSE_STATE state;        /* State of the mouse              */
 
   /* Keyboard parameters */
-  BOOL *keys;                /* Array of all keys states        */
+  BOOL *keys, 
+       *keys_prev,
+       *keys_hold;          /* Array of all keys states        */
+  DBL TimeOfLastCleanup;    /* Time of the last done cleanup   */
 };
 
 /* Controller initialization function.

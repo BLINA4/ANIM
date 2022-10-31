@@ -88,6 +88,8 @@ UNIT * AnimUnitCreate( INT Size )
   Unit->Close = UnitClose;
   Unit->Response = UnitResponse;
   Unit->Render = UnitRender;
+
+  return Unit;
 } /* End of 'AnimUnitCreate' function */
 
 /* END OF 'unit.c' FILE */
