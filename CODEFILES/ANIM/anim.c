@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Animation system implementation file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 11.10.2022.
+ * LAST UPDATE : 31.10.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -36,9 +36,9 @@ VOID AnimInit( VOID )
   if ((Anim.win = SDL_CreateWindow("Hello, SDL 2!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_SHOWN)) == NULL)
     return;
 
+  Anim.rndflgs = SDL_RENDERER_ACCELERATED;
+  Anim.rnd = SDL_CreateRenderer(Anim.win, -1, Anim.rndflgs);
   Anim.scr = SDL_GetWindowSurface(Anim.win);
-  SDL_FillRect(Anim.scr, NULL, SDL_MapRGB(Anim.scr->format, 0, 255, 0));
-  SDL_UpdateWindowSurface(Anim.win);
 
   Anim.Controller = ControllerInit();
   Anim.Debug = FALSE;

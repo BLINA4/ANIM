@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Render system code file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 12.10.2022.
+ * LAST UPDATE : 31.10.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -143,43 +143,31 @@ VOID RndReshape( INT W, INT H )
  */
 VOID RndCheckEvents( ANIM *Anim )
 {
-  /*XEvent xe;
-  INT count = XPending(Anim->dpy);
-
-  ControllerCleanup(Anim->Controller);
-  while (count)
+  while (SDL_PollEvent(&Anim->evt) != 0)
   {
-    //printf("Count is %i!\n");
-    CHAR *key_string;
-    XNextEvent(Anim->dpy, &xe);
+    if (Anim->evt.type == SDL_QUIT)
+      Anim->Run = 0;
 
-    switch (xe.type)
+    if (Anim->evt.type == SDL_KEYDOWN)
     {
-    case KeyPress: 
-      key_string = XKeysymToString(XkbKeycodeToKeysym(Anim->dpy, xe.xkey.keycode, 0, 0));
-      //printf("=== PRESSED: %s ===\n", key_string);
-      ControllerKeyPress(Anim->Controller, key_string);
-      break;
-    
-    case KeyRelease:
-      key_string = XKeysymToString(XkbKeycodeToKeysym(Anim->dpy, xe.xkey.keycode, 0, 0));
-      //printf("=== RELEASED: %s ===\n", key_string); 
-      ControllerKeyRelease(Anim->Controller, key_string);
-      break;
-
-    case Expose:
-      //printf("Exposed event!\n");
-      XGetWindowAttributes(Anim->dpy, Anim->win, &(Anim->gwa));
-      RndReshape(Anim->gwa.width, Anim->gwa.height);
-      break;
-    
-    default:
-      //printf("Strange event!\n");
-      break;
+      switch (Anim->evt.key.keysym.sym)
+      {
+      case SDLK_ESCAPE:
+        Anim->Run = 0;
+        break;
+      case SDLK_UP:
+        break;
+      case SDLK_DOWN:
+        break;
+      case SDLK_RIGHT:
+        break;
+      case SDLK_LEFT:
+        break;
+      default:
+        break;
+      }
     }
-        
-    count = XPending(Anim->dpy);
-  }*/
+  }
 } /* End of 'RndCheckEvents' function */
 
 /* Timer dummy function (refactor later)
