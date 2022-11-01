@@ -96,6 +96,7 @@ VOID RndStart( VOID )
  */
 VOID RndEnd( VOID )
 {
+  SDL_GL_SwapWindow(Anim.win);
   glFinish();
 } /* End of 'RndEnd' function */
 
@@ -146,14 +147,14 @@ VOID RndCheckEvents( ANIM *Anim )
   while (SDL_PollEvent(&Anim->evt) != 0)
   {
     if (Anim->evt.type == SDL_QUIT)
-      Anim->Run = 0;
+      Anim->Run = FALSE;
 
     if (Anim->evt.type == SDL_KEYDOWN)
     {
       switch (Anim->evt.key.keysym.sym)
       {
       case SDLK_ESCAPE:
-        Anim->Run = 0;
+        Anim->Controller->keys[ESCAPE] = TRUE;
         break;
       case SDLK_UP:
         break;
