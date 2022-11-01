@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Render system code file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 31.10.2022.
+ * LAST UPDATE : 01.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -146,28 +146,23 @@ VOID RndCheckEvents( ANIM *Anim )
 {
   while (SDL_PollEvent(&Anim->evt) != 0)
   {
+    if (Anim->evt.type == SDL_WINDOWEVENT)
+    {
+      INT W, H;
+
+      SDL_GetWindowSize(Anim->win, &W, &H);
+
+      RndReshape(W, H);
+    }
+
     if (Anim->evt.type == SDL_QUIT)
       Anim->Run = FALSE;
 
     if (Anim->evt.type == SDL_KEYDOWN)
-    {
-      switch (Anim->evt.key.keysym.sym)
-      {
-      case SDLK_ESCAPE:
-        Anim->Controller->keys[ESCAPE] = TRUE;
-        break;
-      case SDLK_UP:
-        break;
-      case SDLK_DOWN:
-        break;
-      case SDLK_RIGHT:
-        break;
-      case SDLK_LEFT:
-        break;
-      default:
-        break;
-      }
-    }
+      ControllerKeyPress(Anim->Controller, Anim->evt.key.keysym.sym);
+  
+    if (Anim->evt.type == SDL_KEYUP)
+      ControllerKeyRelease(Anim->Controller, Anim->evt.key.keysym.sym);
   }
 } /* End of 'RndCheckEvents' function */
 

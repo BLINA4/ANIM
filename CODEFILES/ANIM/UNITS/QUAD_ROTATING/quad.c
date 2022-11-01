@@ -81,10 +81,8 @@ static VOID UnitResponse( UNIT_QUAD *Unit, ANIM *Anim )
  */
 static VOID UnitRender( UNIT_QUAD *Unit, ANIM *Anim )
 {
-  /*
-   * if (Anim->Debug)
-   *   printf("=== DEBUG === Rendering of QUAD unit ===\n");  
-   */
+  if (Anim->Debug)
+    printf("=== DEBUG === Rendering of QUAD unit ===\n");  
 
   glPushMatrix();
   glColor3d(1, 0, 0);  

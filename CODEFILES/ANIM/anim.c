@@ -83,7 +83,6 @@ VOID AnimClose( VOID )
 
   RndClose();
   ControllerDestroy(Anim.Controller); 
-
   SDL_DestroyWindow(Anim.win);
   SDL_Quit();
 } /* End of 'AnimClose' function */

@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Controller subsystem header.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 11.10.2022.
+ * LAST UPDATE : 02.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -57,8 +57,7 @@ struct tagCONTROLLER
   MOUSE_STATE state;        /* State of the mouse              */
 
   /* Keyboard parameters */
-  BOOL *keys, 
-       *keys_prev,
+  BOOL *keys,
        *keys_hold;          /* Array of all keys states        */
   DBL TimeOfLastCleanup;    /* Time of the last done cleanup   */
 };
@@ -75,21 +74,21 @@ CONTROLLER * ControllerInit( VOID );
  * ARGUMENTS:
  *   - controller structure pointer:
  *       CONTROLLER *cnt
- *   - string of pressed key:
- *       CHAR *key_str
+ *   - pressed key mask:
+ *       SDL_Keycode key
  * RETURNS: None.
  */
-VOID ControllerKeyPress( CONTROLLER *cnt, CHAR *key_str );
+VOID ControllerKeyPress( CONTROLLER *cnt, SDL_Keycode key );
 
 /* Released key controller handle function.
  * ARGUMENTS:
  *   - controller structure pointer:
  *       CONTROLLER *cnt
- *   - string of released key:
- *       CHAR *key_str
+ *   - released key mask:
+ *       SDL_Keycode key
  * RETURNS: None.
  */
-VOID ControllerKeyRelease( CONTROLLER *cnt, CHAR *key_str );
+VOID ControllerKeyRelease( CONTROLLER *cnt, SDL_Keycode key );
 
 /* Cleaning up all keys state function.
  * ARGUMENTS:
