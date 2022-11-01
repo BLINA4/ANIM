@@ -67,6 +67,8 @@ VOID AnimRun( VOID )
     for (i = 0; i < Anim.NumOfUnits; i++)
       Anim.Units[i]->Render(Anim.Units[i], &Anim);
     RndEnd();
+
+    ControllerCleanup(Anim.Controller);
   }
 } /* End of 'AnimRun' function */
 

@@ -29,31 +29,6 @@ typedef struct
   UNIT_BASE_FIELDS;
 } UNIT_OS;
 
-/* Source code of example vertex shader */
-const char *vertexShaderSource =   "#version 330 core\n"
-                                   "layout (location = 0) in vec3 aPos;\n"
-                                   "layout (location = 1) in vec3 aColor;\n"
-                                   "layout (location = 2) in vec2 aTexCoord;\n"
-                                   "out vec3 ourColor;\n"
-                                   "out vec2 texCoord;\n"
-                                   "void main()\n"
-                                   "{\n"
-                                   "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-                                   "   ourColor = aColor;\n"
-                                   "   texCoord = aTexCoord;\n"
-                                   "}\0";
-
-/* Source code of example fragment shader */
-const char *fragmentShaderSource = "#version 330 core\n"
-                                   "out vec4 FragColor;\n"
-                                   "in vec3 ourColor;\n"
-                                   "in vec2 texCoord;\n"
-                                   "uniform sampler2D ourTexture;\n"
-                                   "void main()\n"
-                                   "{\n"
-                                   "   FragColor = texture(ourTexture, texCoord);\n" //" * vec4(ourColor, 1.0f);\n"
-                                   "}\n\0";
-
 /* Some OpenGL variables */
 INT vertexShader, fragmentShader, shaderProgram;
 UINT VBO, VAO, EBO;
@@ -69,38 +44,44 @@ TEXTURE *texture;
  */
 static VOID UnitInit( UNIT_OS *Unit, ANIM *Anim )
 {
-  INT success;
-  CHAR infoLog[512];
+  //INT success;
+  //CHAR infoLog[512];
 
-  vertexShader = glCreateShader(GL_VERTEX_SHADER);
-  glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-  glCompileShader(vertexShader);
+  /*
+   * vertexShader = glCreateShader(GL_VERTEX_SHADER);
+   * glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+   * glCompileShader(vertexShader);
+   *
+   * glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+   * if (!success)
+   * {
+   *   glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+   *   printf("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n%s\n", infoLog);
+   * }
+   */
 
-  glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-  if (!success)
-  {
-    glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-    printf("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n%s\n", infoLog);
-  }
+  /*
+   * fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+   * glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
+   * glCompileShader(fragmentShader);
+   *
+   * glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+   * if (!success)
+   * {
+   *   glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
+   *   printf("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n%s\n", infoLog); 
+   * }
+   */
 
-  fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-  glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-  glCompileShader(fragmentShader);
-
-  glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-  if (!success)
-  {
-    glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-    printf("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n%s\n", infoLog); 
-  }
-
-  shaderProgram = glCreateProgram();
-  glAttachShader(shaderProgram, vertexShader);
-  glAttachShader(shaderProgram, fragmentShader);
-  glLinkProgram(shaderProgram);
-
-  glDeleteShader(vertexShader);
-  glDeleteShader(fragmentShader);
+  /*
+   * shaderProgram = glCreateProgram();
+   * glAttachShader(shaderProgram, vertexShader);
+   * glAttachShader(shaderProgram, fragmentShader);
+   * glLinkProgram(shaderProgram);
+   *
+   * glDeleteShader(vertexShader);
+   * glDeleteShader(fragmentShader);
+   */
 
   FLT vertices[] = 
   {
