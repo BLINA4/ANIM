@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Render system header file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 04.02.2022.
+ * LAST UPDATE : 04.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -18,6 +18,7 @@
 
 #include "../comdef.h"
 #include "../ANIM/anim.h"
+#include "SHADERS/shader.h"
 
 extern GLuint    (*glCreateShader)             ( GLenum );
 extern VOID      (*glShaderSource)             ( GLuint, GLsizei, const GLchar **, const GLint * );
@@ -27,7 +28,9 @@ extern GLuint    (*glCreateProgram)            ( VOID );
 extern VOID      (*glLinkProgram)              ( GLuint );
 extern VOID      (*glAttachShader)             ( GLuint, GLuint );
 extern VOID      (*glBindVertexArray)          ( GLuint );
+extern VOID      (*glDetachShader)             ( GLuint, GLuint );
 extern VOID      (*glDeleteShader)             ( GLuint );
+extern VOID      (*glDeleteProgram)            ( GLuint );
 extern VOID      (*glGenVertexArrays)          ( GLsizei, GLuint * );
 extern VOID      (*glGenBuffers)               ( GLsizei, GLuint * );
 extern VOID      (*glBindBuffer)               ( GLenum, GLuint );
@@ -37,7 +40,9 @@ extern VOID      (*glEnableVertexAttribArray)  ( GLuint );
 extern VOID      (*glDeleteVertexArrays)       ( GLsizei, const GLuint * );
 extern VOID      (*glDeleteBuffers)            ( GLsizei, const GLuint * );
 extern VOID  	 (*glGetShaderiv)	           ( GLuint, GLenum, GLint * );
+extern VOID      (*glGetProgramiv)             ( GLuint, GLenum, GLint * );
 extern VOID 	 (*glGetShaderInfoLog)	       ( GLuint, GLsizei, GLsizei *, GLchar * );
+extern VOID      (*glGetProgramInfoLog)        ( GLuint, GLsizei, GLsizei *, GLchar * );
 extern VOID      (*glGenerateMipmap)           ( GLuint );
 extern VOID      (*glTexStorage2D)             ( GLenum, GLsizei, GLenum, GLsizei, GLsizei );
 

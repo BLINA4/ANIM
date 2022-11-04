@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Operating system unit file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 08.02.2022.
+ * LAST UPDATE : 02.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -27,6 +27,7 @@
 typedef struct
 {
   UNIT_BASE_FIELDS;
+  SHADER shdPrg;
 } UNIT_OS;
 
 /* Some OpenGL variables */
@@ -44,44 +45,11 @@ TEXTURE *texture;
  */
 static VOID UnitInit( UNIT_OS *Unit, ANIM *Anim )
 {
-  //INT success;
-  //CHAR infoLog[512];
-
-  /*
-   * vertexShader = glCreateShader(GL_VERTEX_SHADER);
-   * glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-   * glCompileShader(vertexShader);
-   *
-   * glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-   * if (!success)
-   * {
-   *   glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-   *   printf("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n%s\n", infoLog);
-   * }
-   */
-
-  /*
-   * fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-   * glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-   * glCompileShader(fragmentShader);
-   *
-   * glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-   * if (!success)
-   * {
-   *   glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-   *   printf("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n%s\n", infoLog); 
-   * }
-   */
-
-  /*
-   * shaderProgram = glCreateProgram();
-   * glAttachShader(shaderProgram, vertexShader);
-   * glAttachShader(shaderProgram, fragmentShader);
-   * glLinkProgram(shaderProgram);
-   *
-   * glDeleteShader(vertexShader);
-   * glDeleteShader(fragmentShader);
-   */
+  sprintf(Unit->shdPrg.Name, "OS_SHADERS");
+  Unit->shdPrg.PrgNo = ShaderLoad(Unit->shdPrg.Name); 
+  
+  printf("%i\n", Unit->shdPrg.PrgNo);
+  glUseProgram(Unit->shdPrg.PrgNo);
 
   FLT vertices[] = 
   {
@@ -125,6 +93,7 @@ static VOID UnitInit( UNIT_OS *Unit, ANIM *Anim )
   glBindBuffer(GL_ARRAY_BUFFER, 0);
   glBindVertexArray(0);
 
+  glUseProgram(0);
   // Enable this line for LINE mode
   // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 } /* End of 'UnitInit' function */
@@ -169,7 +138,7 @@ static VOID UnitResponse( UNIT_OS *Unit, ANIM *Anim )
  */
 static VOID UnitRender( UNIT_OS *Unit, ANIM *Anim )
 { 
-  glUseProgram(shaderProgram);
+  glUseProgram(Unit->shdPrg.PrgNo);
   glBindVertexArray(VAO);
   glDrawArrays(GL_TRIANGLES, 0, 3);
 
@@ -177,6 +146,8 @@ static VOID UnitRender( UNIT_OS *Unit, ANIM *Anim )
   glBindVertexArray(VAO);
 
   glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+  
+  glUseProgram(0);
 } /* End of 'UnitRender' function */
 
 /* Unit creation function.

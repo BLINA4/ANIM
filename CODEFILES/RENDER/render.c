@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Render system code file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 01.11.2022.
+ * LAST UPDATE : 04.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -28,7 +28,9 @@ GLuint    (*glCreateProgram)            ( VOID );
 VOID      (*glLinkProgram)              ( GLuint );
 VOID      (*glAttachShader)             ( GLuint, GLuint );
 VOID      (*glBindVertexArray)          ( GLuint );
+VOID      (*glDetachShader)             ( GLuint, GLuint );
 VOID      (*glDeleteShader)             ( GLuint );
+VOID      (*glDeleteProgram)            ( GLuint );
 VOID      (*glGenVertexArrays)          ( GLsizei, GLuint * );
 VOID      (*glGenBuffers)               ( GLsizei, GLuint * );
 VOID      (*glBindBuffer)               ( GLenum, GLuint );
@@ -38,7 +40,9 @@ VOID      (*glEnableVertexAttribArray)  ( GLuint );
 VOID      (*glDeleteVertexArrays)       ( GLsizei, const GLuint * );
 VOID      (*glDeleteBuffers)            ( GLsizei, const GLuint * );
 VOID      (*glGetShaderiv)		        ( GLuint, GLenum, GLint * );
+VOID      (*glGetProgramiv)             ( GLuint, GLenum, GLint * );
 VOID 	  (*glGetShaderInfoLog)		    ( GLuint, GLsizei, GLsizei *, GLchar * );
+VOID      (*glGetProgramInfoLog)        ( GLuint, GLsizei, GLsizei *, GLchar * );
 VOID      (*glGenerateMipmap)           ( GLenum );
 VOID      (*glTexStorage2D)             ( GLenum, GLsizei, GLenum, GLsizei, GLsizei );
 
@@ -56,7 +60,9 @@ VOID RndInit( VOID )
   glLinkProgram = glXGetProcAddress((const GLubyte *)"glLinkProgram");
   glAttachShader = glXGetProcAddress((const GLubyte *)"glAttachShader");
   glBindVertexArray = glXGetProcAddress((const GLubyte *)"glBindVertexArray");
+  glDetachShader = glXGetProcAddress((const GLubyte *)"glDetachShader");
   glDeleteShader = glXGetProcAddress((const GLubyte *)"glDeleteShader");
+  glDeleteProgram = glXGetProcAddress((const GLubyte *)"glDeleteProgram");
   glGenVertexArrays = glXGetProcAddress((const GLubyte *)"glGenVertexArrays");
   glGenBuffers = glXGetProcAddress((const GLubyte *)"glGenBuffers");
   glBindBuffer = glXGetProcAddress((const GLubyte *)"glBindBuffer");
@@ -66,7 +72,9 @@ VOID RndInit( VOID )
   glDeleteVertexArrays = glXGetProcAddress((const GLubyte *)"glDeleteVertexArrays");
   glDeleteBuffers = glXGetProcAddress((const GLubyte *)"glDeleteBuffers");
   glGetShaderiv = glXGetProcAddress((const GLubyte *)"glGetShaderiv");
+  glGetProgramiv = glXGetProcAddress((const GLubyte *)"glGetProgramiv");
   glGetShaderInfoLog = glXGetProcAddress((const GLubyte *)"glGetShaderInfoLog");
+  glGetProgramInfoLog = glXGetProcAddress((const GLubyte *)"glGetProgramInfoLog");
   glGenerateMipmap = glXGetProcAddress((const GLubyte *)"glGenerateMipmap");
   glTexStorage2D = glXGetProcAddress((const GLubyte *)"glTexStorage2D");
 } /* End of 'RndInit' function */
