@@ -45,6 +45,9 @@ extern VOID 	 (*glGetShaderInfoLog)	       ( GLuint, GLsizei, GLsizei *, GLchar 
 extern VOID      (*glGetProgramInfoLog)        ( GLuint, GLsizei, GLsizei *, GLchar * );
 extern VOID      (*glGenerateMipmap)           ( GLuint );
 extern VOID      (*glTexStorage2D)             ( GLenum, GLsizei, GLenum, GLsizei, GLsizei );
+extern GLint     (*glGetUniformLocation)       ( GLuint, const GLchar * );
+extern VOID      (*glUniform3f)                ( GLint, GLfloat, GLfloat, GLfloat );
+
 
 /* Render initialization function.
  * ARGUMENTS: None.

@@ -45,6 +45,8 @@ VOID 	  (*glGetShaderInfoLog)		    ( GLuint, GLsizei, GLsizei *, GLchar * );
 VOID      (*glGetProgramInfoLog)        ( GLuint, GLsizei, GLsizei *, GLchar * );
 VOID      (*glGenerateMipmap)           ( GLenum );
 VOID      (*glTexStorage2D)             ( GLenum, GLsizei, GLenum, GLsizei, GLsizei );
+GLint     (*glGetUniformLocation)       ( GLuint, const GLchar * );
+VOID      (*glUniform3f)                ( GLint, GLfloat, GLfloat, GLfloat ); 
 
 /* Render initialization function.
  * ARGUMENTS: None.
@@ -77,6 +79,8 @@ VOID RndInit( VOID )
   glGetProgramInfoLog = glXGetProcAddress((const GLubyte *)"glGetProgramInfoLog");
   glGenerateMipmap = glXGetProcAddress((const GLubyte *)"glGenerateMipmap");
   glTexStorage2D = glXGetProcAddress((const GLubyte *)"glTexStorage2D");
+  glGetUniformLocation = glXGetProcAddress((const GLubyte *)"glGetUniformLocation"); 
+  glUniform3f = glXGetProcAddress((const GLubyte *)"glUniform3f");
 } /* End of 'RndInit' function */
 
 /* Render close function.

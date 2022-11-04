@@ -138,7 +138,17 @@ static VOID UnitResponse( UNIT_OS *Unit, ANIM *Anim )
  */
 static VOID UnitRender( UNIT_OS *Unit, ANIM *Anim )
 { 
+  INT vertexColorLocation;
+ 
   glUseProgram(Unit->shdPrg.PrgNo);
+
+  vertexColorLocation = glGetUniformLocation(Unit->shdPrg.PrgNo, "sinColor");
+  glUniform3f(
+     vertexColorLocation,
+     0.7f * cos(Anim->SyncTime * 1.2f) + 0.3f,
+     0.5f * sin(Anim->SyncTime + cos(2.3 * Anim->SyncTime)),
+     0.63f * sin(cos(Anim->SyncTime * 2.82) + 33) + 0.37f);
+
   glBindVertexArray(VAO);
   glDrawArrays(GL_TRIANGLES, 0, 3);
 
