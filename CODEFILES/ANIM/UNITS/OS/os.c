@@ -31,7 +31,6 @@ typedef struct
 } UNIT_OS;
 
 /* Some OpenGL variables */
-INT vertexShader, fragmentShader, shaderProgram;
 UINT VBO, VAO, EBO;
 TEXTURE *texture;
 
