@@ -17,6 +17,10 @@
 #define __anim_h_
 
 #include "../comdef.h"
+#include "../MATH/mth.h"
+#include "../MATH/vec.h"
+#include "../MATH/cam.h"
+#include "../MATH/matr.h"
 #include "./UNITS/unit.h"
 #include "../RENDER/render.h"
 #include "./TEXTURES/textures.h"

@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Render system code file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 04.11.2022.
+ * LAST UPDATE : 06.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -47,6 +47,7 @@ VOID      (*glGenerateMipmap)           ( GLenum );
 VOID      (*glTexStorage2D)             ( GLenum, GLsizei, GLenum, GLsizei, GLsizei );
 GLint     (*glGetUniformLocation)       ( GLuint, const GLchar * );
 VOID      (*glUniform3f)                ( GLint, GLfloat, GLfloat, GLfloat ); 
+VOID      (*glUniformMatrix4fv)         ( GLint, GLsizei, GLboolean, const GLfloat * );
 
 /* Render initialization function.
  * ARGUMENTS: None.
@@ -81,6 +82,7 @@ VOID RndInit( VOID )
   glTexStorage2D = glXGetProcAddress((const GLubyte *)"glTexStorage2D");
   glGetUniformLocation = glXGetProcAddress((const GLubyte *)"glGetUniformLocation"); 
   glUniform3f = glXGetProcAddress((const GLubyte *)"glUniform3f");
+  glUniformMatrix4fv = glXGetProcAddress((const GLubyte *)"glUniformMatrix4fv");
 } /* End of 'RndInit' function */
 
 /* Render close function.

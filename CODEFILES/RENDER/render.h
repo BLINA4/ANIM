@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Render system header file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 04.11.2022.
+ * LAST UPDATE : 06.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -47,7 +47,7 @@ extern VOID      (*glGenerateMipmap)           ( GLuint );
 extern VOID      (*glTexStorage2D)             ( GLenum, GLsizei, GLenum, GLsizei, GLsizei );
 extern GLint     (*glGetUniformLocation)       ( GLuint, const GLchar * );
 extern VOID      (*glUniform3f)                ( GLint, GLfloat, GLfloat, GLfloat );
-
+extern VOID      (*glUniformMatrix4fv)         ( GLint, GLsizei, GLboolean, const GLfloat * );
 
 /* Render initialization function.
  * ARGUMENTS: None.

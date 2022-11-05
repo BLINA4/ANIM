@@ -33,7 +33,7 @@
  * RETURNS:
  *   (VEC) which is new 3-component vector
  */
-inline VEC VecSet( FLT X, FLT Y, FLT Z )
+static inline VEC VecSet( FLT X, FLT Y, FLT Z )
 {
   VEC v;
 
@@ -50,7 +50,7 @@ inline VEC VecSet( FLT X, FLT Y, FLT Z )
  * RETURNS:
  *   (VEC2) which is new 2-component vector.
  */
-inline VEC2 Vec2Set( FLT X, FLT Y )
+static inline VEC2 Vec2Set( FLT X, FLT Y )
 {
   VEC2 v;
 
@@ -66,7 +66,7 @@ inline VEC2 Vec2Set( FLT X, FLT Y )
  * RETURNS:
  *   (VEC4) which is new 4-component vector
  */
-inline VEC4 Vec4Set( FLT X, FLT Y, FLT Z, FLT W )
+static inline VEC4 Vec4Set( FLT X, FLT Y, FLT Z, FLT W )
 {
   VEC4 v;
 
@@ -84,7 +84,7 @@ inline VEC4 Vec4Set( FLT X, FLT Y, FLT Z, FLT W )
  * RETURNS:
  *   (VEC) which is new 3-component vector
  */
-inline VEC VecSet1( FLT N )
+static inline VEC VecSet1( FLT N )
 {
   VEC v;
 
@@ -101,7 +101,7 @@ inline VEC VecSet1( FLT N )
  * RETURNS:
  *   (VEC) which is new summary 3-component vector
  */
-inline VEC VecAddVec( VEC V1, VEC V2 )
+static inline VEC VecAddVec( VEC V1, VEC V2 )
 {
   return VecSet(V1.X + V2.X, V1.Y + V2.Y, V1.Z + V2.Z);
 } /* End of 'VecAddVec' function */
@@ -113,7 +113,7 @@ inline VEC VecAddVec( VEC V1, VEC V2 )
  * RETURNS:
  *   (VEC) which is new subtract 3-component vector
  */
-inline VEC VecSubVec( VEC V1, VEC V2 )
+static inline VEC VecSubVec( VEC V1, VEC V2 )
 {
   return VecSet(V1.X - V2.X, V1.Y - V2.Y, V1.Z - V2.Z);
 } /* End of 'VecSubVec' function */
@@ -127,7 +127,7 @@ inline VEC VecSubVec( VEC V1, VEC V2 )
  * RETURNS:
  *   (VEC) which is new 3-component vector
  */
-inline VEC VecMulNum( VEC V1, FLT N )
+static inline VEC VecMulNum( VEC V1, FLT N )
 {
   return VecSet(V1.X * N, V1.Y * N, V1.Z * N);
 } /* End of 'VecMulNum' function */
@@ -141,7 +141,7 @@ inline VEC VecMulNum( VEC V1, FLT N )
  * RETURNS:
  *   (VEC) which is new 3-component vector
  */
-inline VEC VecDivNum( VEC V1, FLT N )
+static inline VEC VecDivNum( VEC V1, FLT N )
 {
   return VecSet(V1.X / N, V1.Y / N, V1.Z / N);
 } /* End of 'VecDivNum' function */
@@ -153,7 +153,7 @@ inline VEC VecDivNum( VEC V1, FLT N )
  * RETURNS:
  *   (VEC) what is new 3-component vector
  */
-inline VEC VecNeg( VEC V1 )
+static inline VEC VecNeg( VEC V1 )
 {
   return VecSet(-V1.X, -V1.Y, -V1.Z);
 } /* End of 'VecNeg' function */
@@ -165,7 +165,7 @@ inline VEC VecNeg( VEC V1 )
  * RETURNS:
  *   (FLT) what is 3-component vectors dot product
  */
-inline FLT VecDot( VEC V1, VEC V2 )
+static inline FLT VecDot( VEC V1, VEC V2 )
 {
   return V1.X * V2.X + V1.Y * V2.Y + V1.Z * V2.Z;
 } /* End of 'VecDot' function */
@@ -177,7 +177,7 @@ inline FLT VecDot( VEC V1, VEC V2 )
  * RETURNS:
  *   (VEC) what is 3-component vectors cross product
  */
-inline VEC VecCross( VEC V1, VEC V2 )
+static inline VEC VecCross( VEC V1, VEC V2 )
 {
   return VecSet(V1.Y * V2.Z - V1.Z * V2.Y,
     -V1.X * V2.Z + V1.Z * V2.X, V1.X * V2.Y - V1.Y * V2.X);
@@ -190,7 +190,7 @@ inline VEC VecCross( VEC V1, VEC V2 )
  * RETURNS:
  *   (FLT) what is 3-component vector lenght
  */
-inline FLT VecLen( VEC V )
+static inline FLT VecLen( VEC V )
 {
   return sqrt(V.X * V.X + V.Y * V.Y + V.Z * V.Z);
 } /* End of 'VecLen' function */
@@ -202,7 +202,7 @@ inline FLT VecLen( VEC V )
  * RETURNS:
  *   (FLT) what is 2-component vector lenght
  */
-inline FLT VecLen2( VEC V )
+static inline FLT VecLen2( VEC V )
 {
   return sqrt(V.X * V.X + V.Y * V.Y);
 } /* End of 'VecLen2' function */
@@ -214,7 +214,7 @@ inline FLT VecLen2( VEC V )
  * RETURNS:
  *   (VEC) what is nolmalized 3-component vector
  */
-inline VEC VecNormalize( VEC V )
+static inline VEC VecNormalize( VEC V )
 {
   FLT len;
 
@@ -229,7 +229,7 @@ inline VEC VecNormalize( VEC V )
  * RETURNS:
  *   (VEC) result vector.
  */
-inline VEC VecMin( VEC V1, VEC V2 )
+static inline VEC VecMin( VEC V1, VEC V2 )
 {
   return VecSet(V1.X < V2.X ? V1.X : V2.X,
                 V1.Y < V2.Y ? V1.Y : V2.Y,
@@ -243,7 +243,7 @@ inline VEC VecMin( VEC V1, VEC V2 )
  * RETURNS:
  *   (VEC) result vector.
  */
-inline VEC VecMax( VEC V1, VEC V2 )
+static inline VEC VecMax( VEC V1, VEC V2 )
 {
   return VecSet(V1.X > V2.X ? V1.X : V2.X,
                 V1.Y > V2.Y ? V1.Y : V2.Y,
@@ -259,7 +259,7 @@ inline VEC VecMax( VEC V1, VEC V2 )
  * RETURNS:
  *   (VEC) what is new 3-component vector
  */
-inline VEC VecMulMatr( VEC V, MATR M )
+static inline VEC VecMulMatr( VEC V, MATR M )
 {
   FLT w = V.X * M.M[0][3] + V.Y * M.M[1][3] + V.Z * M.M[2][3] + M.M[3][3];
 
@@ -278,7 +278,7 @@ inline VEC VecMulMatr( VEC V, MATR M )
  * RETURNS:
  *   (VEC) what is new 3-component vector
  */
-inline VEC VecTransform( VEC V, MATR M )
+static inline VEC VecTransform( VEC V, MATR M )
 {
   return
     VecSet(M.M[0][0] * V.X + M.M[1][0] * V.Y + M.M[2][0] * V.Z,
@@ -295,7 +295,7 @@ inline VEC VecTransform( VEC V, MATR M )
  * RETURNS:
  *   (VEC) what is new 3-component point vector
  */
-inline VEC PointTransform( VEC V, MATR M )
+static inline VEC PointTransform( VEC V, MATR M )
 {
   return
     VecSet(M.M[0][0] * V.X + M.M[1][0] * V.Y + M.M[2][0] * V.Z + M.M[3][0],

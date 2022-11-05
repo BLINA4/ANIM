@@ -34,7 +34,7 @@
  * RETURNS:
  *   (MATR) what is identity matrix
  */
-inline MATR MatrIdentity( VOID )
+static inline MATR MatrIdentity( VOID )
 {
   return UnixMatrix;
 } /* End of 'MatrIdentity' function */
@@ -46,7 +46,7 @@ inline MATR MatrIdentity( VOID )
  * RETURNS:
  *   (MATR) what is translation matrix
  */
-inline MATR MatrTranslate( VEC T )
+static inline MATR MatrTranslate( VEC T )
 {
   MATR m = UnixMatrix;
 
@@ -64,7 +64,7 @@ inline MATR MatrTranslate( VEC T )
  * RETURNS:
  *   (MATR) what is scaling matrix
  */
-inline MATR MatrScale( VEC S )
+static inline MATR MatrScale( VEC S )
 {
   MATR m = UnixMatrix;
 
@@ -82,7 +82,7 @@ inline MATR MatrScale( VEC S )
  * RETURNS:
  *   (MATR) what is rotation aroud X axis matrix
  */
-inline MATR MatrRotateX( FLT AngleInDegrees )
+static inline MATR MatrRotateX( FLT AngleInDegrees )
 {
   FLT A = MTH_D2R(AngleInDegrees), si = sin(A), co = cos(A);
   MATR M =
@@ -104,7 +104,7 @@ inline MATR MatrRotateX( FLT AngleInDegrees )
  * RETURNS:
  *   (MATR) what is rotation aroud Y axis matrix
  */
-inline MATR MatrRotateY( FLT AngleInDegrees )
+static inline MATR MatrRotateY( FLT AngleInDegrees )
 {
   FLT A = MTH_D2R(AngleInDegrees), si = sin(A), co = cos(A);
   MATR M =
@@ -126,7 +126,7 @@ inline MATR MatrRotateY( FLT AngleInDegrees )
  * RETURNS:
  *   (MATR) what is rotation aroud Z axis matrix
  */
-inline MATR MatrRotateZ( FLT AngleInDegrees )
+static inline MATR MatrRotateZ( FLT AngleInDegrees )
 {
   FLT A = MTH_D2R(AngleInDegrees), si = sin(A), co = cos(A);
   MATR M =
@@ -150,7 +150,7 @@ inline MATR MatrRotateZ( FLT AngleInDegrees )
  * RETURNS:
  *   (MATR) what is rotation matrix
  */
-inline MATR MatrRotate( FLT AngleInDegrees, VEC R )
+static inline MATR MatrRotate( FLT AngleInDegrees, VEC R )
 {
   FLT A = MTH_D2R(AngleInDegrees), si = sin(A), co = cos(A);
   VEC V = VecNormalize(R);
@@ -179,7 +179,7 @@ inline MATR MatrRotate( FLT AngleInDegrees, VEC R )
  * RETURNS:
  *   (MATR) what is new matrix
  */
-inline MATR MatrMulMatr( MATR M1, MATR M2 )
+static inline MATR MatrMulMatr( MATR M1, MATR M2 )
 {
   MATR N = MatrIdentity();
   INT i, j, k;
@@ -199,7 +199,7 @@ inline MATR MatrMulMatr( MATR M1, MATR M2 )
  * RETURNS:
  *   (MATR) what is transpose matrix
  */
-inline MATR MatrTranspose( MATR M )
+static inline MATR MatrTranspose( MATR M )
 {
   MATR T = MatrIdentity();
   INT i, j;
@@ -215,14 +215,14 @@ inline MATR MatrTranspose( MATR M )
  * ARGUMENTS:
  *   - matrix elements
  *       FLT A11, A12, A13,
-         FLT A21, A22, A23,
-         FLT A31, A32, A33;
+ *       FLT A21, A22, A23,
+ *       FLT A31, A32, A33;
  * RETURNS:
  *   (FLT) what is matrix determinant
  */
-inline FLT MatrDeterm3x3( FLT A11, FLT A12, FLT A13,
-                          FLT A21, FLT A22, FLT A23,
-                          FLT A31, FLT A32, FLT A33 )
+static inline FLT MatrDeterm3x3( FLT A11, FLT A12, FLT A13,
+                                 FLT A21, FLT A22, FLT A23,
+                                 FLT A31, FLT A32, FLT A33 )
 {
   return A11 * A22 * A33 - A11 * A23 * A32 - A12 * A21 * A33 +
          A12 * A23 * A31 + A13 * A21 * A32 - A13 * A22 * A31;
@@ -235,7 +235,7 @@ inline FLT MatrDeterm3x3( FLT A11, FLT A12, FLT A13,
  * RETURNS:
  *   (FLT) what is matrix determinant
  */
-inline FLT MatrDeterm( MATR M )
+static inline FLT MatrDeterm( MATR M )
 {
   return
     M.M[0][0] * MatrDeterm3x3(M.M[1][1], M.M[1][2], M.M[1][3],
@@ -259,7 +259,7 @@ inline FLT MatrDeterm( MATR M )
  * RETURNS:
  *   (MATR) what is inversed matrix
  */
-inline MATR MatrInverse( MATR M )
+static inline MATR MatrInverse( MATR M )
 {
   MATR N;
   FLT det = MatrDeterm(M);
@@ -361,7 +361,7 @@ inline MATR MatrInverse( MATR M )
  * RETURNS:
  *   (MATR) result matrix.
  */
-inline MATR MatrUnitFit( VEC Min, VEC Max )
+static inline MATR MatrUnitFit( VEC Min, VEC Max )
 {
   VEC Dv = VecSubVec(Max, Min);
   FLT sc;
@@ -377,7 +377,7 @@ inline MATR MatrUnitFit( VEC Min, VEC Max )
  * RETURNS:
  *   (MATR) result matrix.
  */
-inline MATR MatrUnitFitCenterY( VEC Min, VEC Max )
+static inline MATR MatrUnitFitCenterY( VEC Min, VEC Max )
 {
   VEC Dv = VecSubVec(Max, Min);
   FLT sc;
@@ -393,7 +393,7 @@ inline MATR MatrUnitFitCenterY( VEC Min, VEC Max )
  * RETURNS:
  *   (MATR) result matrix.
  */
-inline MATR MatrUnitFitCenterZ( VEC Min, VEC Max )
+static inline MATR MatrUnitFitCenterZ( VEC Min, VEC Max )
 {
   VEC Dv = VecSubVec(Max, Min);
   FLT sc;
@@ -409,7 +409,7 @@ inline MATR MatrUnitFitCenterZ( VEC Min, VEC Max )
  * RETURNS:
  *   (MATR) what is view matrix
  */
-inline MATR MatrView( VEC Loc, VEC At, VEC Up1 )
+static inline MATR MatrView( VEC Loc, VEC At, VEC Up1 )
 {
   VEC
     Dir = VecNormalize(VecSubVec(At, Loc)),
@@ -434,7 +434,7 @@ inline MATR MatrView( VEC Loc, VEC At, VEC Up1 )
  * RETURNS:
  *   (MATR) what is ortho projection matrix
  */
-inline MATR MatrOrtho( FLT Left, FLT Right, FLT Bottom, FLT Top, FLT Near, FLT Far )
+static inline MATR MatrOrtho( FLT Left, FLT Right, FLT Bottom, FLT Top, FLT Near, FLT Far )
 {
   MATR M =
     {
@@ -456,7 +456,7 @@ inline MATR MatrOrtho( FLT Left, FLT Right, FLT Bottom, FLT Top, FLT Near, FLT F
  * RETURNS:
  *   (MATR) what is view frustum matrix
  */
-inline MATR MatrFrustum( FLT l, FLT r, FLT b, FLT t, FLT n, FLT f )
+static inline MATR MatrFrustum( FLT l, FLT r, FLT b, FLT t, FLT n, FLT f )
 {
   MATR m =
     {

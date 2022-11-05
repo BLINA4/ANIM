@@ -47,7 +47,7 @@ static VOID UnitInit( UNIT_OS *Unit, ANIM *Anim )
   sprintf(Unit->shdPrg.Name, "OS_SHADERS");
   Unit->shdPrg.PrgNo = ShaderLoad(Unit->shdPrg.Name); 
   
-  printf("%i\n", Unit->shdPrg.PrgNo);
+  //printf("%i\n", Unit->shdPrg.PrgNo);
   glUseProgram(Unit->shdPrg.PrgNo);
 
   FLT vertices[] = 
@@ -137,8 +137,9 @@ static VOID UnitResponse( UNIT_OS *Unit, ANIM *Anim )
  */
 static VOID UnitRender( UNIT_OS *Unit, ANIM *Anim )
 { 
-  INT vertexColorLocation;
- 
+  INT vertexColorLocation, transformLocation;
+  MATR MatrTransform = MatrMulMatr(MatrRotateZ(30 * Anim->SyncTime), MatrScale(VecSet(0.5f, 0.5f, 0.5f)));
+
   glUseProgram(Unit->shdPrg.PrgNo);
 
   vertexColorLocation = glGetUniformLocation(Unit->shdPrg.PrgNo, "sinColor");
@@ -147,6 +148,9 @@ static VOID UnitRender( UNIT_OS *Unit, ANIM *Anim )
      0.7f * cos(Anim->SyncTime * 1.2f) + 0.3f,
      0.5f * sin(Anim->SyncTime + cos(2.3 * Anim->SyncTime)),
      0.63f * sin(cos(Anim->SyncTime * 2.82) + 33) + 0.37f);
+
+  transformLocation = glGetUniformLocation(Unit->shdPrg.PrgNo, "transform");
+  glUniformMatrix4fv(transformLocation, 1, GL_FALSE, &MatrTransform);
 
   glBindVertexArray(VAO);
   glDrawArrays(GL_TRIANGLES, 0, 3);

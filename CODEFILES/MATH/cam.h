@@ -27,7 +27,7 @@
  *       VEC Loc, At, Up;
  * RETURNS: None.
  */
-inline VOID CamSet( CAMERA *Cam, VEC Loc, VEC At, VEC Up )
+static inline VOID CamSet( CAMERA *Cam, VEC Loc, VEC At, VEC Up )
 {
   Cam->Loc = Loc;
   Cam->At = At;
@@ -42,7 +42,7 @@ inline VOID CamSet( CAMERA *Cam, VEC Loc, VEC At, VEC Up )
  * RETURNS:
  *   (VEC) right direction vector.
  */
-inline VEC CamRight( CAMERA *Cam )
+static inline VEC CamRight( CAMERA *Cam )
 {
   return VecSet(Cam->ViewMatr.M[0][0], Cam->ViewMatr.M[1][0], Cam->ViewMatr.M[2][0]);
 } /* End of 'CamRight' function */
@@ -54,7 +54,7 @@ inline VEC CamRight( CAMERA *Cam )
  * RETURNS:
  *   (VEC) up direction vector.
  */
-inline VEC CamUp( CAMERA *Cam )
+static inline VEC CamUp( CAMERA *Cam )
 {
   return VecSet(Cam->ViewMatr.M[0][1], Cam->ViewMatr.M[1][1], Cam->ViewMatr.M[2][1]);
 } /* End of 'CamUp' function */
@@ -66,7 +66,7 @@ inline VEC CamUp( CAMERA *Cam )
  * RETURNS:
  *   (VEC) forward direction vector.
  */
-inline VEC CamDir( CAMERA *Cam )
+static inline VEC CamDir( CAMERA *Cam )
 {
   return VecSet(-Cam->ViewMatr.M[0][2], -Cam->ViewMatr.M[1][2], -Cam->ViewMatr.M[2][2]);
 } /* End of 'CamDir' function */
@@ -78,7 +78,7 @@ inline VEC CamDir( CAMERA *Cam )
  *       INT W, H;
  * RETURNS: None.
  */
-inline VOID CamProjSet( CAMERA *Cam, INT W, INT H )
+static inline VOID CamProjSet( CAMERA *Cam, INT W, INT H )
 {
   FLT ratio_x, ratio_y;
 
@@ -103,7 +103,7 @@ inline VOID CamProjSet( CAMERA *Cam, INT W, INT H )
  *       CAMERA *Cam;
  * RETURNS: None.
  */
-inline VOID CamSetDefault( CAMERA *Cam )
+static inline VOID CamSetDefault( CAMERA *Cam )
 {
   /* Set viewer */
   Cam->Loc = VecSet(0, 0, 1);
