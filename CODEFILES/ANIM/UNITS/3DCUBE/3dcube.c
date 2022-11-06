@@ -149,11 +149,11 @@ static VOID UnitResponse( UNIT_3DCUBE *Unit, ANIM *Anim )
 static VOID UnitRender( UNIT_3DCUBE *Unit, ANIM *Anim )
 { 
   INT loc;
-  MATR Model =
-    MatrMulMatr4(MatrRotateY(30 * Anim->SyncTime),
-                 MatrScale(VecSet(0.3f, 0.3f, 0.3f)),
-                 MatrRotateX(-60 * cos(0.8 * Anim->SyncTime + 17.5)),
-                 MatrTranslate(VecSet(0.0f, 0.0f, 1.0f)));
+  MATR Model = MatrMulMatr4(
+    MatrScale(VecSet(0.3f * cos(Anim->SyncTime * 1.325f) + 0.5f, 0.3f, 0.3f)),
+    MatrRotateY(30 * Anim->SyncTime),
+    MatrRotateX(-60 * cos(0.8 * Anim->SyncTime + 17.5)),
+    MatrTranslate(VecSet(0.0f, 0.0f, 0.0f))); 
   MATR N = MatrTranspose(MatrInverse(Model));
 
   glUseProgram(Unit->shdPrg.PrgNo);
@@ -172,10 +172,10 @@ static VOID UnitRender( UNIT_3DCUBE *Unit, ANIM *Anim )
     glUniformMatrix4fv(loc, 1, FALSE, &Model);
   
   if ((loc = glGetUniformLocation(Unit->shdPrg.PrgNo, "view")) != -1)
-    glUniformMatrix4fv(loc, 1, FALSE, Anim->cam.ViewMatr.M[0]);
+    glUniformMatrix4fv(loc, 1, FALSE, &(Anim->cam.ViewMatr));
   
   if ((loc = glGetUniformLocation(Unit->shdPrg.PrgNo, "proj")) != -1)
-    glUniformMatrix4fv(loc, 1, FALSE, &N);
+    glUniformMatrix4fv(loc, 1, FALSE, &(Anim->cam.ProjMatr));
 
   glBindVertexArray(Unit->VAO);
   glDrawArrays(GL_TRIANGLES, 0, 3);
