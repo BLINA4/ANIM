@@ -55,6 +55,13 @@ UNIT * UnitCreateQuad( VOID );
  */
 UNIT * UnitCreateOS( VOID );
 
+/* Unit creation function.
+ * ARGUMENTS: None.
+ * RETURNS:
+ *   (UNIT *) pointer to created unit.
+ */
+UNIT * UnitCreate3DCUBE( VOID );
+
 #endif /* __unit_h_ */
 
 /* END OF 'unit.h' FILE */

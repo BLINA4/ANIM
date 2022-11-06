@@ -3,18 +3,18 @@
  *   C programmer
  ***************************************************************/
  
-/* FILE NAME   : os.c
+/* FILE NAME   : 3dcube.c
  * PURPOSE     : Animation project.
- *               Operating system unit file.
+ *               3d cube unit file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 02.11.2022.
+ * LAST UPDATE : 06.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
  */
 
-#ifndef __os_c_
-#define __os_c_
+#ifndef __3dcube_c_
+#define __3dcube_c_
 
 #include <stdio.h>
 #include <math.h>
@@ -22,29 +22,29 @@
 #include "../unit.h"
 #include "../../anim.h"
 
-#endif
+#endif /* __3dcude_c_ */
 
 typedef struct
 {
   UNIT_BASE_FIELDS;
   SHADER shdPrg;
-
+  
   /* Some OpenGL variables */
   UINT VBO, VAO, EBO;
   TEXTURE *texture;
-} UNIT_OS;
+} UNIT_3DCUBE;
 
 /* Unit initialization function.
  * ARGUMENTS:
  *   - self-pointer to this object:
- *       UNIT_OS *Unit;
+ *       UNIT_3DCUBE *Unit;
  *   - animation context:
  *       ANIM *Anim;
  * RETURNS: None.  
  */
-static VOID UnitInit( UNIT_OS *Unit, ANIM *Anim )
+static VOID UnitInit( UNIT_3DCUBE *Unit, ANIM *Anim )
 {
-  sprintf(Unit->shdPrg.Name, "OS_SHADERS");
+  sprintf(Unit->shdPrg.Name, "3DCUBE_SHADER");
   Unit->shdPrg.PrgNo = ShaderLoad(Unit->shdPrg.Name); 
   
   //printf("%i\n", Unit->shdPrg.PrgNo);
@@ -53,16 +53,30 @@ static VOID UnitInit( UNIT_OS *Unit, ANIM *Anim )
   FLT vertices[] = 
   {
      // vertice coords    // colours         // texture coords
-     1.0f,  1.0f,  0.0f,  1.0f, 0.0f, 1.0f,  1.0f,  0.0f,   // tor-right
-     1.0f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f,  1.0f,  1.0f,   // bottom-right
-    -1.0f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f,  0.0f,  1.0f,   // bottom-left
-    -1.0f,  1.0f,  0.0f,  1.0f, 1.0f, 0.0f,  0.0f,  0.0f    // top-left   
+    -1.0f, -1.0f, -1.0f,  1.0f, 0.0f, 0.0f,  //1.0f, 0.0f,   
+     1.0f, -1.0f, -1.0f,  0.0f, 1.0f, 0.0f,  //1.0f, 1.0f,
+     1.0f,  1.0f, -1.0f,  0.0f, 0.0f, 1.0f,  //0.0f, 1.0f,
+    -1.0f,  1.0f, -1.0f,  0.0f, 0.0f, 0.0f,  //0.0f, 0.0f,
+    -1.0f, -1.0f,  1.0f,  1.0f, 1.0f, 1.0f,  
+     1.0f, -1.0f,  1.0f,  0.0f, 0.0f, 0.0f,
+     1.0f,  1.0f,  1.0f,  0.0f, 0.0f, 0.0f,
+    -1.0f,  1.0f,  1.0f,  1.0f, 1.0f, 1.0f,
   }; 
 
   UINT indices[] = 
   {
-    0, 1, 3, // first triangle
-    1, 2, 3  // second triangle
+    0, 1, 2, // first triangle
+    2, 0, 3, // second triangle
+    4, 5, 6, // third triangle
+    6, 4, 7, // forth triangle
+    0, 4, 7, // fifth triangle
+    7, 3, 0, // sixth triangle
+    1, 2, 6, // seventh triangle
+    6, 5, 1, // eigth triangle
+    0, 4, 5, // ninth triangle
+    5, 1, 0, // tength triangle
+    2, 3, 6, // eleventh triangle
+    6, 7, 3  // twelth triangle
   };
 
   glGenVertexArrays(1, &(Unit->VAO));
@@ -78,16 +92,13 @@ static VOID UnitInit( UNIT_OS *Unit, ANIM *Anim )
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Unit->EBO);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
   glEnableVertexAttribArray(0);
  
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(3 * sizeof(float)));
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
   glEnableVertexAttribArray(1);
-
-  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(6 * sizeof(float)));
-  glEnableVertexAttribArray(2);
  
-  Unit->texture = TextureAddFromFile("USEFILES/sunix.bmp");
+  //Unit->texture = TextureAddFromFile("USEFILES/sunix.bmp");
 
   glBindBuffer(GL_ARRAY_BUFFER, 0);
   glBindVertexArray(0);
@@ -100,28 +111,28 @@ static VOID UnitInit( UNIT_OS *Unit, ANIM *Anim )
 /* Unit deinitialization function.
  * ARGUMENTS:
  *   - self-pointer to this object:
- *       UNIT_OS *Unit;
+ *       UNIT_3DCUBE *Unit;
  *   - animation context:
  *       ANIM *Anim;
  * RETURNS: None.
  */
-static VOID UnitClose( UNIT_OS *Unit, ANIM *Anim )
+static VOID UnitClose( UNIT_3DCUBE *Unit, ANIM *Anim )
 {
   glDeleteVertexArrays(1, &(Unit->VAO));
   glDeleteBuffers(1, &(Unit->VBO));
   glDeleteBuffers(1, &(Unit->EBO));
-  TextureDelete(Unit->texture);
+  //TextureDelete(Unit->texture);
 } /* End of 'UnitClose' function */
 
 /* Unit response to event function.
  * ARGUMENTS:
  *   - self-pointer to this object:
- *       UNIT_OS *Unit;
+ *       UNIT_3DCUBE *Unit;
  *   - animation context:
  *       ANIM *Anim;
  * RETURNS: None.
  */
-static VOID UnitResponse( UNIT_OS *Unit, ANIM *Anim )
+static VOID UnitResponse( UNIT_3DCUBE *Unit, ANIM *Anim )
 {
   if (Anim->Debug)
     ;
@@ -130,15 +141,19 @@ static VOID UnitResponse( UNIT_OS *Unit, ANIM *Anim )
 /* Unit drawing function.
  * ARGUMENTS:
  *   - self-pointer to this object:
- *       UNIT_OS *Unit;
+ *       UNIT_3DCUBE *Unit;
  *   - animation context:
  *       ANIM *Anim;
  * RETURNS: None.
  */
-static VOID UnitRender( UNIT_OS *Unit, ANIM *Anim )
+static VOID UnitRender( UNIT_3DCUBE *Unit, ANIM *Anim )
 { 
   INT vertexColorLocation, transformLocation;
-  MATR MatrTransform = MatrMulMatr(MatrRotateZ(30 * Anim->SyncTime), MatrScale(VecSet(0.5f, 0.5f, 0.5f)));
+  MATR MatrTransform = 
+    MatrMulMatr4(MatrRotateY(30 * Anim->SyncTime),
+                 MatrScale(VecSet(0.3f, 0.3f, 0.3f)),
+                 MatrRotateX(-60 * cos(0.8 * Anim->SyncTime + 17.5)),
+                 MatrTranslate(VecSet(0.0f, 0.0f, 0.0f)));
 
   glUseProgram(Unit->shdPrg.PrgNo);
 
@@ -155,10 +170,10 @@ static VOID UnitRender( UNIT_OS *Unit, ANIM *Anim )
   glBindVertexArray(Unit->VAO);
   glDrawArrays(GL_TRIANGLES, 0, 3);
 
-  TextureApply(Unit->texture, 0);
+  //TextureApply(Unit->texture, 0);
   glBindVertexArray(Unit->VAO);
 
-  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+  glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
   
   glUseProgram(0);
 } /* End of 'UnitRender' function */
@@ -168,11 +183,11 @@ static VOID UnitRender( UNIT_OS *Unit, ANIM *Anim )
  * RETURNS: 
  *   (UNIT *) pointer to created unit.
  */
-UNIT * UnitCreateOS( VOID )
+UNIT * UnitCreate3DCUBE( VOID )
 {
-  UNIT_OS *Unit;
+  UNIT_3DCUBE *Unit;
 
-  if ((Unit = (UNIT_OS *)AnimUnitCreate(sizeof(UNIT_OS))) == NULL)
+  if ((Unit = (UNIT_3DCUBE *)AnimUnitCreate(sizeof(UNIT_3DCUBE))) == NULL)
     return NULL;
 
   Unit->Init = (VOID *)UnitInit;
@@ -183,5 +198,5 @@ UNIT * UnitCreateOS( VOID )
   return (UNIT *)Unit;
 } /* End of 'AnimUnitCreate' function */
 
-/* END OF 'os.c' FILE */
+/* END OF '3dcube.c' FILE */
 

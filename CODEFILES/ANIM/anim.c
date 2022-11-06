@@ -33,7 +33,7 @@ VOID AnimInit( VOID )
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
     return;
 
-  if ((Anim.win = SDL_CreateWindow("Hello, SDL 2!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_OPENGL)) == NULL)
+  if ((Anim.win = SDL_CreateWindow("Hello, SDL 2!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1600, 1600, SDL_WINDOW_OPENGL)) == NULL)
     return;
 
   Anim.glc = SDL_GL_CreateContext(Anim.win);

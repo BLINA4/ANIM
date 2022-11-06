@@ -83,6 +83,8 @@ VOID RndInit( VOID )
   glGetUniformLocation = glXGetProcAddress((const GLubyte *)"glGetUniformLocation"); 
   glUniform3f = glXGetProcAddress((const GLubyte *)"glUniform3f");
   glUniformMatrix4fv = glXGetProcAddress((const GLubyte *)"glUniformMatrix4fv");
+
+  glEnable(GL_DEPTH_TEST);
 } /* End of 'RndInit' function */
 
 /* Render close function.

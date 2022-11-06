@@ -26,8 +26,9 @@ INT main( VOID )
   AnimInit();
   
   //AnimUnitAdd(UnitCreateQuad());
-  AnimUnitAdd(UnitCreateOS());
-  
+  //AnimUnitAdd(UnitCreateOS());
+  AnimUnitAdd(UnitCreate3DCUBE());
+
   AnimRun();
   AnimClose();
 
