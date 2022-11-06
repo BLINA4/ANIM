@@ -135,7 +135,7 @@ static VOID UnitClose( UNIT_3DCUBE *Unit, ANIM *Anim )
 static VOID UnitResponse( UNIT_3DCUBE *Unit, ANIM *Anim )
 {
   if (Anim->Debug)
-    ;
+    printf("=== Test debug output of 3dcube unit ===\n");
 } /* End of 'UnitResponse' function */
  
 /* Unit drawing function.
