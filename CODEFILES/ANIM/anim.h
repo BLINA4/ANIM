@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Animation system header file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 01.11.2022.
+ * LAST UPDATE : 06.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -35,6 +35,7 @@ struct tagANIM
   SDL_Window              *win;                                                             /*  SDL window pointer          */
   Display                 *dpy;                                                             /*  Display pointer             */
   SDL_Event               evt;                                                              /*  Current event processing    */
+  CAMERA                  cam;                                                              /*  Main animation camera       */
   UNIT                    *Units[MAX_UNITS];                                                /*  Array of units              */
   INT                     NumOfUnits;                                                       /*  Number of loaded units      */
   BOOL                    Run;                                                              /*  Is programm still running   */

@@ -135,21 +135,8 @@ VOID RndCopyFrame( Window win )
  */
 VOID RndReshape( INT W, INT H )
 {
-  DBL size = 0.1, rx = size, ry = size;
-
-  if (W > H)
-    rx *= (DBL)W / H;
-  else
-    ry *= (DBL)H / W;
-
   glViewport(0, 0, W, H);
-
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  glFrustum(-rx / 2, rx / 2, -ry / 2, ry / 2, size, 100);
-
-  gluLookAt(0, 0, 10, 0, 0, 0, 0, 1, 0);
-  glMatrixMode(GL_MODELVIEW);
+  CamProjSet(&(Anim.cam), W, H);
 } /* End of 'RndReshape' function */
 
 /* Check pending events function

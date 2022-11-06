@@ -148,24 +148,34 @@ static VOID UnitResponse( UNIT_3DCUBE *Unit, ANIM *Anim )
  */
 static VOID UnitRender( UNIT_3DCUBE *Unit, ANIM *Anim )
 { 
-  INT vertexColorLocation, transformLocation;
-  MATR MatrTransform = 
+  INT loc;
+  MATR Model =
     MatrMulMatr4(MatrRotateY(30 * Anim->SyncTime),
                  MatrScale(VecSet(0.3f, 0.3f, 0.3f)),
                  MatrRotateX(-60 * cos(0.8 * Anim->SyncTime + 17.5)),
-                 MatrTranslate(VecSet(0.0f, 0.0f, 0.0f)));
+                 MatrTranslate(VecSet(0.0f, 0.0f, 1.0f)));
+  MATR N = MatrTranspose(MatrInverse(Model));
 
   glUseProgram(Unit->shdPrg.PrgNo);
 
-  vertexColorLocation = glGetUniformLocation(Unit->shdPrg.PrgNo, "sinColor");
-  glUniform3f(
-     vertexColorLocation,
-     0.7f * cos(Anim->SyncTime * 1.2f) + 0.3f,
-     0.5f * sin(Anim->SyncTime + cos(2.3 * Anim->SyncTime)),
-     0.63f * sin(cos(Anim->SyncTime * 2.82) + 33) + 0.37f);
 
-  transformLocation = glGetUniformLocation(Unit->shdPrg.PrgNo, "transform");
-  glUniformMatrix4fv(transformLocation, 1, GL_FALSE, &MatrTransform);
+  if ((loc = glGetUniformLocation(Unit->shdPrg.PrgNo, "sinColor")) != -1)
+  {  
+    glUniform3f(
+      loc,
+      0.7f * cos(Anim->SyncTime * 1.2f) + 0.3f,
+      0.5f * sin(Anim->SyncTime + cos(2.3 * Anim->SyncTime)),
+      0.63f * sin(cos(Anim->SyncTime * 2.82) + 33) + 0.37f);
+  }
+  
+  if ((loc = glGetUniformLocation(Unit->shdPrg.PrgNo, "model")) != -1)
+    glUniformMatrix4fv(loc, 1, FALSE, &Model);
+  
+  if ((loc = glGetUniformLocation(Unit->shdPrg.PrgNo, "view")) != -1)
+    glUniformMatrix4fv(loc, 1, FALSE, Anim->cam.ViewMatr.M[0]);
+  
+  if ((loc = glGetUniformLocation(Unit->shdPrg.PrgNo, "proj")) != -1)
+    glUniformMatrix4fv(loc, 1, FALSE, &N);
 
   glBindVertexArray(Unit->VAO);
   glDrawArrays(GL_TRIANGLES, 0, 3);
