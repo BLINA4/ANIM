@@ -123,7 +123,7 @@ TEXTURE * TextureAddFromFile( CHAR *FileName )
 
   ImageLoad(&Im, FileName);
 
-  tex = TextureAdd(FileName, TEXFMT_RGBA8, Im.W, Im.H, Im.Pixels);
+  tex = TextureAdd(FileName, TEXFMT_RGB8, Im.W, Im.H, Im.Pixels);
 
   ImageFree(&Im);
 

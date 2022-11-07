@@ -30,7 +30,7 @@ typedef struct
   SHADER shdPrg;
   
   /* Some OpenGL variables */
-  UINT VBO, VAO, EBO;
+  UINT VBO, VAO;
   TEXTURE *texture;
 } UNIT_3DCUBE;
 
@@ -52,53 +52,64 @@ static VOID UnitInit( UNIT_3DCUBE *Unit, ANIM *Anim )
 
   FLT vertices[] = 
   {
-     // vertice coords    // colours         // texture coords
-    -1.0f, -1.0f, -1.0f,  1.0f, 0.0f, 0.0f,  //1.0f, 0.0f,   
-     1.0f, -1.0f, -1.0f,  0.0f, 1.0f, 0.0f,  //1.0f, 1.0f,
-     1.0f,  1.0f, -1.0f,  0.0f, 0.0f, 1.0f,  //0.0f, 1.0f,
-    -1.0f,  1.0f, -1.0f,  0.0f, 0.0f, 0.0f,  //0.0f, 0.0f,
-    -1.0f, -1.0f,  1.0f,  1.0f, 1.0f, 1.0f,  
-     1.0f, -1.0f,  1.0f,  0.0f, 0.0f, 0.0f,
-     1.0f,  1.0f,  1.0f,  0.0f, 0.0f, 0.0f,
-    -1.0f,  1.0f,  1.0f,  1.0f, 1.0f, 1.0f,
-  }; 
+     // vertice coords     // texture coords
+     -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+      0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+      0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+      0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+     -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+     -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+        
+     -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+      0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+      0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+      0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+     -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+     -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
 
-  UINT indices[] = 
-  {
-    0, 1, 2, // first triangle
-    2, 0, 3, // second triangle
-    4, 5, 6, // third triangle
-    6, 4, 7, // forth triangle
-    0, 4, 7, // fifth triangle
-    7, 3, 0, // sixth triangle
-    1, 2, 6, // seventh triangle
-    6, 5, 1, // eigth triangle
-    0, 4, 5, // ninth triangle
-    5, 1, 0, // tength triangle
-    2, 3, 6, // eleventh triangle
-    6, 7, 3  // twelth triangle
-  };
+     -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+     -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+     -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+     -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+     -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+     -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+      0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+      0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+      0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+      0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+      0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+      0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+     -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+      0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+      0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+      0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+     -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+     -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+     -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+      0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+      0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+      0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+     -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+     -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+  }; 
 
   glGenVertexArrays(1, &(Unit->VAO));
   glGenBuffers(1, &(Unit->VBO));
-  glGenBuffers(1, &(Unit->EBO));
   glBindVertexArray(Unit->VAO);
 
   glBindBuffer(GL_ARRAY_BUFFER, Unit->VBO);
   glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-  glEnableVertexAttribArray(0);
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Unit->EBO);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);
   glEnableVertexAttribArray(0);
  
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
+  glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
   glEnableVertexAttribArray(1);
  
-  //Unit->texture = TextureAddFromFile("USEFILES/sunix.bmp");
+  Unit->texture = TextureAddFromFile("USEFILES/pack.png");
 
   glBindBuffer(GL_ARRAY_BUFFER, 0);
   glBindVertexArray(0);
@@ -120,8 +131,7 @@ static VOID UnitClose( UNIT_3DCUBE *Unit, ANIM *Anim )
 {
   glDeleteVertexArrays(1, &(Unit->VAO));
   glDeleteBuffers(1, &(Unit->VBO));
-  glDeleteBuffers(1, &(Unit->EBO));
-  //TextureDelete(Unit->texture);
+  TextureDelete(Unit->texture);
 } /* End of 'UnitClose' function */
 
 /* Unit response to event function.
@@ -150,14 +160,13 @@ static VOID UnitRender( UNIT_3DCUBE *Unit, ANIM *Anim )
 { 
   INT loc;
   MATR Model = MatrMulMatr4(
-    MatrScale(VecSet(0.3f * cos(Anim->SyncTime * 1.325f) + 0.5f, 0.3f, 0.3f)),
+    MatrScale(VecSet(0.3f * cos(Anim->SyncTime * 1.325f) + 0.5f, 0.3f * sin(2.87f * Anim->SyncTime + 2.2) + 0.4f, 0.3f)),
     MatrRotateY(30 * Anim->SyncTime),
     MatrRotateX(-60 * cos(0.8 * Anim->SyncTime + 17.5)),
     MatrTranslate(VecSet(0.0f, 0.0f, 0.0f))); 
   MATR N = MatrTranspose(MatrInverse(Model));
 
   glUseProgram(Unit->shdPrg.PrgNo);
-
 
   if ((loc = glGetUniformLocation(Unit->shdPrg.PrgNo, "sinColor")) != -1)
   {  
@@ -177,14 +186,11 @@ static VOID UnitRender( UNIT_3DCUBE *Unit, ANIM *Anim )
   if ((loc = glGetUniformLocation(Unit->shdPrg.PrgNo, "proj")) != -1)
     glUniformMatrix4fv(loc, 1, FALSE, &(Anim->cam.ProjMatr));
 
-  glBindVertexArray(Unit->VAO);
-  glDrawArrays(GL_TRIANGLES, 0, 3);
-
-  //TextureApply(Unit->texture, 0);
+  TextureApply(Unit->texture, 0);
   glBindVertexArray(Unit->VAO);
 
-  glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-  
+  glDrawArrays(GL_TRIANGLES, 0, 36);
+
   glUseProgram(0);
 } /* End of 'UnitRender' function */
 
