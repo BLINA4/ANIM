@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Controller subsystem.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 02.11.2022.
+ * LAST UPDATE : 11.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -46,26 +46,6 @@ CONTROLLER * ControllerInit( VOID )
 
   return cnt;
 } /* End of 'ControllerInit' function */ 
-
-/* Controller hold key function.
- * ARGUMENTS:
- *   - controller structure pointer
- *      CONTROLLER *cnt
- *   - index of the key
- *      INT i
- * RETURNS:
- *   - True if the key is already held, False if added to hold_list:
- *       (BOOL)
- */
-BOOL ControllerKeyHold( CONTROLLER *cnt, INT i )
-{
-  if (cnt->keys_hold[i])
-    return TRUE;
-  
-  cnt->keys_hold[i] = TRUE;
-  
-  return FALSE; 
-} /* End of 'ControllerKeyHold' function */ 
 
 /* Pressed key controller handle function.
  * ARGUMENTS:

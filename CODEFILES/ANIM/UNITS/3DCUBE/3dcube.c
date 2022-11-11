@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               3d cube unit file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 06.11.2022.
+ * LAST UPDATE : 11.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -109,7 +109,7 @@ static VOID UnitInit( UNIT_3DCUBE *Unit, ANIM *Anim )
   glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
   glEnableVertexAttribArray(1);
  
-  Unit->texture = TextureAddFromFile("USEFILES/pack.png");
+  Unit->texture = TextureAddFromFile("USEFILES/grass.png");
 
   glBindBuffer(GL_ARRAY_BUFFER, 0);
   glBindVertexArray(0);
@@ -145,7 +145,21 @@ static VOID UnitClose( UNIT_3DCUBE *Unit, ANIM *Anim )
 static VOID UnitResponse( UNIT_3DCUBE *Unit, ANIM *Anim )
 {
   if (Anim->Debug)
-    printf("=== Test debug output of 3dcube unit ===\n");
+  {
+    if (!strcmp(Unit->texture->Name, "USEFILES/grass.png"))
+    {
+      TextureDelete(Unit->texture);
+      Unit->texture = TextureAddFromFile("USEFILES/bricks.png");
+    }
+  }
+  else
+  {
+    if (!strcmp(Unit->texture->Name, "USEFILES/bricks.png"))
+    {
+      TextureDelete(Unit->texture);
+      Unit->texture = TextureAddFromFile("USEFILES/grass.png");
+    }
+  }
 } /* End of 'UnitResponse' function */
  
 /* Unit drawing function.
@@ -164,7 +178,6 @@ static VOID UnitRender( UNIT_3DCUBE *Unit, ANIM *Anim )
     MatrRotateY(30 * Anim->SyncTime),
     MatrRotateX(-60 * cos(0.8 * Anim->SyncTime + 17.5)),
     MatrTranslate(VecSet(0.0f, 0.0f, 0.0f))); 
-  MATR N = MatrTranspose(MatrInverse(Model));
 
   glUseProgram(Unit->shdPrg.PrgNo);
 

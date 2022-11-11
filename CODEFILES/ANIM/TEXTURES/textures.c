@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Texture implementation file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 08.02.2022.
+ * LAST UPDATE : 11.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -123,7 +123,7 @@ TEXTURE * TextureAddFromFile( CHAR *FileName )
 
   ImageLoad(&Im, FileName);
 
-  tex = TextureAdd(FileName, TEXFMT_RGB8, Im.W, Im.H, Im.Pixels);
+  tex = TextureAdd(FileName, TEXFMT_RGBA8, Im.W, Im.H, Im.Pixels);
 
   ImageFree(&Im);
 

@@ -191,7 +191,7 @@ BOOL ImageLoadG24( IMAGE *Im, CHAR *FileName )
 BOOL ImageLoadSTBI( IMAGE *Im, CHAR *FileName )
 {
   INT width, height, nrChannels;
-  BYTE *Data = stbi_load(FileName, &width, &height, &nrChannels, 0); 
+  BYTE *Data = stbi_load(FileName, &width, &height, &nrChannels, 4); 
 
   if (Data == NULL)
     return 0;

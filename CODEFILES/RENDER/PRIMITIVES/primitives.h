@@ -32,6 +32,7 @@ typedef enum tagPRIM_TYPE
 } PRIM_TYPE;
 
 /* Primitive structure */
+typedef struct tagPRIM PRIM;
 struct tagPRIM
 {
   PRIM_TYPE Type;    /* Primitive type */
