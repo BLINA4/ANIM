@@ -6,5 +6,8 @@ CODEFILES = ./CODEFILES/main.c ./CODEFILES/ANIM/anim.c ./CODEFILES/ANIM/UNITS/un
 CFLAGS = `sdl2-config --libs --cflags` -ggdb3 -O0 --std=c99 -Wall -lGL -lGLU -lSDL2_image -lm 
 
 all:
-	@$(COMPILER) $(LANGUAGE) $(DEBUG_MODE) $(BINARY) $(CODEFILES) $(CFLAGS) 
+	@$(COMPILER) $(LANGUAGE) $(DEBUG_MODE) $(BINARY) $(CODEFILES) $(CFLAGS)
+
+log:
+	@$(COMPILER) $(LANGUAGE) $(DEBUG_MODE) $(BINARY) $(CODEFILES) $(CFLAGS) 2> log.txt
 

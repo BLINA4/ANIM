@@ -42,13 +42,16 @@ extern VOID      (*glVertexAttribPointer)      ( GLuint, GLint, GLenum, GLboolea
 extern VOID      (*glEnableVertexAttribArray)  ( GLuint );
 extern VOID      (*glDeleteVertexArrays)       ( GLsizei, const GLuint * );
 extern VOID      (*glDeleteBuffers)            ( GLsizei, const GLuint * );
+extern VOID      (*glGetAttachedShaders)       ( GLuint, GLsizei, GLsizei *, GLuint * );
 extern VOID  	 (*glGetShaderiv)	           ( GLuint, GLenum, GLint * );
 extern VOID      (*glGetProgramiv)             ( GLuint, GLenum, GLint * );
 extern VOID 	 (*glGetShaderInfoLog)	       ( GLuint, GLsizei, GLsizei *, GLchar * );
 extern VOID      (*glGetProgramInfoLog)        ( GLuint, GLsizei, GLsizei *, GLchar * );
+extern VOID      (*glPatchParameteri)          ( GLenum, GLint );
 extern VOID      (*glGenerateMipmap)           ( GLuint );
 extern VOID      (*glTexStorage2D)             ( GLenum, GLsizei, GLenum, GLsizei, GLsizei );
 extern GLint     (*glGetUniformLocation)       ( GLuint, const GLchar * );
+extern VOID      (*glUniform1i)                ( GLint, GLint );
 extern VOID      (*glUniform1f)                ( GLint, GLfloat );
 extern VOID      (*glUniform3f)                ( GLint, GLfloat, GLfloat, GLfloat );
 extern VOID      (*glUniform3fv)               ( GLint, GLsizei, const GLfloat * );

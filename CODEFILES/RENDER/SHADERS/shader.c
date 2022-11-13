@@ -19,6 +19,9 @@
 #include "shader.h"
 #include "../render.h"
 
+/* Default shader */
+SHADER *ShaderDefault;
+
 /* Read text from .glsl file function
  * ARGUMENTS:
  *   - name of file to read:
@@ -137,6 +140,7 @@ UINT ShaderLoad( CHAR *FileNamePrefix )
 
   /* Create program */
   if (isok)
+  {  
     if ((prg = glCreateProgram()) == 0)
       isok = FALSE;
     else
@@ -156,6 +160,7 @@ UINT ShaderLoad( CHAR *FileNamePrefix )
         isok = FALSE;
       }
     }
+  }
 
   /* Error handle */
   if (!isok)
@@ -173,6 +178,44 @@ UINT ShaderLoad( CHAR *FileNamePrefix )
   }
   return prg;
 } /* End of 'ShaderLoad' function */
+
+/* Shader program deletion function.
+ * ARGUMENTS:
+ *   - shader program pointer:
+ *       SHADER *Shd;
+ * RETURNS: None.
+ */
+static VOID ShaderDelete( SHADER *Shd )
+{
+  UINT i, n, shds[5];
+
+  if (Shd->PrgNo == 0)
+    return;
+
+  /* Obtain program shaders count */
+  glGetAttachedShaders(Shd->PrgNo, 5, &n, shds);
+  for (i = 0; i < n; i++)
+  {
+    glDetachShader(Shd->PrgNo, shds[i]);
+    glDeleteShader(shds[i]);
+  }
+  glDeleteProgram(Shd->PrgNo);
+} /* End of 'TNG_ShaderFree' function */
+
+/* Correct shader number function.
+ * ARGUMENTS:
+ *   - shader pointer:
+ *       SHADER *Shd;
+ * RETURNS: 
+ *   (UINT) Shader program Id.
+ */
+UINT ShaderApply( SHADER *Shd )
+{
+  if (Shd == NULL)
+    Shd = ShaderDefault;
+  glUseProgram(Shd->PrgNo);
+  return Shd->PrgNo;
+} /* End of 'ShadersApply' function */
 
 /* END OF 'shader.c' FILE */
 

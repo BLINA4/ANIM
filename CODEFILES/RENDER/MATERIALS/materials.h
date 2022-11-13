@@ -25,6 +25,7 @@
 /* Number of pointers to textures in material */
 #define MATERIAL_TEXTURE_COUNT 8
 
+typedef struct tagMATERIAL MATERIAL;
 struct tagMATERIAL
 {
   CHAR Name[MATERIAL_NAME_LENGTH];

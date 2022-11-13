@@ -30,6 +30,15 @@ typedef struct tagSHADER
  */
 UINT ShaderLoad( CHAR *FileNamePrefix );
 
+/* Correct shader number function.
+ * ARGUMENTS:
+ *   - shader pointer:
+ *       SHADER *Shd;
+ * RETURNS: 
+ *   (UINT) Shader program Id.
+ */
+UINT ShaderApply( SHADER *Shd );
+
 #endif /* __shader_h_ */
 
 /* END OF 'shader.h' FILE */
