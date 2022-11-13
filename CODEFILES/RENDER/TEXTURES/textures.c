@@ -18,6 +18,7 @@
 
 #include "../IMAGES/images.h"
 #include "textures.h"
+#include "../../ANIM/anim.h"
 
 TEXTURE Textures[MaximumTextures];
 

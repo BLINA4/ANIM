@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Textures header file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 08.02.2022.
+ * LAST UPDATE : 13.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -17,7 +17,6 @@
 #define __textures_h_
 
 #include "../../comdef.h"
-#include "../anim.h"
 
 /* Length of texture name */
 #define TEXTURE_NAME_LENGTH 256
@@ -88,8 +87,6 @@ VOID TextureApply( TEXTURE *T, INT Num );
  * RETURNS: None.
  */
 VOID TextureDelete( TEXTURE *Txt );
-
-void TextureLoad( void );
 
 #endif /* __textures_h_ */
 

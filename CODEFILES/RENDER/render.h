@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Render system header file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 06.11.2022.
+ * LAST UPDATE : 13.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -17,8 +17,11 @@
 #define __render_h_
 
 #include "../comdef.h"
+#include "../MATH/mth.h"
+#include "TEXTURES/textures.h"
+#include "SHADERS/shader.h"   
+#include "MATERIALS/materials.h"
 #include "../ANIM/anim.h"
-#include "SHADERS/shader.h"
 
 extern GLuint    (*glCreateShader)             ( GLenum );
 extern VOID      (*glShaderSource)             ( GLuint, GLsizei, const GLchar **, const GLint * );
@@ -46,7 +49,9 @@ extern VOID      (*glGetProgramInfoLog)        ( GLuint, GLsizei, GLsizei *, GLc
 extern VOID      (*glGenerateMipmap)           ( GLuint );
 extern VOID      (*glTexStorage2D)             ( GLenum, GLsizei, GLenum, GLsizei, GLsizei );
 extern GLint     (*glGetUniformLocation)       ( GLuint, const GLchar * );
+extern VOID      (*glUniform1f)                ( GLint, GLfloat );
 extern VOID      (*glUniform3f)                ( GLint, GLfloat, GLfloat, GLfloat );
+extern VOID      (*glUniform3fv)               ( GLint, GLsizei, const GLfloat * );
 extern VOID      (*glUniformMatrix4fv)         ( GLint, GLsizei, GLboolean, const GLfloat * );
 
 /* Render initialization function.

@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Animation system header file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 06.11.2022.
+ * LAST UPDATE : 13.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -23,7 +23,6 @@
 #include "../MATH/matr.h"
 #include "./UNITS/unit.h"
 #include "../RENDER/render.h"
-#include "./TEXTURES/textures.h"
 #include "./CONTROLLER/controller.h"
 
 #define MAX_UNITS 4096
@@ -33,6 +32,7 @@ struct tagANIM
 {
   SDL_GLContext           glc;                                                              /*  OpenGL context              */
   SDL_Window              *win;                                                             /*  SDL window pointer          */
+  INT                     W, H;                                                             /*  Window width and height     */
   Display                 *dpy;                                                             /*  Display pointer             */
   SDL_Event               evt;                                                              /*  Current event processing    */
   CAMERA                  cam;                                                              /*  Main animation camera       */

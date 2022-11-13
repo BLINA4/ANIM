@@ -144,20 +144,20 @@ static VOID UnitClose( UNIT_3DCUBE *Unit, ANIM *Anim )
  */
 static VOID UnitResponse( UNIT_3DCUBE *Unit, ANIM *Anim )
 {
-  if (Anim->Debug)
+  if (Anim->Controller->keys[TAB] == TRUE)
   {
     if (!strcmp(Unit->texture->Name, "USEFILES/grass.png"))
     {
       TextureDelete(Unit->texture);
       Unit->texture = TextureAddFromFile("USEFILES/bricks.png");
+      return;
     }
-  }
-  else
-  {
+  
     if (!strcmp(Unit->texture->Name, "USEFILES/bricks.png"))
     {
       TextureDelete(Unit->texture);
       Unit->texture = TextureAddFromFile("USEFILES/grass.png");
+      return;
     }
   }
 } /* End of 'UnitResponse' function */

@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Render system code file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 06.11.2022.
+ * LAST UPDATE : 13.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -46,7 +46,9 @@ VOID      (*glGetProgramInfoLog)        ( GLuint, GLsizei, GLsizei *, GLchar * )
 VOID      (*glGenerateMipmap)           ( GLenum );
 VOID      (*glTexStorage2D)             ( GLenum, GLsizei, GLenum, GLsizei, GLsizei );
 GLint     (*glGetUniformLocation)       ( GLuint, const GLchar * );
+VOID      (*glUniform1f)                ( GLint, GLfloat );
 VOID      (*glUniform3f)                ( GLint, GLfloat, GLfloat, GLfloat ); 
+VOID      (*glUniform3fv)               ( GLint, GLsizei, const GLfloat * );
 VOID      (*glUniformMatrix4fv)         ( GLint, GLsizei, GLboolean, const GLfloat * );
 
 /* Render initialization function.
@@ -80,8 +82,10 @@ VOID RndInit( VOID )
   glGetProgramInfoLog = glXGetProcAddress((const GLubyte *)"glGetProgramInfoLog");
   glGenerateMipmap = glXGetProcAddress((const GLubyte *)"glGenerateMipmap");
   glTexStorage2D = glXGetProcAddress((const GLubyte *)"glTexStorage2D");
-  glGetUniformLocation = glXGetProcAddress((const GLubyte *)"glGetUniformLocation"); 
+  glGetUniformLocation = glXGetProcAddress((const GLubyte *)"glGetUniformLocation");
+  glUniform1f = glXGetProcAddress((const GLubyte *)"glUniform1f");
   glUniform3f = glXGetProcAddress((const GLubyte *)"glUniform3f");
+  glUniform3fv = glXGetProcAddress((const GLubyte *)"glUniform3fv");
   glUniformMatrix4fv = glXGetProcAddress((const GLubyte *)"glUniformMatrix4fv");
 
   glEnable(GL_DEPTH_TEST);
@@ -151,11 +155,9 @@ VOID RndCheckEvents( ANIM *Anim )
   {
     if (Anim->evt.type == SDL_WINDOWEVENT)
     {
-      INT W, H;
+      SDL_GetWindowSize(Anim->win, &(Anim->W), &(Anim->H));
 
-      SDL_GetWindowSize(Anim->win, &W, &H);
-
-      RndReshape(W, H);
+      RndReshape(Anim->W, Anim->H);
     }
 
     if (Anim->evt.type == SDL_QUIT)

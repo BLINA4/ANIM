@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Shaders subsystem code file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 04.11.2022.
+ * LAST UPDATE : 13.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -17,6 +17,7 @@
 
 #include "../../comdef.h"
 #include "shader.h"
+#include "../render.h"
 
 /* Read text from .glsl file function
  * ARGUMENTS:

@@ -12,7 +12,6 @@
 #define __shader_h_
 
 #include "../../comdef.h"
-#include "../render.h"
 
 #define NAME_LENGTH 256
 
