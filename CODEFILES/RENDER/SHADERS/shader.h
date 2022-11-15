@@ -2,7 +2,7 @@
  * PURPOSE     : Animation project.
  *               Shaders subsystem header file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 04.11.2022.
+ * LAST UPDATE : 14.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -13,22 +13,20 @@
 
 #include "../../comdef.h"
 
-#define NAME_LENGTH 256
-
 typedef struct tagSHADER
 {
   CHAR Name[NAME_LENGTH]; /* Shader path prefix */
   UINT PrgNo;             /* Shader programm ID */
 } SHADER;
 
-/* Load shader program function.
+/* Add shader program from file function.
  * ARGUMENTS:
- *   - shader files prefix (directory):
+ *   - shader files prefix:
  *       CHAR *FileNamePrefix;
- * RETURNS:
- *   (UINT) shader program index or 0 if error is occured.
+ * RETURNS: 
+ *  (SHADER *) pointer to added shader.
  */
-UINT ShaderLoad( CHAR *FileNamePrefix );
+SHADER * ShaderAdd( CHAR *FileNamePrefix );
 
 /* Correct shader number function.
  * ARGUMENTS:
@@ -38,6 +36,14 @@ UINT ShaderLoad( CHAR *FileNamePrefix );
  *   (UINT) Shader program Id.
  */
 UINT ShaderApply( SHADER *Shd );
+
+/* Shader program deletion function.
+ * ARGUMENTS:
+ *   - shader program pointer:
+ *       SHADER *Shd;
+ * RETURNS: None.
+ */
+VOID ShaderDelete( SHADER *Shd );
 
 #endif /* __shader_h_ */
 

@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Shaders subsystem code file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 13.11.2022.
+ * LAST UPDATE : 14.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -112,7 +112,7 @@ UINT ShaderLoad( CHAR *FileNamePrefix )
   for (i = 0; isok && i < NS; i++)
   {
     /* Load text file */
-    sprintf(buf, "USEFILES/SHADERS/%s/%s.GLSL", FileNamePrefix, suff[i]);
+    sprintf(buf, "%s/%s.GLSL", FileNamePrefix, suff[i]);
     if ((txt = ReadShaderFile(buf)) == NULL)
       continue;
     /* Create shader */
@@ -178,6 +178,33 @@ UINT ShaderLoad( CHAR *FileNamePrefix )
   }
   return prg;
 } /* End of 'ShaderLoad' function */
+  
+/* Add shader program from file function.
+ * ARGUMENTS:
+ *   - shader files prefix:
+ *       CHAR *FileNamePrefix;
+ * RETURNS: 
+ *  (SHADER *) pointer to added shader.
+ */
+SHADER * ShaderAdd( CHAR *FileNamePrefix )
+{
+  SHADER *Shd;
+  static CHAR Buf[1000];
+ 
+  if ((Shd = malloc(sizeof(SHADER))) == NULL)
+    return NULL;
+
+  sprintf(Buf, "USEFILES/SHADERS/%s", FileNamePrefix);
+  Shd->PrgNo = ShaderLoad(Buf);
+  
+  glUseProgram(Shd->PrgNo);
+  
+  glUseProgram(0);
+  
+  strncpy(Shd->Name, FileNamePrefix, NAME_LENGTH - 1);
+  
+  return Shd;
+} /* End of 'ShaderAdd' function */
 
 /* Shader program deletion function.
  * ARGUMENTS:
@@ -185,7 +212,7 @@ UINT ShaderLoad( CHAR *FileNamePrefix )
  *       SHADER *Shd;
  * RETURNS: None.
  */
-static VOID ShaderDelete( SHADER *Shd )
+VOID ShaderDelete( SHADER *Shd )
 {
   UINT i, n, shds[5];
 
@@ -200,7 +227,7 @@ static VOID ShaderDelete( SHADER *Shd )
     glDeleteShader(shds[i]);
   }
   glDeleteProgram(Shd->PrgNo);
-} /* End of 'TNG_ShaderFree' function */
+} /* End of 'ShaderFree' function */
 
 /* Correct shader number function.
  * ARGUMENTS:

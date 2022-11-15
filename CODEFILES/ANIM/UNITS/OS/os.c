@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Operating system unit file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 02.11.2022.
+ * LAST UPDATE : 14.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -27,11 +27,12 @@
 typedef struct
 {
   UNIT_BASE_FIELDS;
-  SHADER shdPrg;
+  
+  SHADER *shdPrg;
+  TEXTURE *texture;
 
   /* Some OpenGL variables */
   UINT VBO, VAO, EBO;
-  TEXTURE *texture;
 } UNIT_OS;
 
 /* Unit initialization function.
@@ -44,11 +45,9 @@ typedef struct
  */
 static VOID UnitInit( UNIT_OS *Unit, ANIM *Anim )
 {
-  sprintf(Unit->shdPrg.Name, "OS_SHADERS");
-  Unit->shdPrg.PrgNo = ShaderLoad(Unit->shdPrg.Name); 
+  Unit->shdPrg = ShaderAdd("OS_SHADERS"); 
   
-  //printf("%i\n", Unit->shdPrg.PrgNo);
-  glUseProgram(Unit->shdPrg.PrgNo);
+  glUseProgram(Unit->shdPrg->PrgNo);
 
   FLT vertices[] = 
   {
@@ -111,6 +110,7 @@ static VOID UnitClose( UNIT_OS *Unit, ANIM *Anim )
   glDeleteBuffers(1, &(Unit->VBO));
   glDeleteBuffers(1, &(Unit->EBO));
   TextureDelete(Unit->texture);
+  ShaderDelete(Unit->shdPrg);
 } /* End of 'UnitClose' function */
 
 /* Unit response to event function.
@@ -140,16 +140,16 @@ static VOID UnitRender( UNIT_OS *Unit, ANIM *Anim )
   INT vertexColorLocation, transformLocation;
   MATR MatrTransform = MatrMulMatr(MatrRotateZ(30 * Anim->SyncTime), MatrScale(VecSet(0.5f, 0.5f, 0.5f)));
 
-  glUseProgram(Unit->shdPrg.PrgNo);
+  glUseProgram(Unit->shdPrg->PrgNo);
 
-  vertexColorLocation = glGetUniformLocation(Unit->shdPrg.PrgNo, "sinColor");
+  vertexColorLocation = glGetUniformLocation(Unit->shdPrg->PrgNo, "sinColor");
   glUniform3f(
      vertexColorLocation,
      0.7f * cos(Anim->SyncTime * 1.2f) + 0.3f,
      0.5f * sin(Anim->SyncTime + cos(2.3 * Anim->SyncTime)),
      0.63f * sin(cos(Anim->SyncTime * 2.82) + 33) + 0.37f);
 
-  transformLocation = glGetUniformLocation(Unit->shdPrg.PrgNo, "transform");
+  transformLocation = glGetUniformLocation(Unit->shdPrg->PrgNo, "transform");
   glUniformMatrix4fv(transformLocation, 1, GL_FALSE, &MatrTransform);
 
   glBindVertexArray(Unit->VAO);

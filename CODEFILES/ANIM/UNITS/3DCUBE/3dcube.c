@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               3d cube unit file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 11.11.2022.
+ * LAST UPDATE : 14.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -27,7 +27,7 @@
 typedef struct
 {
   UNIT_BASE_FIELDS;
-  SHADER shdPrg;
+  SHADER *shdPrg;
   
   /* Some OpenGL variables */
   UINT VBO, VAO;
@@ -44,11 +44,9 @@ typedef struct
  */
 static VOID UnitInit( UNIT_3DCUBE *Unit, ANIM *Anim )
 {
-  sprintf(Unit->shdPrg.Name, "3DCUBE_SHADER");
-  Unit->shdPrg.PrgNo = ShaderLoad(Unit->shdPrg.Name); 
+  Unit->shdPrg = ShaderAdd("3DCUBE_SHADER"); 
   
-  //printf("%i\n", Unit->shdPrg.PrgNo);
-  glUseProgram(Unit->shdPrg.PrgNo);
+  glUseProgram(Unit->shdPrg->PrgNo);
 
   FLT vertices[] = 
   {
@@ -132,6 +130,7 @@ static VOID UnitClose( UNIT_3DCUBE *Unit, ANIM *Anim )
   glDeleteVertexArrays(1, &(Unit->VAO));
   glDeleteBuffers(1, &(Unit->VBO));
   TextureDelete(Unit->texture);
+  ShaderDelete(Unit->shdPrg);
 } /* End of 'UnitClose' function */
 
 /* Unit response to event function.
@@ -179,9 +178,9 @@ static VOID UnitRender( UNIT_3DCUBE *Unit, ANIM *Anim )
     MatrRotateX(-60 * cos(0.8 * Anim->SyncTime + 17.5)),
     MatrTranslate(VecSet(0.0f, 0.0f, 0.0f))); 
 
-  glUseProgram(Unit->shdPrg.PrgNo);
+  glUseProgram(Unit->shdPrg->PrgNo);
 
-  if ((loc = glGetUniformLocation(Unit->shdPrg.PrgNo, "sinColor")) != -1)
+  if ((loc = glGetUniformLocation(Unit->shdPrg->PrgNo, "sinColor")) != -1)
   {  
     glUniform3f(
       loc,
@@ -190,13 +189,13 @@ static VOID UnitRender( UNIT_3DCUBE *Unit, ANIM *Anim )
       0.63f * sin(cos(Anim->SyncTime * 2.82) + 33) + 0.37f);
   }
   
-  if ((loc = glGetUniformLocation(Unit->shdPrg.PrgNo, "model")) != -1)
+  if ((loc = glGetUniformLocation(Unit->shdPrg->PrgNo, "model")) != -1)
     glUniformMatrix4fv(loc, 1, FALSE, &Model);
   
-  if ((loc = glGetUniformLocation(Unit->shdPrg.PrgNo, "view")) != -1)
+  if ((loc = glGetUniformLocation(Unit->shdPrg->PrgNo, "view")) != -1)
     glUniformMatrix4fv(loc, 1, FALSE, &(Anim->cam.ViewMatr));
   
-  if ((loc = glGetUniformLocation(Unit->shdPrg.PrgNo, "proj")) != -1)
+  if ((loc = glGetUniformLocation(Unit->shdPrg->PrgNo, "proj")) != -1)
     glUniformMatrix4fv(loc, 1, FALSE, &(Anim->cam.ProjMatr));
 
   TextureApply(Unit->texture, 0);

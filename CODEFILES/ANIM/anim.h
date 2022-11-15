@@ -17,6 +17,7 @@
 #define __anim_h_
 
 #include "../comdef.h"
+#include "../SCANNER/scanner.h"
 #include "../MATH/mth.h"
 #include "../MATH/vec.h"
 #include "../MATH/cam.h"

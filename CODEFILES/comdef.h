@@ -22,6 +22,8 @@
 #include <GL/glx.h>
 #include <GL/glu.h>
 
+#define NAME_LENGTH 512
+
 /* redefining main C types */
 typedef void VOID;
 typedef int INT;

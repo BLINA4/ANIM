@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Materials subsystem code file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 13.11.2022.
+ * LAST UPDATE : 16.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -31,12 +31,18 @@ MATERIAL *MaterialDefault;
 static MATERIAL * MaterialAdd( CHAR *Name, CHAR *Params )
 {
   INT i, j;
-  MATERIAL mtl = *MaterialDefault;
+  MATERIAL *mtl;
+
+  if ((mtl = malloc(sizeof(MATERIAL))) == NULL)
+    return NULL;
+  
+  // Copy default material
+  memcpy(mtl, MaterialDefault, sizeof(MATERIAL));
   
   // Scanner is not yet implemented!
   // ARGS Args = Scanner(Params);
  
-  strcpy(mtl.Name, Name);
+  strcpy(mtl->Name, Name);
 
   /* Scanner is not yet implemented!
    * for (i = 0; i < Args.NumOfScans; i++)
@@ -65,11 +71,11 @@ static MATERIAL * MaterialAdd( CHAR *Name, CHAR *Params )
    *    for (j = 0; j < Args.Scan[i].NumOfStr; j++)
    *      mtl.Tex[j] = TNG()->TextureAddFromFile(Args.Scan[i].Str[j]);
    *  else if (strcmp(Args.Scan[i].Name, "Shader") == 0)
-   *    mtl.Shd = TNG()->ShaderAdd(Args.Scan[i].Str[0]);
+   *    mtl.Shd = ShaderAdd(Args.Scan[i].Str[0]);
    * }
    */
 
-  return &mtl;
+  return mtl;
 } /* End of 'MaterialAdd' function */
 
 /* Materials apply function.
