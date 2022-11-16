@@ -105,10 +105,12 @@ static inline VOID CamProjSet( CAMERA *Cam, INT W, INT H )
  */
 static inline VOID CamSetDefault( CAMERA *Cam )
 {
+  VEC Up = VecSet(0, 5, 1);
+
   /* Set viewer */
-  Cam->Loc = VecSet(0, 0, 1);
-  Cam->At = VecSet(0, 0, 0);
-  Cam->ViewMatr = MatrView(Cam->Loc, Cam->At, VecSet(0, 1, 0));
+  Cam->Loc = VecSet(0, 1, 0);
+  Cam->At = VecSet(0, 0, -5);
+  Cam->ViewMatr = MatrView(Cam->Loc, Cam->At, Up);
 
   /* Set projection */
   Cam->ProjSize = 0.1;

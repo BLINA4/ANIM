@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Main file of project.
  * PROGRAMMER  : BLIN4
- * LAST UPDATE : 03.02.2022.
+ * LAST UPDATE : 16.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -27,7 +27,7 @@ INT main( VOID )
   
   //AnimUnitAdd(UnitCreateQuad());
   //AnimUnitAdd(UnitCreateOS());
-  AnimUnitAdd(UnitCreate3DCUBE());
+  AnimUnitAdd(UnitCreateScene());
 
   AnimRun();
   AnimClose();

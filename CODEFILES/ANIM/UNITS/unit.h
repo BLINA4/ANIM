@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Units system header file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 11.03.2021.
+ * LAST UPDATE : 16.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -60,7 +60,7 @@ UNIT * UnitCreateOS( VOID );
  * RETURNS:
  *   (UNIT *) pointer to created unit.
  */
-UNIT * UnitCreate3DCUBE( VOID );
+UNIT * UnitCreateScene( VOID );
 
 #endif /* __unit_h_ */
 
