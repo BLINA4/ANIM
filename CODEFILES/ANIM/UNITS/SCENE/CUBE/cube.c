@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Cube sub-unit file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 16.11.2022.
+ * LAST UPDATE : 17.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -29,8 +29,9 @@ typedef struct
   UNIT_BASE_FIELDS;
   
   MATERIAL *Mtl;
-  
-  /* Some OpenGL variables */
+  MATR Transform;     
+
+  /* Some OpenGL variables */ 
   UINT VBO, VAO;
 } UNIT_CUBE;
 
@@ -44,6 +45,7 @@ typedef struct
  */
 static VOID UnitInit( UNIT_CUBE *Unit, ANIM *Anim )
 {
+  Unit->Transform = MatrIdentity();
   Unit->Mtl = MaterialAdd("CUBE_MATERIAL", "Shader(CUBE_SHADERS),Tex(USEFILES/bricks.png)");
   MaterialApply(Unit->Mtl); 
 
@@ -126,7 +128,6 @@ static VOID UnitClose( UNIT_CUBE *Unit, ANIM *Anim )
 {
   glDeleteVertexArrays(1, &(Unit->VAO));
   glDeleteBuffers(1, &(Unit->VBO));
-  MaterialDelete(Unit->Mtl);
 } /* End of 'UnitClose' function */
 
 /* Unit response to event function.
@@ -171,16 +172,11 @@ static VOID UnitResponse( UNIT_CUBE *Unit, ANIM *Anim )
 static VOID UnitRender( UNIT_CUBE *Unit, ANIM *Anim )
 { 
   INT PrgNo = 0, loc = 0;
-  MATR Model = MatrMulMatr4(
-    MatrScale(VecSet(0.3f * cos(Anim->SyncTime * 1.325f) + 0.5f, 0.3f * sin(2.87f * Anim->SyncTime + 2.2) + 0.4f, 0.3f)),
-    MatrRotateY(30 * Anim->SyncTime),
-    MatrRotateX(-60 * cos(0.8 * Anim->SyncTime + 17.5)),
-    MatrTranslate(VecSet(0.0f, 1.0f, -1.0f))); 
 
   PrgNo = MaterialApply(Unit->Mtl);
 
   if ((loc = glGetUniformLocation(PrgNo, "model")) != -1)
-    glUniformMatrix4fv(loc, 1, FALSE, &Model);
+    glUniformMatrix4fv(loc, 1, FALSE, &(Unit->Transform));
   
   if ((loc = glGetUniformLocation(PrgNo, "view")) != -1)
     glUniformMatrix4fv(loc, 1, FALSE, &(Anim->cam.ViewMatr));

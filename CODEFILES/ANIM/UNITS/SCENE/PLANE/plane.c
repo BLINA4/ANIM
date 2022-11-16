@@ -92,7 +92,6 @@ static VOID UnitClose( UNIT_PLANE *Unit, ANIM *Anim )
   glDeleteVertexArrays(1, &(Unit->VAO));
   glDeleteBuffers(1, &(Unit->VBO));
   glDeleteBuffers(1, &(Unit->EBO));
-  MaterialDelete(Unit->Mtl);
 } /* End of 'UnitClose' function */
 
 /* Unit response to event function.

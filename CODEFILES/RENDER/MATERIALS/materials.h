@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Materials subsystem header file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 16.11.2022.
+ * LAST UPDATE : 17.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -18,6 +18,9 @@
 
 #include "../../comdef.h"
 #include "../render.h"
+
+/* Maximum number of different materials */
+#define MATERIALS_COUNT 256
 
 /* Length of material's name */
 #define MATERIAL_NAME_LENGTH 256
@@ -63,6 +66,12 @@ UINT MaterialApply( MATERIAL *Mtl );
  * RETURNS: None.
  */
 VOID MaterialDelete( MATERIAL *Mtl );
+
+/* Materials destructor function.
+ * ARGUMENTS: None.
+ * RETURNS: None.
+ */
+VOID MaterialsDestructor( VOID );
 
 #endif /* __materials_h_ */
 

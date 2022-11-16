@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Animation system implementation file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 16.11.2022.
+ * LAST UPDATE : 17.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.

@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Scanner subsystem header file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 16.11.2022.
+ * LAST UPDATE : 17.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -19,13 +19,13 @@
 #include "../comdef.h"
  
 /* Maximum size of scanning string */
-#define MAX_NAME_SIZE 30
+#define MAX_NAME_SIZE 256 
 
 /* Maximum amount of variables */
-#define MAX_VAR_SIZE 30
+#define MAX_VAR_SIZE 256
 
 /* Maximum size of string */
-#define MAX_STR_SIZE 20
+#define MAX_STR_SIZE 256
 
 /* Maximum size of string */
 #define MAX_VAR_COUNT 20

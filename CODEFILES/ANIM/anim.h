@@ -43,6 +43,7 @@ struct tagANIM
   BOOL                    Debug;                                                            /*  Is programm in debug mode   */
   DBL                     StartTime;                                                        /*  Time of startup             */
   DBL                     SyncTime;                                                         /*  Synchronization time        */
+  INT                     NumOfMaterials;                                                   /*  Number of loaded materials  */
   INT                     NumOfTextures;                                                    /*  Number of loaded textures   */
   CONTROLLER              *Controller;                                                      /*  Module controller           */
   GLint                   att[];                                                            /*  Attributes of GL            */  

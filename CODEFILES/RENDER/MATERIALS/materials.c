@@ -16,6 +16,8 @@
 #include <string.h>
 #include "materials.h"
 
+MATERIAL Materials[MATERIALS_COUNT];
+
 /* Material add function.
  * ARGUMENTS:
  *   - name of material:
@@ -28,16 +30,26 @@
 MATERIAL * MaterialAdd( CHAR *Name, CHAR *Params )
 {
   INT i, j;
-  MATERIAL *mtl;
+  MATERIAL mtl;
+ 
+  strcpy(mtl.Name, Name);
 
-  if ((mtl = malloc(sizeof(MATERIAL))) == NULL)
+  /* Check if material is already loaded */
+  for (i = 0; i < Anim.NumOfMaterials; i++)
+  {  
+    //printf("name is %s\n", mtl.Name);
+    if (!strcmp(Materials[i].Name, mtl.Name))
+      return &Materials[i];
+    //printf("new mtl!\n");
+  }
+
+  /* Check if maximum count */
+  if (Anim.NumOfMaterials == MATERIALS_COUNT)
     return NULL;
-  memset(mtl, 0, sizeof(MATERIAL));
 
+  /* The worst parser ever btw... */
   ARGS Args = Scanner(Params);
  
-  strcpy(mtl->Name, Name);
-
   if (Anim.Debug)
     printf("SCANNER:\n  Number of scans is %i\n", Args.NumOfScans);
   for (i = 0; i < Args.NumOfScans; i++)
@@ -53,29 +65,30 @@ MATERIAL * MaterialAdd( CHAR *Name, CHAR *Params )
     }
 
     if (strcmp(Args.Scan[i].Name, "Ka") == 0 && Args.Scan[i].NumOfComp == 3)
-      mtl->Ka = VecSet(x, y, z);
+      mtl.Ka = VecSet(x, y, z);
     else if (strcmp(Args.Scan[i].Name, "Ka") == 0 && Args.Scan[i].NumOfComp == 1)
-      mtl->Ka = VecSet(x, x, x);
+      mtl.Ka = VecSet(x, x, x);
     else if (strcmp(Args.Scan[i].Name, "Kd") == 0 && Args.Scan[i].NumOfComp == 3)
-      mtl->Kd = VecSet(x, y, z);
+      mtl.Kd = VecSet(x, y, z);
     else if (strcmp(Args.Scan[i].Name, "Kd") == 0 && Args.Scan[i].NumOfComp == 1)
-      mtl->Kd = VecSet(x, x, x);
+      mtl.Kd = VecSet(x, x, x);
     else if (strcmp(Args.Scan[i].Name, "Ks") == 0 && Args.Scan[i].NumOfComp == 3)
-      mtl->Ks = VecSet(x, y, z);
+      mtl.Ks = VecSet(x, y, z);
     else if (strcmp(Args.Scan[i].Name, "Ks") == 0 && Args.Scan[i].NumOfComp == 1)
-      mtl->Ks = VecSet(x, x, x);
+      mtl.Ks = VecSet(x, x, x);
     else if (strcmp(Args.Scan[i].Name, "Ph") == 0)
-      mtl->Ph = x;
+      mtl.Ph = x;
     else if (strcmp(Args.Scan[i].Name, "Trans") == 0)
-      mtl->Trans = x;
+      mtl.Trans = x;
     else if (strcmp(Args.Scan[i].Name, "Tex") == 0)
       for (j = 0; j < Args.Scan[i].NumOfStr; j++)
-        mtl->Tex[j] = TextureAddFromFile(Args.Scan[i].Str[j]);
+        mtl.Tex[j] = TextureAddFromFile(Args.Scan[i].Str[j]);
     else if (strcmp(Args.Scan[i].Name, "Shader") == 0)
-      mtl->Shd = ShaderAdd(Args.Scan[i].Str[0]);
+      mtl.Shd = ShaderAdd(Args.Scan[i].Str[0]);
   }
 
-  return mtl;
+  Materials[Anim.NumOfMaterials] = mtl;
+  return &Materials[Anim.NumOfMaterials++];
 } /* End of 'MaterialAdd' function */
 
 /* Materials apply function.
@@ -140,9 +153,6 @@ VOID MaterialDelete( MATERIAL *Mtl )
 {
   INT i;
 
-  if (Mtl == NULL)
-    return;
-
   for (i = 0; i < MATERIAL_TEXTURE_COUNT; i++)
   {
     if (Mtl->Tex[i] != NULL)
@@ -150,9 +160,19 @@ VOID MaterialDelete( MATERIAL *Mtl )
   }
 
   ShaderDelete(Mtl->Shd);
-
-  free(Mtl);
 } /* End of 'MaterialDelete' function */
+
+/* Materials destructor function.
+ * ARGUMENTS: None.
+ * RETURNS: None.
+ */
+VOID MaterialsDestructor( VOID )
+{
+  INT i;
+  
+  for (i = 0; i < MATERIALS_COUNT; i++)
+    MaterialDelete(&Materials[i]);
+} /* End of 'MaterialsDestructor' function */
 
 /* END OF 'materials.c' FILE */
 

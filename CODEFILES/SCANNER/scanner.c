@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Scanner subsystem code file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 16.11.2022.
+ * LAST UPDATE : 17.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -56,7 +56,7 @@ ARGS Scanner( CHAR *S )
   INT
     i = 0, NumOfScans = 0, j = 0, k = 1, m = 0,
     l, NumOfSymb, read, NumOfStr = 0, flag = 1, cnt;
-  CHAR buf[100] = {0}, str[100] = {0};
+  CHAR buf[255] = {0}, str[256] = {0};
   ARGS Args = {0};
 
   /*
