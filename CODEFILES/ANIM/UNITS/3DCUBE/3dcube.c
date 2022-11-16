@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               3d cube unit file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 14.11.2022.
+ * LAST UPDATE : 16.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -27,11 +27,11 @@
 typedef struct
 {
   UNIT_BASE_FIELDS;
-  SHADER *shdPrg;
+  
+  MATERIAL *Mtl;
   
   /* Some OpenGL variables */
   UINT VBO, VAO;
-  TEXTURE *texture;
 } UNIT_3DCUBE;
 
 /* Unit initialization function.
@@ -44,9 +44,8 @@ typedef struct
  */
 static VOID UnitInit( UNIT_3DCUBE *Unit, ANIM *Anim )
 {
-  Unit->shdPrg = ShaderAdd("3DCUBE_SHADER"); 
-  
-  glUseProgram(Unit->shdPrg->PrgNo);
+  Unit->Mtl = MaterialAdd("3DCUBE_MATERIAL", "Shader(CUBE_SHADERS),Tex(USEFILES/bricks.png)");
+  MaterialApply(Unit->Mtl); 
 
   FLT vertices[] = 
   {
@@ -107,8 +106,6 @@ static VOID UnitInit( UNIT_3DCUBE *Unit, ANIM *Anim )
   glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
   glEnableVertexAttribArray(1);
  
-  Unit->texture = TextureAddFromFile("USEFILES/grass.png");
-
   glBindBuffer(GL_ARRAY_BUFFER, 0);
   glBindVertexArray(0);
 
@@ -129,8 +126,7 @@ static VOID UnitClose( UNIT_3DCUBE *Unit, ANIM *Anim )
 {
   glDeleteVertexArrays(1, &(Unit->VAO));
   glDeleteBuffers(1, &(Unit->VBO));
-  TextureDelete(Unit->texture);
-  ShaderDelete(Unit->shdPrg);
+  MaterialDelete(Unit->Mtl);
 } /* End of 'UnitClose' function */
 
 /* Unit response to event function.
@@ -145,6 +141,7 @@ static VOID UnitResponse( UNIT_3DCUBE *Unit, ANIM *Anim )
 {
   if (Anim->Controller->keys[TAB] == TRUE)
   {
+    /*
     if (!strcmp(Unit->texture->Name, "USEFILES/grass.png"))
     {
       TextureDelete(Unit->texture);
@@ -158,6 +155,8 @@ static VOID UnitResponse( UNIT_3DCUBE *Unit, ANIM *Anim )
       Unit->texture = TextureAddFromFile("USEFILES/grass.png");
       return;
     }
+    */
+    ;
   }
 } /* End of 'UnitResponse' function */
  
@@ -171,36 +170,25 @@ static VOID UnitResponse( UNIT_3DCUBE *Unit, ANIM *Anim )
  */
 static VOID UnitRender( UNIT_3DCUBE *Unit, ANIM *Anim )
 { 
-  INT loc;
+  INT PrgNo = 0, loc = 0;
   MATR Model = MatrMulMatr4(
     MatrScale(VecSet(0.3f * cos(Anim->SyncTime * 1.325f) + 0.5f, 0.3f * sin(2.87f * Anim->SyncTime + 2.2) + 0.4f, 0.3f)),
     MatrRotateY(30 * Anim->SyncTime),
     MatrRotateX(-60 * cos(0.8 * Anim->SyncTime + 17.5)),
     MatrTranslate(VecSet(0.0f, 0.0f, 0.0f))); 
 
-  glUseProgram(Unit->shdPrg->PrgNo);
+  PrgNo = MaterialApply(Unit->Mtl);
 
-  if ((loc = glGetUniformLocation(Unit->shdPrg->PrgNo, "sinColor")) != -1)
-  {  
-    glUniform3f(
-      loc,
-      0.7f * cos(Anim->SyncTime * 1.2f) + 0.3f,
-      0.5f * sin(Anim->SyncTime + cos(2.3 * Anim->SyncTime)),
-      0.63f * sin(cos(Anim->SyncTime * 2.82) + 33) + 0.37f);
-  }
-  
-  if ((loc = glGetUniformLocation(Unit->shdPrg->PrgNo, "model")) != -1)
+  if ((loc = glGetUniformLocation(PrgNo, "model")) != -1)
     glUniformMatrix4fv(loc, 1, FALSE, &Model);
   
-  if ((loc = glGetUniformLocation(Unit->shdPrg->PrgNo, "view")) != -1)
+  if ((loc = glGetUniformLocation(PrgNo, "view")) != -1)
     glUniformMatrix4fv(loc, 1, FALSE, &(Anim->cam.ViewMatr));
   
-  if ((loc = glGetUniformLocation(Unit->shdPrg->PrgNo, "proj")) != -1)
+  if ((loc = glGetUniformLocation(PrgNo, "proj")) != -1)
     glUniformMatrix4fv(loc, 1, FALSE, &(Anim->cam.ProjMatr));
 
-  TextureApply(Unit->texture, 0);
   glBindVertexArray(Unit->VAO);
-
   glDrawArrays(GL_TRIANGLES, 0, 36);
 
   glUseProgram(0);

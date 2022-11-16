@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Primitives subsystem header file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 13.11.2022.
+ * LAST UPDATE : 16.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -152,41 +152,40 @@ static VOID PrimDraw( PRIM *Pr, MATR World )
 
   glLoadMatrixf(&WVP);
 
-  // Disabled till adding materials and lightning
-  // ProgId = MaterialApply(Pr->Mtl);
+  ProgId = MaterialApply(Pr->Mtl);
  
   /* Setup transform coefficients */
-  //if ((loc = glGetUniformLocation(ProgId, "MatrWVP")) != -1)
-  //  glUniformMatrix4fv(loc, 1, FALSE, &WVP);
-  //if ((loc = glGetUniformLocation(ProgId, "MatrVP")) != -1)
-  //  glUniformMatrix4fv(loc, 1, FALSE, &Anim.cam.VP);
-  //if ((loc = glGetUniformLocation(ProgId, "MatrW")) != -1)
-  //  glUniformMatrix4fv(loc, 1, FALSE, &W);
-  //if ((loc = glGetUniformLocation(ProgId, "MatrV")) != -1)
-  //  glUniformMatrix4fv(loc, 1, FALSE, &Anim.cam.ViewMatr);
-  //if ((loc = glGetUniformLocation(ProgId, "MatrN")) != -1)
-  //  glUniformMatrix4fv(loc, 1, FALSE, &N);
-  //if ((loc = glGetUniformLocation(ProgId, "CamLoc")) != -1)
-  //  glUniform3fv(loc, 1, &Anim.cam.Loc);
-  //v = CamRight(&Anim.cam);
-  //if ((loc = glGetUniformLocation(ProgId, "CamRight")) != -1)
-  //  glUniform3fv(loc, 1, &v.X);
-  //v = CamUp(&Anim.cam);
-  //if ((loc = glGetUniformLocation(ProgId, "CamUp")) != -1)
-  //  glUniform3fv(loc, 1, &v);
-  //v = CamDir(&Anim.cam);
-  //if ((loc = glGetUniformLocation(ProgId, "CamDir")) != -1)
-  //  glUniform3fv(loc, 1, &v);
-  //if ((loc = glGetUniformLocation(ProgId, "CamProjDist")) != -1)
-  //  glUniform1f(loc, Anim.cam.ProjDist);
-  //if ((loc = glGetUniformLocation(ProgId, "CamProjSize")) != -1)
-  //  glUniform1f(loc, Anim.cam.ProjSize);
-  //if ((loc = glGetUniformLocation(ProgId, "Time")) != -1)
-  //  glUniform1f(loc, Anim.SyncTime);
-  //if ((loc = glGetUniformLocation(ProgId, "FrameW")) != -1)
-  //  glUniform1f(loc, Anim.W);
-  //if ((loc = glGetUniformLocation(ProgId, "FrameH")) != -1)
-  //  glUniform1f(loc, Anim.H);
+  if ((loc = glGetUniformLocation(ProgId, "MatrWVP")) != -1)
+    glUniformMatrix4fv(loc, 1, FALSE, &WVP);
+  if ((loc = glGetUniformLocation(ProgId, "MatrVP")) != -1)
+    glUniformMatrix4fv(loc, 1, FALSE, &Anim.cam.VP);
+  if ((loc = glGetUniformLocation(ProgId, "MatrW")) != -1)
+    glUniformMatrix4fv(loc, 1, FALSE, &W);
+  if ((loc = glGetUniformLocation(ProgId, "MatrV")) != -1)
+    glUniformMatrix4fv(loc, 1, FALSE, &Anim.cam.ViewMatr);
+  if ((loc = glGetUniformLocation(ProgId, "MatrN")) != -1)
+    glUniformMatrix4fv(loc, 1, FALSE, &N);
+  if ((loc = glGetUniformLocation(ProgId, "CamLoc")) != -1)
+    glUniform3fv(loc, 1, &Anim.cam.Loc);
+  v = CamRight(&Anim.cam);
+  if ((loc = glGetUniformLocation(ProgId, "CamRight")) != -1)
+    glUniform3fv(loc, 1, &v.X);
+  v = CamUp(&Anim.cam);
+  if ((loc = glGetUniformLocation(ProgId, "CamUp")) != -1)
+    glUniform3fv(loc, 1, &v);
+  v = CamDir(&Anim.cam);
+  if ((loc = glGetUniformLocation(ProgId, "CamDir")) != -1)
+    glUniform3fv(loc, 1, &v);
+  if ((loc = glGetUniformLocation(ProgId, "CamProjDist")) != -1)
+    glUniform1f(loc, Anim.cam.ProjDist);
+  if ((loc = glGetUniformLocation(ProgId, "CamProjSize")) != -1)
+    glUniform1f(loc, Anim.cam.ProjSize);
+  if ((loc = glGetUniformLocation(ProgId, "Time")) != -1)
+    glUniform1f(loc, Anim.SyncTime);
+  if ((loc = glGetUniformLocation(ProgId, "FrameW")) != -1)
+    glUniform1f(loc, Anim.W);
+  if ((loc = glGetUniformLocation(ProgId, "FrameH")) != -1)
+    glUniform1f(loc, Anim.H);
  
   glBindVertexArray(Pr->VA);
 

@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Primitives subsystem header file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 13.11.2022.
+ * LAST UPDATE : 16.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -36,7 +36,7 @@ typedef struct tagPRIM PRIM;
 struct tagPRIM
 {
   PRIM_TYPE Type;    /* Primitive type */
-  //MATERIAL *Mtl;   /* Primitive material */
+  MATERIAL *Mtl;     /* Primitive material */
   MATR Trans;        /* Additional transformation matrix */
   INT
     VA, IBuf, VBuf,  /* OpenGL vertex array, vertex buffer and index buffer */

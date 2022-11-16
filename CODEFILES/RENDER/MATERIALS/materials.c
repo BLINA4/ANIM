@@ -16,9 +16,6 @@
 #include <string.h>
 #include "materials.h"
 
-/* Default material instance */
-MATERIAL *MaterialDefault;
-
 /* Material add function.
  * ARGUMENTS:
  *   - name of material:
@@ -28,52 +25,55 @@ MATERIAL *MaterialDefault;
  * RETURNS:
  *   (MATERIAL *) pointer to added material.
  */
-static MATERIAL * MaterialAdd( CHAR *Name, CHAR *Params )
+MATERIAL * MaterialAdd( CHAR *Name, CHAR *Params )
 {
   INT i, j;
   MATERIAL *mtl;
 
   if ((mtl = malloc(sizeof(MATERIAL))) == NULL)
     return NULL;
-  
-  // Copy default material
-  memcpy(mtl, MaterialDefault, sizeof(MATERIAL));
-  
-  // Scanner is not yet implemented!
-  // ARGS Args = Scanner(Params);
+  memset(mtl, 0, sizeof(MATERIAL));
+
+  ARGS Args = Scanner(Params);
  
   strcpy(mtl->Name, Name);
 
-  /* Scanner is not yet implemented!
-   * for (i = 0; i < Args.NumOfScans; i++)
-   * {
-   *  FLT x = Args.Scan[i].Var[0],
-   *      y = Args.Scan[i].Var[1],
-   *      z = Args.Scan[i].Var[2];
-   *
-   *  if (strcmp(Args.Scan[i].Name, "Ka") == 0 && Args.Scan[i].NumOfComp == 3)
-   *    mtl.Ka = VecSet(x, y, z);
-   *  else if (strcmp(Args.Scan[i].Name, "Ka") == 0 && Args.Scan[i].NumOfComp == 1)
-   *    mtl.Ka = VecSet(x, x, x);
-   *  else if (strcmp(Args.Scan[i].Name, "Kd") == 0 && Args.Scan[i].NumOfComp == 3)
-   *    mtl.Kd = VecSet(x, y, z);
-   *  else if (strcmp(Args.Scan[i].Name, "Kd") == 0 && Args.Scan[i].NumOfComp == 1)
-   *    mtl.Kd = VecSet(x, x, x);
-   *  else if (strcmp(Args.Scan[i].Name, "Ks") == 0 && Args.Scan[i].NumOfComp == 3)
-   *    mtl.Ks = VecSet(x, y, z);
-   *  else if (strcmp(Args.Scan[i].Name, "Ks") == 0 && Args.Scan[i].NumOfComp == 1)
-   *    mtl.Ks = VecSet(x, x, x);
-   *  else if (strcmp(Args.Scan[i].Name, "Ph") == 0)
-   *    mtl.Ph = x;
-   *  else if (strcmp(Args.Scan[i].Name, "Trans") == 0)
-   *    mtl.Trans = x;
-   *  else if (strcmp(Args.Scan[i].Name, "Tex") == 0)
-   *    for (j = 0; j < Args.Scan[i].NumOfStr; j++)
-   *      mtl.Tex[j] = TNG()->TextureAddFromFile(Args.Scan[i].Str[j]);
-   *  else if (strcmp(Args.Scan[i].Name, "Shader") == 0)
-   *    mtl.Shd = ShaderAdd(Args.Scan[i].Str[0]);
-   * }
-   */
+  if (Anim.Debug)
+    printf("SCANNER:\n  Number of scans is %i\n", Args.NumOfScans);
+  for (i = 0; i < Args.NumOfScans; i++)
+  {
+    FLT x = Args.Scan[i].Var[0],
+        y = Args.Scan[i].Var[1],
+        z = Args.Scan[i].Var[2];
+
+    if (Anim.Debug)
+    {
+      printf("Scan %i - %s\n", i + 1, Args.Scan[i].Name);
+      printf("  Scan string is \"%s\"\n", Args.Scan[i].Str);
+    }
+
+    if (strcmp(Args.Scan[i].Name, "Ka") == 0 && Args.Scan[i].NumOfComp == 3)
+      mtl->Ka = VecSet(x, y, z);
+    else if (strcmp(Args.Scan[i].Name, "Ka") == 0 && Args.Scan[i].NumOfComp == 1)
+      mtl->Ka = VecSet(x, x, x);
+    else if (strcmp(Args.Scan[i].Name, "Kd") == 0 && Args.Scan[i].NumOfComp == 3)
+      mtl->Kd = VecSet(x, y, z);
+    else if (strcmp(Args.Scan[i].Name, "Kd") == 0 && Args.Scan[i].NumOfComp == 1)
+      mtl->Kd = VecSet(x, x, x);
+    else if (strcmp(Args.Scan[i].Name, "Ks") == 0 && Args.Scan[i].NumOfComp == 3)
+      mtl->Ks = VecSet(x, y, z);
+    else if (strcmp(Args.Scan[i].Name, "Ks") == 0 && Args.Scan[i].NumOfComp == 1)
+      mtl->Ks = VecSet(x, x, x);
+    else if (strcmp(Args.Scan[i].Name, "Ph") == 0)
+      mtl->Ph = x;
+    else if (strcmp(Args.Scan[i].Name, "Trans") == 0)
+      mtl->Trans = x;
+    else if (strcmp(Args.Scan[i].Name, "Tex") == 0)
+      for (j = 0; j < Args.Scan[i].NumOfStr; j++)
+        mtl->Tex[j] = TextureAddFromFile(Args.Scan[i].Str[j]);
+    else if (strcmp(Args.Scan[i].Name, "Shader") == 0)
+      mtl->Shd = ShaderAdd(Args.Scan[i].Str[0]);
+  }
 
   return mtl;
 } /* End of 'MaterialAdd' function */
@@ -85,14 +85,15 @@ static MATERIAL * MaterialAdd( CHAR *Name, CHAR *Params )
  * RETURNS:
  *   (UINT) shader program Id.
  */
-static UINT MaterialApply( MATERIAL *Mtl )
+UINT MaterialApply( MATERIAL *Mtl )
 {
   INT i, loc;
   UINT ProgId;
 
-  /* Correction of material */
+  /* NULL check */
   if (Mtl == NULL)
-    Mtl = MaterialDefault;
+    return 0;
+  
   /* Shader applying */
   ProgId = ShaderApply(Mtl->Shd);
  
@@ -129,17 +130,28 @@ static UINT MaterialApply( MATERIAL *Mtl )
   return ProgId;
 } /* End of 'MaterialApply' function */
 
-/*
+/* Material structure free function.
+ * ARGUMENTS:
+ *   - Material structure pointer:
+ *       MATERIAL *Mtl
+ * RETURNS: None.
  */
 VOID MaterialDelete( MATERIAL *Mtl )
 {
   INT i;
+
+  if (Mtl == NULL)
+    return;
 
   for (i = 0; i < MATERIAL_TEXTURE_COUNT; i++)
   {
     if (Mtl->Tex[i] != NULL)
       TextureDelete(Mtl->Tex[i]);
   }
+
+  ShaderDelete(Mtl->Shd);
+
+  free(Mtl);
 } /* End of 'MaterialDelete' function */
 
 /* END OF 'materials.c' FILE */
