@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Main scene unit file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 17.11.2022.
+ * LAST UPDATE : 21.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -36,13 +36,14 @@ static VOID UnitInit( UNIT_SCENE *Unit, ANIM *Anim )
   INT i;
 
   Unit->Plane = UnitCreatePlane();
+  Unit->Plane->Init(Unit->Plane, Anim);
   
+  Unit->Cubes = malloc(sizeof(UNIT_CUBE *) * COUNT_OF_CUBES);
   for (i = 0; i < COUNT_OF_CUBES; i++)
   {
     Unit->Cubes[i] = UnitCreateCube();
     Unit->Cubes[i]->Init(Unit->Cubes[i], Anim);
   }
-  Unit->Plane->Init(Unit->Plane, Anim);
 } /* End of 'UnitInit' function */
 
 /* Unit deinitialization function.
@@ -61,6 +62,8 @@ static VOID UnitClose( UNIT_SCENE *Unit, ANIM *Anim )
 
   for (i = 0; i < COUNT_OF_CUBES; i++)
     Unit->Cubes[i]->Close(Unit->Cubes[i], Anim);
+
+  free(Unit->Cubes);
 } /* End of 'UnitClose' function */
 
 /* Unit response to event function.

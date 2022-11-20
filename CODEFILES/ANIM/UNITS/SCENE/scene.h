@@ -48,7 +48,7 @@ typedef struct
 
   // Sub-units
   UNIT_PLANE *Plane;
-  UNIT_CUBE *Cubes[COUNT_OF_CUBES];
+  UNIT_CUBE **Cubes;
 } UNIT_SCENE;
 
 /* Unit creation function.

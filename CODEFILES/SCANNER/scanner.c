@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Scanner subsystem code file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 17.11.2022.
+ * LAST UPDATE : 21.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -30,19 +30,21 @@
  *       INT Symb.
  * RETURNS: (INT) amount of scanned symbols.
  */
-static INT GoToSymblol( CHAR *S, CHAR ch, CHAR *buf, INT Symb )
+static INT GoToSymbol( CHAR *S, CHAR ch, CHAR *buf, INT Symb )
 {
   INT i = Symb, NumOfCh = 0;
 
   while (S[i] != 0 && S[i] != ch)
   {
+    printf("%c ", S[i]);
     buf[i] = S[i];
     i++;
     NumOfCh++;
   }
+  printf("\n");
 
   return NumOfCh;
-} /* End of 'GoToSymblol' function */
+} /* End of 'GoToSymbol' function */
 
 /* Scanning from string function.
  * ARGUMENTS: 
@@ -59,6 +61,8 @@ ARGS Scanner( CHAR *S )
   CHAR buf[255] = {0}, str[256] = {0};
   ARGS Args = {0};
 
+  printf("%s\n", S);
+
   /*
    * Example of scanning string:
    *  "Pos(10,2.6,8.1),Tex(tex.txt,tx.txt)x2,Att(1,0,0),CutOfDist(0,3)x7,CutOfAngle(5,10)"
@@ -71,9 +75,9 @@ ARGS Scanner( CHAR *S )
   {
     /* If first pass read without ','*/
     if (flag)
-      S += NumOfSymb = GoToSymblol(S, '(', buf, 0);
+      S += NumOfSymb = GoToSymbol(S, '(', buf, 0);
     else
-      S += NumOfSymb = GoToSymblol(S, '(', buf, 1);
+      S += NumOfSymb = GoToSymbol(S, '(', buf, 1);
     sprintf(Args.Scan[i].Name, "%s", buf);
 
     /* Read variables */
@@ -86,13 +90,13 @@ ARGS Scanner( CHAR *S )
     Args.Scan[i].NumOfComp = read;
     NumOfScans++;
     memset(buf, 0, sizeof(buf));
-    NumOfSymb = GoToSymblol(S, ')', buf, 0) + 2;
+    NumOfSymb = GoToSymbol(S, ',', buf, 0) + 1;
 
     /* If strings in */
     if (read == 0)
     {
       m = 0;
-      sprintf(str, "%s)", buf);
+      sprintf(str, "%s", buf);
       while (str[k] != 0)
       {
         while (str[k] != ',' && str[k] != ')')
@@ -114,6 +118,8 @@ ARGS Scanner( CHAR *S )
       buf[m] = 0;
  
     S += NumOfSymb - 1;
+    if (*S != 0)
+      S++;
 
     /* Read repeated scans */
     if (S[0] == 'x')
@@ -131,7 +137,6 @@ ARGS Scanner( CHAR *S )
         S += 2;
       m = 0;
     }
-    S++;
     Args.Scan[i].NumOfStr = NumOfStr;
     NumOfStr = 0;
     i++;
