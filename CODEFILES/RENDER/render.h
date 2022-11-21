@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Render system header file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 13.11.2022.
+ * LAST UPDATE : 21.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -18,9 +18,7 @@
 
 #include "../comdef.h"
 #include "../MATH/mth.h"
-#include "TEXTURES/textures.h"
-#include "SHADERS/shader.h"   
-#include "MATERIALS/materials.h"
+#include "PRIMITIVES/primitives.h"
 #include "../ANIM/anim.h"
 
 extern GLuint    (*glCreateShader)             ( GLenum );

@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Primitives subsystem header file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 16.11.2022.
+ * LAST UPDATE : 21.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -16,8 +16,8 @@
 #ifndef __primitives_h_
 #define __primitives_h_
 
-#include "../../comdef.h"
 #include "../render.h"
+#include "../MATERIALS/materials.h"
 
 /* Primitive types */
 typedef enum tagPRIM_TYPE
@@ -64,7 +64,7 @@ struct tagPRIM
  * RETURNS:
  *   (PRIM *) pointer to created primitive.
  */
-static PRIM * PrimCreate( PRIM_TYPE Type, CHAR *VertexFormat, VOID *V, INT NumOfV, INT *Ind,   INT NumOfI );
+PRIM * PrimCreate( PRIM_TYPE Type, CHAR *VertexFormat, VOID *V, INT NumOfV, INT *Ind,   INT NumOfI );
 
 /* Draw primitive function.
  * ARGUMENTS:
@@ -74,7 +74,7 @@ static PRIM * PrimCreate( PRIM_TYPE Type, CHAR *VertexFormat, VOID *V, INT NumOf
  *       MATR World;
  * RETURNS: None.
  */
-static VOID PrimDraw( PRIM *Pr, MATR World );
+VOID PrimDraw( PRIM *Pr, MATR World );
 
 /* Free memory and delete primitive function.
  * ARGUMENTS:
@@ -82,7 +82,7 @@ static VOID PrimDraw( PRIM *Pr, MATR World );
  *       PRIM *Pr;
  * RETURNS: None.
  */
-static VOID PrimFree( PRIM *Pr );
+VOID PrimFree( PRIM *Pr );
 
 #endif /* __primitives_h_ */
 

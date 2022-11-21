@@ -7,13 +7,18 @@
  * PURPOSE     : Animation project.
  *               Primitives subsystem header file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 16.11.2022.
+ * LAST UPDATE : 21.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
  */
 
+#ifndef __primitives_c_
+#define __primitives_c_
+
 #include "primitives.h"
+
+#endif /* __primitives_c */
 
 /* Primitive create function.
  * ARGUMENTS: 
@@ -32,7 +37,7 @@
  * RETURNS:
  *   (PRIM *) pointer to created primitive.
  */
-static PRIM * PrimCreate( PRIM_TYPE Type, CHAR *VertexFormat, VOID *V, INT NumOfV, INT *Ind, INT NumOfI )
+PRIM * PrimCreate( PRIM_TYPE Type, CHAR *VertexFormat, VOID *V, INT NumOfV, INT *Ind, INT NumOfI )
 {
   INT i, type, attr_count = 0, all_size = 0, n;
   struct
@@ -42,9 +47,11 @@ static PRIM * PrimCreate( PRIM_TYPE Type, CHAR *VertexFormat, VOID *V, INT NumOf
     INT Offset; /* Offset to attributes in structure */
   } Attribs[16];
   VEC *P = V;
-  PRIM Pr;
+  PRIM *Pr;
  
-  memset(&Pr, 0, sizeof(PRIM));
+  if ((Pr = malloc(sizeof(PRIM))) == NULL)
+    return NULL;
+  memset(Pr, 0, sizeof(PRIM));
 
   /* Parse attributes parameters */
   while (*VertexFormat != 0)
@@ -67,16 +74,18 @@ static PRIM * PrimCreate( PRIM_TYPE Type, CHAR *VertexFormat, VOID *V, INT NumOf
     else
       VertexFormat++;
 
+  printf("Attribute count is %i\n", attr_count);
+
   if (all_size != 0 && V != NULL && NumOfV != 0)
   {
     /* Create OpenGL primitve */
-    glGenBuffers(1, &Pr.VBuf);
-    glGenVertexArrays(1, &Pr.VA);
+    glGenBuffers(1, &(Pr->VBuf));
+    glGenVertexArrays(1, &(Pr->VA));
  
     /* Vertexes */
-    glBindVertexArray(Pr.VA);
+    glBindVertexArray(Pr->VA);
 
-    glBindBuffer(GL_ARRAY_BUFFER, Pr.VBuf);
+    glBindBuffer(GL_ARRAY_BUFFER, Pr->VBuf);
     glBufferData(GL_ARRAY_BUFFER, all_size * NumOfV, V, GL_STATIC_DRAW);
 
     /* Store and enable vertex attributes */
@@ -89,38 +98,39 @@ static PRIM * PrimCreate( PRIM_TYPE Type, CHAR *VertexFormat, VOID *V, INT NumOf
 
     if (Ind != NULL && NumOfI != 0)
     {
-      glGenBuffers(1, &Pr.IBuf);
+      glGenBuffers(1, &(Pr->IBuf));
       
-      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Pr.IBuf);
+      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Pr->IBuf);
       glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(INT) * NumOfI, Ind, GL_STATIC_DRAW);
       glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-      Pr.NumOfI = NumOfI;
+      Pr->NumOfI = NumOfI;
     }
     else
-      Pr.NumOfI = NumOfI;
+      Pr->NumOfI = NumOfV;
 
     /* Evaluate minimum & maximum primitives */
-    Pr.Min = Pr.Max = P[0];
+    Pr->Min = Pr->Max = P[0];
     for (i = 1; i < NumOfV; i++)
     {
-      Pr.Min = VecSet(COM_MIN(Pr.Min.X, P->X),
-                      COM_MIN(Pr.Min.Y, P->Y),
-                      COM_MIN(Pr.Min.Z, P->Z));
-      Pr.Max = VecSet(COM_MAX(Pr.Max.X, P->X),
-                      COM_MAX(Pr.Max.Y, P->Y),
-                      COM_MAX(Pr.Max.Z, P->Z));
+      Pr->Min = VecSet(COM_MIN(Pr->Min.X, P->X),
+                       COM_MIN(Pr->Min.Y, P->Y),
+                       COM_MIN(Pr->Min.Z, P->Z));
+      Pr->Max = VecSet(COM_MAX(Pr->Max.X, P->X),
+                       COM_MAX(Pr->Max.Y, P->Y),
+                       COM_MAX(Pr->Max.Z, P->Z));
       P = (VEC *)((BYTE *)P + all_size);
     }
-    Pr.Center = VecDivNum(VecAddVec(Pr.Min, Pr.Max), 2);
+    Pr->Center = VecDivNum(VecAddVec(Pr->Min, Pr->Max), 2);
   }
   else
-    Pr.NumOfI = NumOfV;
+    Pr->NumOfI = NumOfV;
 
-  Pr.Trans = MatrIdentity();
-  Pr.Type = Type;
+  Pr->Trans = MatrIdentity();
+  Pr->Type = Type;
 
-  return &Pr;
+  //printf("Success!\n");
+  return Pr;
 } /* End of 'PrimCreate' function */
 
 /* Draw primitive function.
@@ -131,7 +141,7 @@ static PRIM * PrimCreate( PRIM_TYPE Type, CHAR *VertexFormat, VOID *V, INT NumOf
  *       MATR World;
  * RETURNS: None.
  */
-static VOID PrimDraw( PRIM *Pr, MATR World )
+VOID PrimDraw( PRIM *Pr, MATR World )
 {
   INT
     loc,
@@ -186,7 +196,7 @@ static VOID PrimDraw( PRIM *Pr, MATR World )
     glUniform1f(loc, Anim.W);
   if ((loc = glGetUniformLocation(ProgId, "FrameH")) != -1)
     glUniform1f(loc, Anim.H);
- 
+    
   glBindVertexArray(Pr->VA);
 
   if (Pr->Type == PRIM_PATCH)
@@ -199,7 +209,7 @@ static VOID PrimDraw( PRIM *Pr, MATR World )
   }
   else
     glDrawArrays(PrimType, 0, Pr->NumOfI);
-
+  
   glUseProgram(0);
   glBindVertexArray(0);
 } /* End of 'PrimDraw' function */
@@ -210,7 +220,7 @@ static VOID PrimDraw( PRIM *Pr, MATR World )
  *       PRIM *Pr;
  * RETURNS: None.
  */
-static VOID PrimFree( PRIM *Pr )
+VOID PrimFree( PRIM *Pr )
 {
   if (Pr->VA != 0)
   {

@@ -36,12 +36,12 @@ static INT GoToSymbol( CHAR *S, CHAR ch, CHAR *buf, INT Symb )
 
   while (S[i] != 0 && S[i] != ch)
   {
-    printf("%c ", S[i]);
+    //printf("%c ", S[i]);
     buf[i] = S[i];
     i++;
     NumOfCh++;
   }
-  printf("\n");
+  //printf("\n");
 
   return NumOfCh;
 } /* End of 'GoToSymbol' function */
@@ -61,7 +61,7 @@ ARGS Scanner( CHAR *S )
   CHAR buf[255] = {0}, str[256] = {0};
   ARGS Args = {0};
 
-  printf("%s\n", S);
+  //printf("%s\n", S);
 
   /*
    * Example of scanning string:

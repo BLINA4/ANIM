@@ -38,12 +38,8 @@ static VOID UnitInit( UNIT_SCENE *Unit, ANIM *Anim )
   Unit->Plane = UnitCreatePlane();
   Unit->Plane->Init(Unit->Plane, Anim);
   
-  Unit->Cubes = malloc(sizeof(UNIT_CUBE *) * COUNT_OF_CUBES);
-  for (i = 0; i < COUNT_OF_CUBES; i++)
-  {
-    Unit->Cubes[i] = UnitCreateCube();
-    Unit->Cubes[i]->Init(Unit->Cubes[i], Anim);
-  }
+  Unit->BricksCube = UnitCreateCube();
+  Unit->BricksCube->Init(Unit->BricksCube, Anim);
 } /* End of 'UnitInit' function */
 
 /* Unit deinitialization function.
@@ -56,14 +52,8 @@ static VOID UnitInit( UNIT_SCENE *Unit, ANIM *Anim )
  */
 static VOID UnitClose( UNIT_SCENE *Unit, ANIM *Anim )
 {
-  INT i;
-
   Unit->Plane->Close(Unit->Plane, Anim);
-
-  for (i = 0; i < COUNT_OF_CUBES; i++)
-    Unit->Cubes[i]->Close(Unit->Cubes[i], Anim);
-
-  free(Unit->Cubes);
+  Unit->BricksCube->Close(Unit->BricksCube, Anim);
 } /* End of 'UnitClose' function */
 
 /* Unit response to event function.
@@ -76,12 +66,8 @@ static VOID UnitClose( UNIT_SCENE *Unit, ANIM *Anim )
  */
 static VOID UnitResponse( UNIT_SCENE *Unit, ANIM *Anim )
 {
-  INT i;
-
   Unit->Plane->Response(Unit->Plane, Anim);
-  
-  for (i = 0; i < COUNT_OF_CUBES; i++)
-    Unit->Cubes[i]->Response(Unit->Cubes[i], Anim);
+  Unit->BricksCube->Response(Unit->BricksCube, Anim);
 } /* End of 'UnitResponse' function */
  
 /* Unit drawing function.
@@ -94,18 +80,15 @@ static VOID UnitResponse( UNIT_SCENE *Unit, ANIM *Anim )
  */
 static VOID UnitRender( UNIT_SCENE *Unit, ANIM *Anim )
 {
-  INT i, w, h, width = ceil(sqrt(COUNT_OF_CUBES));
+  INT i, w, h, width = 4;
 
   Unit->Plane->Render(Unit->Plane, Anim);
 
   for (i = 0, w = 0; w < width; w++)
     for (h = 0; h < width; h++)
     {
-      if (i++ == COUNT_OF_CUBES)
-        return;
-
-      Unit->Cubes[w * h + h]->Transform = MatrTranslate(VecSet(1.0f * h - width / 2.0f + (width % 2 == 0 ? 0.5f : 0.0f), 0.5f, -5.0f - 1.0f * w));
-      Unit->Cubes[w * h + h]->Render(Unit->Cubes[w * h + h], Anim);
+      Unit->BricksCube->Transform = MatrTranslate(VecSet(1.0f * h - width / 2.0f + 0.5f, 0.5f, -5.0f - 1.0f * w));
+      Unit->BricksCube->Render(Unit->BricksCube, Anim);
     }
 } /* End of 'UnitRender' function */
 

@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Materials subsystem header file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 17.11.2022.
+ * LAST UPDATE : 21.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -17,7 +17,9 @@
 #define __materials_h_
 
 #include "../../comdef.h"
-#include "../render.h"
+#include "../TEXTURES/textures.h"
+#include "../SHADERS/shader.h"
+#include "../../MATH/mth.h"
 
 /* Maximum number of different materials */
 #define MATERIALS_COUNT 256

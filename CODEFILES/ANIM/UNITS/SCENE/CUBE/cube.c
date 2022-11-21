@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Cube sub-unit file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 17.11.2022.
+ * LAST UPDATE : 21.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -28,11 +28,8 @@ typedef struct
 {
   UNIT_BASE_FIELDS;
   
-  MATERIAL *Mtl;
-  MATR Transform;     
-
-  /* Some OpenGL variables */ 
-  UINT VBO, VAO;
+  PRIM *Pr;
+  MATR Transform;
 } UNIT_CUBE;
 
 /* Unit initialization function.
@@ -45,10 +42,6 @@ typedef struct
  */
 static VOID UnitInit( UNIT_CUBE *Unit, ANIM *Anim )
 {
-  Unit->Transform = MatrIdentity();
-  Unit->Mtl = MaterialAdd("CUBE_MATERIAL", "Shader(CUBE_SHADERS),Tex(USEFILES/bricks.png)");
-  MaterialApply(Unit->Mtl); 
-
   FLT vertices[] = 
   {
      // vertice coords     // texture coords
@@ -95,25 +88,8 @@ static VOID UnitInit( UNIT_CUBE *Unit, ANIM *Anim )
      -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
   }; 
 
-  glGenVertexArrays(1, &(Unit->VAO));
-  glGenBuffers(1, &(Unit->VBO));
-  glBindVertexArray(Unit->VAO);
-
-  glBindBuffer(GL_ARRAY_BUFFER, Unit->VBO);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);
-  glEnableVertexAttribArray(0);
- 
-  glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
-  glEnableVertexAttribArray(1);
- 
-  glBindBuffer(GL_ARRAY_BUFFER, 0);
-  glBindVertexArray(0);
-
-  glUseProgram(0);
-  // Enable this line for LINE mode
-  // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  Unit->Pr = PrimCreate(PRIM_TRIMESH, "f3f2", vertices, 36, NULL, 0);
+  Unit->Pr->Mtl = MaterialAdd("CUBE_MATERIAL", "Shader(CUBE_SHADERS),Tex(USEFILES/bricks.png)"); 
 } /* End of 'UnitInit' function */
 
 /* Unit deinitialization function.
@@ -126,8 +102,7 @@ static VOID UnitInit( UNIT_CUBE *Unit, ANIM *Anim )
  */
 static VOID UnitClose( UNIT_CUBE *Unit, ANIM *Anim )
 {
-  glDeleteVertexArrays(1, &(Unit->VAO));
-  glDeleteBuffers(1, &(Unit->VBO));
+  PrimFree(Unit->Pr);
 } /* End of 'UnitClose' function */
 
 /* Unit response to event function.
@@ -170,24 +145,8 @@ static VOID UnitResponse( UNIT_CUBE *Unit, ANIM *Anim )
  * RETURNS: None.
  */
 static VOID UnitRender( UNIT_CUBE *Unit, ANIM *Anim )
-{ 
-  INT PrgNo = 0, loc = 0;
-
-  PrgNo = MaterialApply(Unit->Mtl);
-
-  if ((loc = glGetUniformLocation(PrgNo, "model")) != -1)
-    glUniformMatrix4fv(loc, 1, FALSE, &(Unit->Transform));
-  
-  if ((loc = glGetUniformLocation(PrgNo, "view")) != -1)
-    glUniformMatrix4fv(loc, 1, FALSE, &(Anim->cam.ViewMatr));
-  
-  if ((loc = glGetUniformLocation(PrgNo, "proj")) != -1)
-    glUniformMatrix4fv(loc, 1, FALSE, &(Anim->cam.ProjMatr));
-
-  glBindVertexArray(Unit->VAO);
-  glDrawArrays(GL_TRIANGLES, 0, 36);
-
-  glUseProgram(0);
+{
+  PrimDraw(Unit->Pr, Unit->Transform);
 } /* End of 'UnitRender' function */
 
 /* Unit creation function.

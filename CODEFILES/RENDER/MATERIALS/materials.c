@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Materials subsystem code file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 16.11.2022.
+ * LAST UPDATE : 21.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -15,8 +15,9 @@
 
 #include <string.h>
 #include "materials.h"
+#include "../render.h"
 
-MATERIAL Materials[MATERIALS_COUNT];
+MATERIAL *Materials[MATERIALS_COUNT];
 
 /* Material add function.
  * ARGUMENTS:
@@ -30,16 +31,20 @@ MATERIAL Materials[MATERIALS_COUNT];
 MATERIAL * MaterialAdd( CHAR *Name, CHAR *Params )
 {
   INT i, j;
-  MATERIAL mtl;
- 
-  strcpy(mtl.Name, Name);
+  MATERIAL *mtl;
 
+  if ((mtl = malloc(sizeof(MATERIAL))) == NULL)
+    return NULL;
+  memset(mtl, 0, sizeof(MATERIAL));
+
+  strcpy(mtl->Name, Name);
+
+  //printf("name is %s\n", mtl->Name);
   /* Check if material is already loaded */
   for (i = 0; i < Anim.NumOfMaterials; i++)
   {  
-    //printf("name is %s\n", mtl.Name);
-    if (!strcmp(Materials[i].Name, mtl.Name))
-      return &Materials[i];
+    if (!strcmp(Materials[i]->Name, mtl->Name))
+      return Materials[i];
     //printf("new mtl!\n");
   }
 
@@ -65,30 +70,30 @@ MATERIAL * MaterialAdd( CHAR *Name, CHAR *Params )
     }
 
     if (strcmp(Args.Scan[i].Name, "Ka") == 0 && Args.Scan[i].NumOfComp == 3)
-      mtl.Ka = VecSet(x, y, z);
+      mtl->Ka = VecSet(x, y, z);
     else if (strcmp(Args.Scan[i].Name, "Ka") == 0 && Args.Scan[i].NumOfComp == 1)
-      mtl.Ka = VecSet(x, x, x);
+      mtl->Ka = VecSet(x, x, x);
     else if (strcmp(Args.Scan[i].Name, "Kd") == 0 && Args.Scan[i].NumOfComp == 3)
-      mtl.Kd = VecSet(x, y, z);
+      mtl->Kd = VecSet(x, y, z);
     else if (strcmp(Args.Scan[i].Name, "Kd") == 0 && Args.Scan[i].NumOfComp == 1)
-      mtl.Kd = VecSet(x, x, x);
+      mtl->Kd = VecSet(x, x, x);
     else if (strcmp(Args.Scan[i].Name, "Ks") == 0 && Args.Scan[i].NumOfComp == 3)
-      mtl.Ks = VecSet(x, y, z);
+      mtl->Ks = VecSet(x, y, z);
     else if (strcmp(Args.Scan[i].Name, "Ks") == 0 && Args.Scan[i].NumOfComp == 1)
-      mtl.Ks = VecSet(x, x, x);
+      mtl->Ks = VecSet(x, x, x);
     else if (strcmp(Args.Scan[i].Name, "Ph") == 0)
-      mtl.Ph = x;
+      mtl->Ph = x;
     else if (strcmp(Args.Scan[i].Name, "Trans") == 0)
-      mtl.Trans = x;
+      mtl->Trans = x;
     else if (strcmp(Args.Scan[i].Name, "Tex") == 0)
       for (j = 0; j < Args.Scan[i].NumOfStr; j++)
-        mtl.Tex[j] = TextureAddFromFile(Args.Scan[i].Str[j]);
+        mtl->Tex[j] = TextureAddFromFile(Args.Scan[i].Str[j]);
     else if (strcmp(Args.Scan[i].Name, "Shader") == 0)
-      mtl.Shd = ShaderAdd(Args.Scan[i].Str[0]);
+      mtl->Shd = ShaderAdd(Args.Scan[i].Str[0]);
   }
 
   Materials[Anim.NumOfMaterials] = mtl;
-  return &Materials[Anim.NumOfMaterials++];
+  return Materials[Anim.NumOfMaterials++];
 } /* End of 'MaterialAdd' function */
 
 /* Materials apply function.
@@ -111,11 +116,11 @@ UINT MaterialApply( MATERIAL *Mtl )
   ProgId = ShaderApply(Mtl->Shd);
  
   if ((loc = glGetUniformLocation(ProgId, "Ka")) != -1)
-    glUniform3fv(loc, 1, &Mtl->Ka.X);
+    glUniform3fv(loc, 1, &(Mtl->Ka));
   if ((loc = glGetUniformLocation(ProgId, "Kd")) != -1)
-    glUniform3fv(loc, 1, &Mtl->Kd.X);
+    glUniform3fv(loc, 1, &(Mtl->Kd));
   if ((loc = glGetUniformLocation(ProgId, "Ks")) != -1)
-    glUniform3fv(loc, 1, &Mtl->Ks.X);
+    glUniform3fv(loc, 1, &(Mtl->Ks));
   if ((loc = glGetUniformLocation(ProgId, "Ph")) != -1)
     glUniform1f(loc, Mtl->Ph);
   if ((loc = glGetUniformLocation(ProgId, "Trans")) != -1)
@@ -160,6 +165,8 @@ VOID MaterialDelete( MATERIAL *Mtl )
   }
 
   ShaderDelete(Mtl->Shd);
+
+  free(Mtl);
 } /* End of 'MaterialDelete' function */
 
 /* Materials destructor function.
@@ -170,8 +177,11 @@ VOID MaterialsDestructor( VOID )
 {
   INT i;
   
-  for (i = 0; i < MATERIALS_COUNT; i++)
-    MaterialDelete(&Materials[i]);
+  for (i = 0; i < Anim.NumOfMaterials; i++)
+  {
+    //printf("Name of mtl is %s\n", Materials[i]->Name);
+    MaterialDelete(Materials[i]);
+  }
 } /* End of 'MaterialsDestructor' function */
 
 /* END OF 'materials.c' FILE */
