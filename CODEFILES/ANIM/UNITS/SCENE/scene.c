@@ -66,6 +66,27 @@ static VOID UnitClose( UNIT_SCENE *Unit, ANIM *Anim )
  */
 static VOID UnitResponse( UNIT_SCENE *Unit, ANIM *Anim )
 {
+  if (Anim->Controller->keys_hold[W] || Anim->Controller->keys[W])
+    CamSet(&(Anim->cam),
+           VecAddVec(VecMulNum(CamDir(&(Anim->cam)),  MOVEMENT_SPEED), Anim->cam.Loc),
+           VecAddVec(VecMulNum(CamDir(&(Anim->cam)),  MOVEMENT_SPEED), Anim->cam.At),
+           CamUp(&(Anim->cam)));
+  if (Anim->Controller->keys_hold[S] || Anim->Controller->keys[S])
+    CamSet(&(Anim->cam),
+           VecAddVec(VecMulNum(CamDir(&(Anim->cam)), -MOVEMENT_SPEED), Anim->cam.Loc),
+           VecAddVec(VecMulNum(CamDir(&(Anim->cam)), -MOVEMENT_SPEED), Anim->cam.At),
+           CamUp(&(Anim->cam)));
+  if (Anim->Controller->keys_hold[A] || Anim->Controller->keys[A])
+    CamSet(&(Anim->cam),
+           VecAddVec(VecMulNum(CamRight(&(Anim->cam)), -MOVEMENT_SPEED), Anim->cam.Loc),
+           VecAddVec(VecMulNum(CamRight(&(Anim->cam)), -MOVEMENT_SPEED), Anim->cam.At),
+           CamUp(&(Anim->cam)));
+  if (Anim->Controller->keys_hold[D] || Anim->Controller->keys[D])
+    CamSet(&(Anim->cam),
+           VecAddVec(VecMulNum(CamRight(&(Anim->cam)),  MOVEMENT_SPEED), Anim->cam.Loc),
+           VecAddVec(VecMulNum(CamRight(&(Anim->cam)),  MOVEMENT_SPEED), Anim->cam.At),
+           CamUp(&(Anim->cam)));
+
   Unit->Plane->Response(Unit->Plane, Anim);
   Unit->BricksCube->Response(Unit->BricksCube, Anim);
 } /* End of 'UnitResponse' function */
@@ -82,7 +103,7 @@ static VOID UnitRender( UNIT_SCENE *Unit, ANIM *Anim )
 {
   INT i, w, h, width = 4;
 
-  Unit->Plane->Render(Unit->Plane, Anim);
+  //Unit->Plane->Render(Unit->Plane, Anim);
 
   for (i = 0, w = 0; w < width; w++)
     for (h = 0; h < width; h++)

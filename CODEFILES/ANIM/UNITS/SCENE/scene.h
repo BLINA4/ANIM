@@ -19,6 +19,8 @@
 #include "../unit.h"
 #include "../../anim.h"
 
+#define MOVEMENT_SPEED 0.5f
+
 typedef struct
 {
   UNIT_BASE_FIELDS;
