@@ -116,24 +116,7 @@ static VOID UnitClose( UNIT_CUBE *Unit, ANIM *Anim )
 static VOID UnitResponse( UNIT_CUBE *Unit, ANIM *Anim )
 {
   if (Anim->Controller->keys[TAB] == TRUE)
-  {
-    /*
-    if (!strcmp(Unit->texture->Name, "USEFILES/grass.png"))
-    {
-      TextureDelete(Unit->texture);
-      Unit->texture = TextureAddFromFile("USEFILES/bricks.png");
-      return;
-    }
-  
-    if (!strcmp(Unit->texture->Name, "USEFILES/bricks.png"))
-    {
-      TextureDelete(Unit->texture);
-      Unit->texture = TextureAddFromFile("USEFILES/grass.png");
-      return;
-    }
-    */
-    ;
-  }
+    ; 
 } /* End of 'UnitResponse' function */
  
 /* Unit drawing function.

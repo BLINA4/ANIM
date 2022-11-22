@@ -22,12 +22,9 @@
 typedef struct
 {
   UNIT_BASE_FIELDS;
-
-  MATERIAL *Mtl;
+  
+  PRIM *Pr;
   MATR Transform;
-
-  /* Some OpenGL variables */
-  UINT VBO, VAO;
 } UNIT_CUBE;
 
 typedef struct

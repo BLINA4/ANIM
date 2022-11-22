@@ -64,7 +64,7 @@ struct tagPRIM
  * RETURNS:
  *   (PRIM *) pointer to created primitive.
  */
-PRIM * PrimCreate( PRIM_TYPE Type, CHAR *VertexFormat, VOID *V, INT NumOfV, INT *Ind,   INT NumOfI );
+PRIM * PrimCreate( PRIM_TYPE Type, CHAR *VertexFormat, VOID *V, INT NumOfV, INT *Ind, INT NumOfI );
 
 /* Draw primitive function.
  * ARGUMENTS:

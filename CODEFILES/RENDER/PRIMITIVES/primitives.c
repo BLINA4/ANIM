@@ -227,12 +227,12 @@ VOID PrimFree( PRIM *Pr )
     glBindVertexArray(Pr->VA);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
-    glDeleteVertexArrays(1, &Pr->VA);
+    glDeleteVertexArrays(1, &(Pr->VA));
   }
   if (Pr->VBuf != 0)
-    glDeleteBuffers(1, &Pr->VBuf);
+    glDeleteBuffers(1, &(Pr->VBuf));
   if (Pr->IBuf != 0)
-    glDeleteBuffers(1, &Pr->IBuf);
+    glDeleteBuffers(1, &(Pr->IBuf));
 } /* End of 'PrimFree' function */
 
 /* END OF 'primitives.c' FILE */
