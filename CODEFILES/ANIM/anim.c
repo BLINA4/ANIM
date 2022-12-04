@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Animation system implementation file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 21.11.2022.
+ * LAST UPDATE : 04.12.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -38,7 +38,7 @@ VOID AnimInit( VOID )
 
   Anim.glc = SDL_GL_CreateContext(Anim.win);
   Anim.Controller = ControllerInit();
-  Anim.Debug = TRUE;
+  Anim.Debug = FALSE;
   Anim.Run = TRUE;
   CamSetDefault(&Anim.cam);
   RndInit();
