@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Matrix supply functions
  * PROGRAMMER  : BLIN4
- * LAST UPDATE : 06.11.2022.
+ * LAST UPDATE : 04.12.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -421,7 +421,7 @@ static inline MATR MatrView( VEC Loc, VEC At, VEC Up1 )
       {Right.X, Up.X, -Dir.X, 0},
       {Right.Y, Up.Y, -Dir.Y, 0},
       {Right.Z, Up.Z, -Dir.Z, 0},
-      {-VecDot(Loc, Right), - VecDot(Loc, Up), VecDot(Loc, Dir), 1}
+      {-VecDot(Loc, Right), -VecDot(Loc, Up), VecDot(Loc, Dir), 1}
     }
   };
   return M;

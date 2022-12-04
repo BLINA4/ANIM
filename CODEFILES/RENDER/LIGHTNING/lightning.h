@@ -19,6 +19,8 @@
 #include "../../comdef.h"
 #include "../render.h"
 
+#define MAX_LIGHTS 256
+
 /* Light sources types */
 typedef enum tagLIGHT_TYPE
 {

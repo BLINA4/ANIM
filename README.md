@@ -1,6 +1,6 @@
 <h1 align="center">Anim</h1>
 
-## quite simple OpenGl animation engine ♒
+## quite simple OpenGL animation engine ♒
 ### It's a pet project made just for fun and upgrading my C/OpenGL skills 👍
 ## Some features 💪
 - Phong based lighting model.

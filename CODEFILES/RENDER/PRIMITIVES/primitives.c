@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Primitives subsystem header file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 21.11.2022.
+ * LAST UPDATE : 04.12.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -74,7 +74,7 @@ PRIM * PrimCreate( PRIM_TYPE Type, CHAR *VertexFormat, VOID *V, INT NumOfV, INT 
     else
       VertexFormat++;
 
-  printf("Attribute count is %i\n", attr_count);
+  //printf("Attribute count is %i\n", attr_count);
 
   if (all_size != 0 && V != NULL && NumOfV != 0)
   {
