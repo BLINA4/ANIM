@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Main scene unit header file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 21.11.2022.
+ * LAST UPDATE : 25.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -32,6 +32,14 @@ typedef struct
 typedef struct
 {
   UNIT_BASE_FIELDS;
+
+  PRIM *Pr;
+  MATR Transform;
+} UNIT_SUN;
+
+typedef struct
+{
+  UNIT_BASE_FIELDS;
   
   MATERIAL *Mtl;
     
@@ -51,6 +59,7 @@ typedef struct
   // Sub-units
   UNIT_PLANE *Plane;
   UNIT_CUBE *BricksCube;
+  UNIT_SUN *Sun;
 
   CUBE_TYPE *WorldCubes;
 } UNIT_SCENE;
@@ -68,6 +77,13 @@ UNIT * UnitCreateCube( VOID );
  *   (UNIT *) pointer to created unit.
  */
 UNIT * UnitCreatePlane( VOID );
+
+/* Unit creation function.
+ * ARGUMENTS: None.
+ * RETURNS: 
+ *   (UNIT *) pointer to created unit.
+ */
+UNIT * UnitCreateSun( VOID );
 
 #endif /* __scene_h_ */
 

@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Main scene unit file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 21.11.2022.
+ * LAST UPDATE : 25.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -35,6 +35,9 @@ static VOID UnitInit( UNIT_SCENE *Unit, ANIM *Anim )
 {
   INT i;
 
+  Unit->Sun = UnitCreateSun();
+  Unit->Sun->Init(Unit->Sun, Anim);
+
   Unit->Plane = UnitCreatePlane();
   Unit->Plane->Init(Unit->Plane, Anim);
   
@@ -52,6 +55,7 @@ static VOID UnitInit( UNIT_SCENE *Unit, ANIM *Anim )
  */
 static VOID UnitClose( UNIT_SCENE *Unit, ANIM *Anim )
 {
+  Unit->Sun->Close(Unit->Sun, Anim);
   Unit->Plane->Close(Unit->Plane, Anim);
   Unit->BricksCube->Close(Unit->BricksCube, Anim);
 } /* End of 'UnitClose' function */
@@ -87,6 +91,7 @@ static VOID UnitResponse( UNIT_SCENE *Unit, ANIM *Anim )
            VecAddVec(VecMulNum(CamRight(&(Anim->cam)),  MOVEMENT_SPEED), Anim->cam.At),
            CamUp(&(Anim->cam)));
 
+  Unit->Sun->Response(Unit->Sun, Anim);
   Unit->Plane->Response(Unit->Plane, Anim);
   Unit->BricksCube->Response(Unit->BricksCube, Anim);
 } /* End of 'UnitResponse' function */
@@ -103,7 +108,10 @@ static VOID UnitRender( UNIT_SCENE *Unit, ANIM *Anim )
 {
   INT i, w, h, width = 4;
 
-  //Unit->Plane->Render(Unit->Plane, Anim);
+  Unit->Plane->Render(Unit->Plane, Anim);
+
+  Unit->Sun->Transform = MatrTranslate(VecSet(0.0f, 10.5f, -10.0f));
+  Unit->Sun->Render(Unit->Sun, Anim);
 
   for (i = 0, w = 0; w < width; w++)
     for (h = 0; h < width; h++)

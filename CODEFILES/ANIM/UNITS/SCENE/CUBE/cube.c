@@ -89,7 +89,7 @@ static VOID UnitInit( UNIT_CUBE *Unit, ANIM *Anim )
   }; 
 
   Unit->Pr = PrimCreate(PRIM_TRIMESH, "f3f2", vertices, 36, NULL, 0);
-  Unit->Pr->Mtl = MaterialAdd("CUBE_MATERIAL", "Shader(CUBE_SHADERS),Tex(USEFILES/bricks.png)"); 
+  Unit->Pr->Mtl = MaterialAdd("CUBE_MATERIAL", "Shader(CUBE_SHADERS),Tex(USEFILES/bricks.png),Ka(0.04),Kd(0.4),Ks(0.15)"); 
 } /* End of 'UnitInit' function */
 
 /* Unit deinitialization function.

@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Render system code file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 17.11.2022.
+ * LAST UPDATE : 25.11.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -95,6 +95,7 @@ VOID RndInit( VOID )
   glUniformMatrix4fv = glXGetProcAddress((const GLubyte *)"glUniformMatrix4fv");
 
   glEnable(GL_DEPTH_TEST);
+  glEnable(GL_LIGHTING);
 } /* End of 'RndInit' function */
 
 /* Render close function.

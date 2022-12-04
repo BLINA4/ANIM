@@ -39,7 +39,7 @@ typedef struct
  */
 static VOID UnitInit( UNIT_PLANE *Unit, ANIM *Anim )
 {
-  Unit->Mtl = MaterialAdd("PLANE_MATERIAL", "Shader(PLANE_SHADERS),Tex(USEFILES/WoodPlanksWorn33/WoodPlanksWorn33_Flat.jpg)");
+  Unit->Mtl = MaterialAdd("PLANE_MATERIAL", "Shader(PLANE_SHADERS),Tex(USEFILES/grass_top.png),Ka(0.2), Kd(0.6), Ks(0.0)");
   MaterialApply(Unit->Mtl);
  
   FLT vertices[] =
