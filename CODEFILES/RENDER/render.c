@@ -98,6 +98,8 @@ VOID RndInit( VOID )
 
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_LIGHTING);
+
+  LightsInit();
 } /* End of 'RndInit' function */
 
 /* Render close function.
@@ -106,6 +108,7 @@ VOID RndInit( VOID )
  */
 VOID RndClose( VOID )
 {
+  LightsClose();
   MaterialsDestructor();
 } /* End of 'RndClose' function */
 

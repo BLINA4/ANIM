@@ -57,7 +57,7 @@ typedef struct tagShadowDir
  * RETURNS:
  *   (LIGHT *) Pointer to light or NULL if failed.
  */
-static LIGHT * LightAdd( CHAR *LightDescr )
+LIGHT * LightAdd( CHAR *LightDescr )
 {
   INT i;
   ARGS Args = Scanner(LightDescr);
@@ -109,7 +109,7 @@ static LIGHT * LightAdd( CHAR *LightDescr )
  *       LIGHT *Lig;
  * RETURNS: None.
  */
-static VOID LightDraw( LIGHT *Lig )
+VOID LightDraw( LIGHT *Lig )
 {
   if (Lig != NULL)
     Lig->IsRender = TRUE;
@@ -119,7 +119,7 @@ static VOID LightDraw( LIGHT *Lig )
  * ARGUMENTS: None.
  * RETURNS: None.
  */
-static VOID LightClearIsRenderFlag( VOID )
+VOID LightClearIsRenderFlag( VOID )
 {
   INT i;
 
@@ -132,7 +132,7 @@ static VOID LightClearIsRenderFlag( VOID )
  * ARGUMENTS: None.
  * RETURNS: None.
  */
-static VOID LightsRedraw( VOID )
+VOID LightsRedraw( VOID )
 {
   INT i, loc;
   /* Shaders pointers */
@@ -291,7 +291,7 @@ static VOID LightsRedraw( VOID )
  * ARGUMENTS: None.
  * RETURNS: None.
  */
-static VOID LightsInit( VOID )
+VOID LightsInit( VOID )
 {
   LightShdAmbient = ShaderAdd("Light/Ambient");
   LightShdPoint   = ShaderAdd("Light/Point");
@@ -310,7 +310,7 @@ static VOID LightsInit( VOID )
  * ARGUMENTS: None.
  * RETURNS: None.
  */
-static VOID LightsClose( VOID )
+VOID LightsClose( VOID )
 {
   INT i;
   

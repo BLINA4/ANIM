@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Lightning subsystem header file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 04.12.2022.
+ * LAST UPDATE : 08.12.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -46,6 +46,18 @@ typedef struct tagLIGHT
     IsShadowCast,     /* Is shadow castes flag */
     IsRender;         /* Is rendering on current frame */
 } LIGHT;
+
+/* Lights subsystem initialization function.
+ * ARGUMENTS: None.
+ * RETURNS: None.
+ */
+VOID LightsInit( VOID );
+         
+/* Lights subsystem deinitialization function.
+ * ARGUMENTS: None.
+ * RETURNS: None.
+ */   
+VOID LightsClose( VOID );
 
 #endif /* __lightning_h_ */
 
