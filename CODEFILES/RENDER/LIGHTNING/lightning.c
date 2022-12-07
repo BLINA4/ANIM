@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Lightning subsystem code file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 07.12.2022.
+ * LAST UPDATE : 08.12.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -172,7 +172,7 @@ static VOID LightsRedraw( VOID )
         //glBindTexture(GL_TEXTURE_2D, ShadowFBO->Attachments[0]->TexId);
         ProgId = ShaderApply(ShadersId[Lig->Type]);
         if ((loc = glGetUniformLocation(ProgId, "MatrShadow")) != -1)
-          glUniformMatrix4fv(loc, 1, FALSE, LightMatr.M[0]);
+          glUniformMatrix4fv(loc, 1, FALSE, &LightMatr);
       }
       else if (Lig->IsShadowCast && Lig->Type == 1)
       {
@@ -293,11 +293,17 @@ static VOID LightsRedraw( VOID )
  */
 static VOID LightsInit( VOID )
 {
-  LightShdAmbient = ShaderAdd("Ambient-light");
-  LightShdPoint   = ShaderAdd("Point-light");
-  LightShdDir     = ShaderAdd("Directional-light");
-  LightShdSpot    = ShaderAdd("Spot-light");
-  LightShdDraw    = ShaderAdd("Draw-light");
+  LightShdAmbient = ShaderAdd("Light/Ambient");
+  LightShdPoint   = ShaderAdd("Light/Point");
+  LightShdDir     = ShaderAdd("Light/Directional");
+  LightShdSpot    = ShaderAdd("Light/Spot");
+  LightShdDraw    = ShaderAdd("Light/Draw");
+
+  /* Texture of glowing light source */
+  //LightGlowTex = TextureAddFromFile("USEFILES/TEXTURES/...");
+
+  /* Add base ambient light source */
+  LightAdd("Type(0),IsShadowCast(0),IsRender(1)");
 } /* End of 'LightsInit' function */
 
 /* Lights subsystem deinitialization function.
