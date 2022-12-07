@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Animation system header file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 04.12.2022.
+ * LAST UPDATE : 08.12.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -45,6 +45,7 @@ struct tagANIM
   DBL                     SyncTime;                                                         /*  Synchronization time        */
   INT                     NumOfMaterials;                                                   /*  Number of loaded materials  */
   INT                     NumOfTextures;                                                    /*  Number of loaded textures   */
+  INT                     NumOfShaders;                                                     /*  Number of loaded shaders    */
   INT                     NumOfLights;                                                      /*  Number of added lights      */
   CONTROLLER              *Controller;                                                      /*  Module controller           */
   GLint                   att[];                                                            /*  Attributes of GL            */  

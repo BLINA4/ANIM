@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Render system code file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 25.11.2022.
+ * LAST UPDATE : 07.12.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -50,6 +50,7 @@ VOID      (*glTexStorage2D)             ( GLenum, GLsizei, GLenum, GLsizei, GLsi
 GLint     (*glGetUniformLocation)       ( GLuint, const GLchar * );
 VOID      (*glUniform1i)                ( GLint, GLint );
 VOID      (*glUniform1f)                ( GLint, GLfloat );
+VOID      (*glUniform2fv)               ( GLint, GLsizei, const GLfloat * );
 VOID      (*glUniform3f)                ( GLint, GLfloat, GLfloat, GLfloat ); 
 VOID      (*glUniform3fv)               ( GLint, GLsizei, const GLfloat * );
 VOID      (*glUniformMatrix4fv)         ( GLint, GLsizei, GLboolean, const GLfloat * );
@@ -90,6 +91,7 @@ VOID RndInit( VOID )
   glGetUniformLocation = glXGetProcAddress((const GLubyte *)"glGetUniformLocation");
   glUniform1i = glXGetProcAddress((const GLubyte *)"glUniform1i");
   glUniform1f = glXGetProcAddress((const GLubyte *)"glUniform1f");
+  glUniform2fv = glXGetProcAddress((const GLubyte *)"glUniform2fv");
   glUniform3f = glXGetProcAddress((const GLubyte *)"glUniform3f");
   glUniform3fv = glXGetProcAddress((const GLubyte *)"glUniform3fv");
   glUniformMatrix4fv = glXGetProcAddress((const GLubyte *)"glUniformMatrix4fv");

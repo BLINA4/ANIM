@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Render system header file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 21.11.2022.
+ * LAST UPDATE : 07.12.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -51,6 +51,7 @@ extern VOID      (*glTexStorage2D)             ( GLenum, GLsizei, GLenum, GLsize
 extern GLint     (*glGetUniformLocation)       ( GLuint, const GLchar * );
 extern VOID      (*glUniform1i)                ( GLint, GLint );
 extern VOID      (*glUniform1f)                ( GLint, GLfloat );
+extern VOID      (*glUniform2fv)               ( GLint, GLsizei, const GLfloat * );
 extern VOID      (*glUniform3f)                ( GLint, GLfloat, GLfloat, GLfloat );
 extern VOID      (*glUniform3fv)               ( GLint, GLsizei, const GLfloat * );
 extern VOID      (*glUniformMatrix4fv)         ( GLint, GLsizei, GLboolean, const GLfloat * );

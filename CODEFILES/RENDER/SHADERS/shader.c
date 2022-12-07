@@ -7,7 +7,7 @@
  * PURPOSE     : Animation project.
  *               Shaders subsystem code file.
  * PROGRAMMER  : BLIN4.
- * LAST UPDATE : 16.11.2022.
+ * LAST UPDATE : 08.12.2022.
  *
  * All parts of this file may be changed without agreement
  *   of programmer if you give credits to author.
@@ -18,6 +18,8 @@
 #include "../../comdef.h"
 #include "shader.h"
 #include "../render.h"
+
+SHADER *Shaders[MAX_SHADERS];
 
 /* Read text from .glsl file function
  * ARGUMENTS:
@@ -172,7 +174,8 @@ UINT ShaderLoad( CHAR *FileNamePrefix )
     if (prg != 0)
       glDeleteProgram(prg);
     return 0;
-  }
+ }
+
   return prg;
 } /* End of 'ShaderLoad' function */
   
@@ -187,8 +190,8 @@ SHADER * ShaderAdd( CHAR *FileNamePrefix )
 {
   SHADER *Shd;
   static CHAR Buf[1000];
- 
-  if ((Shd = malloc(sizeof(SHADER))) == NULL)
+
+  if ((Shd = malloc(sizeof(SHADER))) == NULL || Anim.NumOfShaders == MAX_SHADERS)
     return NULL;
 
   sprintf(Buf, "USEFILES/SHADERS/%s", FileNamePrefix);
@@ -199,7 +202,8 @@ SHADER * ShaderAdd( CHAR *FileNamePrefix )
   glUseProgram(0);
   
   strncpy(Shd->Name, FileNamePrefix, NAME_LENGTH - 1);
-  
+ 
+  Shaders[Anim.NumOfShaders++] = Shd;
   return Shd;
 } /* End of 'ShaderAdd' function */
 
